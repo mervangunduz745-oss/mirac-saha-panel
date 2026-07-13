@@ -1,0 +1,2148 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="application-name" content="Miraç ERP">
+  <meta name="apple-mobile-web-app-title" content="Miraç ERP">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <title>Miraç ERP Karargâh Paneli V5 V3 V2</title>
+  <style>
+    :root {
+      --bg: #eef3f7;
+      --panel: rgba(255,255,255,.92);
+      --panel-solid: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --muted-2: #475569;
+      --line: #e2e8f0;
+      --soft: #f8fafc;
+      --soft-2: #f1f5f9;
+      --dark: #0f172a;
+      --dark-2: #1e293b;
+      --green: #10b981;
+      --green-2: #059669;
+      --green-soft: #ecfdf5;
+      --amber: #f59e0b;
+      --amber-soft: #fffbeb;
+      --red: #ef4444;
+      --red-soft: #fef2f2;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --shadow: 0 22px 60px -38px rgba(15, 23, 42, .65);
+      --radius: 22px;
+      --nav-width: 284px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { min-height: 100%; scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 0 0, rgba(16,185,129,.18), transparent 30%),
+        radial-gradient(circle at 100% 0, rgba(37,99,235,.10), transparent 28%),
+        linear-gradient(135deg, #f8fafc 0%, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: var(--nav-width) minmax(0, 1fr);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 18px;
+      border-right: 1px solid rgba(226,232,240,.9);
+      background: rgba(255,255,255,.74);
+      backdrop-filter: blur(18px);
+      overflow: auto;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 8px 18px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+
+    .mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--green), var(--green-2));
+      color: #fff;
+      font-weight: 950;
+      font-size: 24px;
+      box-shadow: 0 14px 28px rgba(16,185,129,.24);
+      flex: 0 0 auto;
+    }
+
+    .brand h1 {
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: -.35px;
+      line-height: 1.1;
+    }
+
+    .brand p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+      line-height: 1.35;
+    }
+
+    .nav-title {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 20px 8px 8px;
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav button {
+      width: 100%;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted-2);
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-weight: 760;
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+
+    .nav button:hover {
+      background: rgba(241,245,249,.78);
+      color: var(--text);
+    }
+
+    .nav button.active {
+      background: var(--dark);
+      color: #fff;
+      box-shadow: 0 14px 26px -22px rgba(15,23,42,.9);
+    }
+
+    .nav .ico {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: rgba(15,23,42,.06);
+      font-size: 13px;
+      flex: 0 0 auto;
+    }
+
+    .nav button.active .ico {
+      background: rgba(255,255,255,.14);
+    }
+
+    .side-card {
+      margin-top: 18px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel-solid);
+    }
+
+    .side-card strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .side-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .main {
+      min-width: 0;
+      padding: 22px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0 18px;
+      background: linear-gradient(180deg, rgba(238,243,247,.96) 0%, rgba(238,243,247,.74) 68%, rgba(238,243,247,0) 100%);
+      backdrop-filter: blur(8px);
+    }
+
+    .mobile-menu {
+      display: none;
+      border: 1px solid var(--line);
+      background: var(--panel-solid);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-weight: 850;
+    }
+
+    .page-kicker {
+      color: var(--green-2);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .page-title {
+      font-size: clamp(26px, 3.5vw, 42px);
+      letter-spacing: -1.35px;
+      line-height: 1.05;
+      font-weight: 980;
+    }
+
+    .page-subtitle {
+      color: var(--muted-2);
+      font-size: 14px;
+      line-height: 1.55;
+      margin-top: 8px;
+      max-width: 760px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .search {
+      width: min(340px, 42vw);
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--panel-solid);
+      padding: 13px 14px;
+      color: var(--text);
+      box-shadow: 0 16px 34px -30px rgba(15,23,42,.6);
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      min-height: 44px;
+      border-radius: 14px;
+      padding: 11px 14px;
+      font-weight: 850;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform .12s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn:active { transform: scale(.985); }
+    .btn-dark { background: var(--dark); color: #fff; }
+    .btn-dark:hover { background: #020617; }
+    .btn-soft { background: var(--panel-solid); color: var(--text); border-color: var(--line); }
+    .btn-soft:hover { border-color: #cbd5e1; }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-green:hover { background: var(--green-2); }
+    .btn-red { background: var(--red-soft); color: #991b1b; border-color: #fecaca; }
+    .btn-blue { background: var(--blue-soft); color: #1d4ed8; border-color: #bfdbfe; }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(300px, .75fr);
+      gap: 16px;
+      align-items: stretch;
+      margin-bottom: 16px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(226,232,240,.95);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .card-pad { padding: 18px; }
+
+    .command {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 95% 0%, rgba(16,185,129,.18), transparent 28%),
+        linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      min-height: 246px;
+    }
+
+    .command:after {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border-radius: 999px;
+      right: -85px;
+      bottom: -92px;
+      background: rgba(255,255,255,.08);
+    }
+
+    .command .content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 16px;
+      height: 100%;
+    }
+
+    .command h2 {
+      font-size: clamp(27px, 4vw, 46px);
+      line-height: 1.02;
+      letter-spacing: -1.4px;
+      font-weight: 980;
+      max-width: 700px;
+    }
+
+    .command p {
+      color: rgba(255,255,255,.78);
+      max-width: 720px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .signal-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .signal {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.88);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(16,185,129,.12);
+    }
+
+    .focus-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .focus-item {
+      display: grid;
+      grid-template-columns: 34px minmax(0,1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: rgba(248,250,252,.76);
+      border-radius: 16px;
+    }
+
+    .focus-item .badge {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      font-weight: 950;
+      font-size: 13px;
+      background: var(--dark);
+      color: #fff;
+    }
+
+    .focus-item strong {
+      font-size: 13px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .focus-item span {
+      color: var(--muted);
+      line-height: 1.4;
+      font-size: 12px;
+    }
+
+    .kpi-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 16px;
+    }
+
+    .kpi {
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi:after {
+      content:"";
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      right: -30px;
+      top: -30px;
+      border-radius: 999px;
+      background: rgba(16,185,129,.08);
+    }
+
+    .kpi .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      margin-bottom: 9px;
+    }
+
+    .kpi .value {
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 980;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .kpi .hint {
+      margin-top: 10px;
+      color: var(--muted-2);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .section {
+      display: none;
+      animation: fade .16s ease;
+    }
+
+    .section.active { display: block; }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+      gap: 16px;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: -.3px;
+    }
+
+    .card-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      margin-top: 4px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 850;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      color: var(--muted-2);
+      white-space: nowrap;
+    }
+
+    .pill.green { background: var(--green-soft); border-color: #bbf7d0; color: #065f46; }
+    .pill.amber { background: var(--amber-soft); border-color: #fde68a; color: #92400e; }
+    .pill.red { background: var(--red-soft); border-color: #fecaca; color: #991b1b; }
+    .pill.blue { background: var(--blue-soft); border-color: #bfdbfe; color: #1d4ed8; }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 11px;
+    }
+
+    .action-tile {
+      min-height: 104px;
+      border: 1px solid var(--line);
+      background: var(--panel-solid);
+      border-radius: 18px;
+      padding: 14px;
+      text-align: left;
+      display: grid;
+      align-content: space-between;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+
+    .action-tile:hover {
+      transform: translateY(-2px);
+      border-color: #cbd5e1;
+      box-shadow: 0 18px 36px -30px rgba(15,23,42,.7);
+    }
+
+    .action-tile strong {
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .action-tile span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      margin-top: 6px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel-solid);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+    }
+
+    th, td {
+      padding: 12px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f8fafc;
+      color: var(--muted-2);
+      font-size: 11px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-weight: 950;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    td strong { font-weight: 900; }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .row-card {
+      border: 1px solid var(--line);
+      background: var(--panel-solid);
+      border-radius: 16px;
+      padding: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .row-card strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .row-card span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--soft-2);
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .progress > div {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      border-radius: inherit;
+    }
+
+    .audit {
+      display: grid;
+      gap: 10px;
+    }
+
+    .audit-item {
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .audit-item strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .audit-item span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(15,23,42,.52);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal.show { display: grid; }
+
+    .modal-card {
+      width: min(560px, 100%);
+      max-height: min(760px, calc(100vh - 28px));
+      overflow: auto;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 26px 80px -26px rgba(2,6,23,.72);
+      border: 1px solid rgba(226,232,240,.9);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 2;
+    }
+
+    .modal-head h3 {
+      font-size: 19px;
+      letter-spacing: -.4px;
+      font-weight: 950;
+    }
+
+    .modal-head p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+      line-height: 1.45;
+    }
+
+    .x {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      border-radius: 13px;
+      font-weight: 950;
+    }
+
+    .form {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(16,185,129,.58);
+      box-shadow: 0 0 0 4px rgba(16,185,129,.10);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(20px, env(safe-area-inset-bottom));
+      z-index: 120;
+      transform: translateX(-50%) translateY(16px);
+      background: #0f172a;
+      color: #fff;
+      padding: 13px 16px;
+      border-radius: 15px;
+      font-size: 14px;
+      font-weight: 850;
+      box-shadow: 0 18px 42px rgba(15,23,42,.28);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      max-width: calc(100vw - 32px);
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .mobile-bottom {
+      display: none;
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: max(12px, env(safe-area-inset-bottom));
+      z-index: 80;
+      background: rgba(255,255,255,.9);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(226,232,240,.9);
+      border-radius: 22px;
+      box-shadow: 0 18px 50px -30px rgba(15,23,42,.7);
+      padding: 8px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .mobile-bottom button {
+      min-height: 48px;
+      border: 0;
+      border-radius: 16px;
+      background: transparent;
+      color: var(--muted-2);
+      font-size: 11px;
+      font-weight: 850;
+      display: grid;
+      place-items: center;
+      gap: 2px;
+    }
+
+    .mobile-bottom button.active {
+      background: var(--dark);
+      color: #fff;
+    }
+
+    .empty {
+      border: 1px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 18px;
+      color: var(--muted);
+      text-align: center;
+      background: #f8fafc;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .hide { display: none !important; }
+
+
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .strategy-card {
+      border: 1px solid var(--line);
+      background: var(--panel-solid);
+      border-radius: 18px;
+      padding: 15px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .strategy-card strong {
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .strategy-card span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 9px;
+    }
+
+    .check-item {
+      display: grid;
+      grid-template-columns: 24px minmax(0,1fr) auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 15px;
+      padding: 11px;
+    }
+
+    .check-item input {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--green);
+    }
+
+    .check-item strong {
+      font-size: 13px;
+      display: block;
+    }
+
+    .check-item span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .automation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .automation-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .automation-card strong {
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .automation-card span {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #bbf7d0;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 1120px) {
+      .strategy-grid, .automation-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 1120px) {
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .action-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .hero, .two-col { grid-template-columns: 1fr; }
+      .three-col { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 820px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar {
+        position: fixed;
+        z-index: 90;
+        left: 12px;
+        top: 12px;
+        bottom: 12px;
+        width: min(320px, calc(100vw - 24px));
+        height: auto;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 26px 75px -30px rgba(15,23,42,.72);
+        transform: translateX(calc(-100% - 24px));
+        transition: transform .18s ease;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .main { padding: 16px 14px 90px; }
+      .topbar { align-items: flex-start; }
+      .mobile-menu { display: inline-flex; }
+      .top-actions { display: none; }
+      .mobile-bottom { display: grid; }
+      .kpi-grid, .action-grid, .form-row { grid-template-columns: 1fr; }
+      .command { min-height: 300px; }
+      .page-title { font-size: 29px; }
+    }
+
+
+    .install-card {
+      position: fixed;
+      right: 18px;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      z-index: 95;
+      width: min(360px, calc(100vw - 36px));
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(226,232,240,.95);
+      border-radius: 22px;
+      box-shadow: 0 22px 58px -34px rgba(15,23,42,.75);
+      padding: 14px;
+      display: none;
+      gap: 10px;
+    }
+
+    .install-card.show { display: grid; }
+
+    .install-card strong {
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .install-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .install-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .install-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      font-weight: 950;
+    }
+
+    @media (max-width: 820px) {
+      .install-card {
+        left: 12px;
+        right: 12px;
+        bottom: 82px;
+        width: auto;
+      }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .sidebar, .topbar, .mobile-bottom, .btn, .action-grid { display: none !important; }
+      .app { display: block; }
+      .main { padding: 0; }
+      .section { display: block !important; page-break-after: always; }
+      .card { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="mark">M</div>
+        <div>
+          <h1>Miraç ERP</h1>
+          <p>Karargâh paneli · sade, ciddi, saha odaklı</p>
+        </div>
+      </div>
+
+      <div class="nav-title">Ana Menü</div>
+      <nav class="nav" id="nav">
+        <button class="active" data-section="karargah"><span class="ico">K</span>Karargâh</button>
+        <button data-section="siparis"><span class="ico">S</span>Sipariş</button>
+        <button data-section="uretim"><span class="ico">Ü</span>Üretim</button>
+        <button data-section="stok"><span class="ico">D</span>Stok</button>
+        <button data-section="cari"><span class="ico">C</span>Cari</button>
+        <button data-section="kasa"><span class="ico">₺</span>Kasa & POS</button>
+        <button data-section="rapor"><span class="ico">R</span>Rapor</button>
+      </nav>
+
+      <div class="nav-title">Gizli Sistem</div>
+      <nav class="nav">
+        <button data-section="sistem"><span class="ico">⚙</span>Sistem Sağlığı</button>
+      </nav>
+
+      <div class="side-card">
+        <strong>İşletme prensibi</strong>
+        <p>Az menü, net aksiyon, her kayıt iz bıraksın. Silme değil; iptal ve hesap etkisini kaldırma mantığı korunur.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <button class="mobile-menu" type="button" onclick="toggleSidebar()">Menü</button>
+          <div class="page-kicker" id="pageKicker">Bugünün ticari kontrol merkezi</div>
+          <h2 class="page-title" id="pageTitle">Karargâh</h2>
+          <p class="page-subtitle" id="pageSubtitle">Kasa, cari, üretim, stok ve borç durumunu tek ekranda toplayan karar paneli.</p>
+        </div>
+        <div class="top-actions">
+          <input class="search" id="searchInput" placeholder="Sipariş, cari, ürün veya işlem ara..." oninput="globalSearch(this.value)">
+          <button class="btn btn-soft" type="button" onclick="installPwa()">Ana Ekrana Ekle</button>
+          <button class="btn btn-soft" type="button" onclick="print()">Yazdır</button>
+          <button class="btn btn-dark" type="button" onclick="openModal('quick')">Hızlı İşlem</button>
+        </div>
+      </header>
+
+      <section class="section active" id="karargah">
+        <div class="hero">
+          <article class="card command card-pad">
+            <div class="content">
+              <div class="pill green">Canlı karar ekranı</div>
+              <h2>Bugün önce para, sonra teslim, sonra stok.</h2>
+              <p>Panel kalabalık bilgi göstermez; iş sahibinin o gün karar vermesi gereken konuları öne çıkarır. Ana gayemiz: açık para, geciken iş ve eksik maliyet bırakmamak.</p>
+              <div class="signal-row">
+                <span class="signal"><span class="dot"></span> Son yedek: <span id="lastBackup">-</span></span>
+                <span class="signal">Son işlem: <span id="lastLog">-</span></span>
+                <span class="signal">Pilot veri: aktif</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Bugünün Öncelik Sırası</div>
+                <div class="card-note">Panel önce işi kurtaracak başlıkları söyler.</div>
+              </div>
+              <span class="pill amber">Saha modu</span>
+            </div>
+            <div class="focus-list" id="priorityList"></div>
+          </article>
+        </div>
+
+        <div class="grid kpi-grid" id="kpiGrid"></div>
+
+        <div class="two-col">
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Hızlı İşlem Merkezi</div>
+                <div class="card-note">Ana ekranda sadece para, sipariş, üretim ve stok aksiyonu var.</div>
+              </div>
+              <span class="pill blue">8 kritik buton</span>
+            </div>
+            <div class="action-grid">
+              <button class="action-tile" onclick="openModal('order')"><strong>Yeni Sipariş Aç</strong><span>Müşteri, ürün, ölçü, teslim ve kapora.</span></button>
+              <button class="action-tile" onclick="openModal('collection')"><strong>Tahsilat Kaydet</strong><span>Nakit, banka veya POS tahsilatı.</span></button>
+              <button class="action-tile" onclick="openModal('payment')"><strong>Ödeme Kaydet</strong><span>Masraf, borç veya tedarikçi ödemesi.</span></button>
+              <button class="action-tile" onclick="openModal('debtplan')"><strong>Borç Planı Aç</strong><span>Vade, öncelik, kapsam ve ödeme hesabı.</span></button>
+              <button class="action-tile" onclick="openModal('fixedexpense')"><strong>Sabit Gider Ekle</strong><span>Personel, kira, muhasebe ve düzenli giderler.</span></button>
+              <button class="action-tile" onclick="openModal('stock')"><strong>Stok Girişi Yap</strong><span>Malzeme, ürün veya mamül girişi.</span></button>
+              <button class="action-tile" onclick="openModal('production')"><strong>Üretim Emri Aç</strong><span>Siparişi üretime bağla, aşama takip et.</span></button>
+              <button class="action-tile" onclick="openModal('customer')"><strong>Cari Hesabı Aç</strong><span>Müşteri veya tedarikçi kartı.</span></button>
+            </div>
+          </article>
+
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Kritik Uyarılar</div>
+                <div class="card-note">Gereksiz alarm yok. Sadece karar gerektiren konular.</div>
+              </div>
+              <span class="pill red" id="alertCount">0 uyarı</span>
+            </div>
+            <div class="list" id="alerts"></div>
+          </article>
+        </div>
+
+        <div class="two-col" style="margin-top:16px">
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Günlük Karargâh Akışı</div>
+                <div class="card-note">Her sabah aynı sıra: para, borç, üretim, stok. Tamamlananlar cihazda saklanır.</div>
+              </div>
+              <button class="btn btn-soft" onclick="resetDailyFlow()">Bugünü Sıfırla</button>
+            </div>
+            <div class="checklist" id="dailyFlow"></div>
+          </article>
+
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Panel İçi Otomasyonlar</div>
+                <div class="card-note">Şimdilik tarayıcı içinde çalışır. Firebase bağlanınca gerçek otomasyona dönüşür.</div>
+              </div>
+              <span class="live-badge"><span class="dot"></span>Aktif mantık</span>
+            </div>
+            <div class="automation-grid">
+              <div class="automation-card"><strong>Geciken borç alarmı</strong><span>Vadesi geçen borç planı kritik uyarıya düşer.</span><button class="btn btn-soft" onclick="navTo('kasa')">Borçları Gör</button></div>
+              <div class="automation-card"><strong>Maliyet eksik alarmı</strong><span>Kritik uyarı sadece ham madde/malzeme kartlarında çalışır.</span><button class="btn btn-soft" onclick="navTo('stok')">Ürünleri Gör</button></div>
+              <div class="automation-card"><strong>Aktif üretim kontrolü</strong><span>Aktif üretim işi yoksa karargâhta uyarı verir.</span><button class="btn btn-soft" onclick="navTo('uretim')">Üretime Git</button></div>
+              <div class="automation-card"><strong>Gün sonu raporu</strong><span>Karargâh raporu tek tuşla kopyalanır.</span><button class="btn btn-soft" onclick="copyReport()">Raporu Kopyala</button></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="two-col" style="margin-top:16px">
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Son İşlemler</div>
+                <div class="card-note">Aktif kayıtlar görünür. Geçersiz kayıtlar ana panelde yer almaz.</div>
+              </div>
+              <button class="btn btn-soft" onclick="navTo('rapor')">Tümünü Gör</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Tarih</th><th>Taraf</th><th>Tip</th><th>Tutar</th><th>Durum</th></tr></thead>
+                <tbody id="lastTransactions"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">İşletme Nabzı</div>
+                <div class="card-note">ERP oturmadan önce tamamlanacak çekirdek işler.</div>
+              </div>
+              <span class="pill green">Karargâh</span>
+            </div>
+            <div class="audit" id="healthList"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="siparis">
+        <div class="two-col">
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Sipariş Yönetimi</div>
+                <div class="card-note">Sipariş, kapora, teslim tarihi ve üretim bağlantısı tek akışta olmalı.</div>
+              </div>
+              <button class="btn btn-dark" onclick="openModal('order')">Yeni Sipariş Aç</button>
+            </div>
+            <div class="empty">Aktif açık sipariş görünmüyor. Yeni sipariş oluştuğunda burada listelenir.</div>
+          </article>
+          <article class="card card-pad">
+            <div class="card-title">Sipariş Formu Standardı</div>
+            <div class="list" style="margin-top:12px">
+              <div class="row-card"><div><strong>Müşteri + Telefon</strong><span>Eksik iletişim siparişi körleştirir.</span></div><span class="pill amber">zorunlu</span></div>
+              <div class="row-card"><div><strong>Ürün + Ölçü + Renk</strong><span>Üretim emrine aynen düşmeli.</span></div><span class="pill amber">zorunlu</span></div>
+              <div class="row-card"><div><strong>Teslim Tarihi</strong><span>Geciken teslim uyarısının kaynağı.</span></div><span class="pill amber">zorunlu</span></div>
+              <div class="row-card"><div><strong>Kapora / Tahsilat</strong><span>Cari hesap otomatik etkilenmeli.</span></div><span class="pill green">kritik</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="uretim">
+        <div class="two-col">
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Üretim İş Emirleri</div>
+                <div class="card-note">Aktif işler ayrı, iptal işler ayrı. Ana ekranda iptal kalabalığı yok.</div>
+              </div>
+              <button class="btn btn-dark" onclick="openModal('production')">Üretim Emri Aç</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Müşteri</th><th>Ürün</th><th>Adet</th><th>Teslim</th><th>Aşama</th></tr></thead>
+                <tbody id="productionTable"></tbody>
+              </table>
+            </div>
+          </article>
+          <article class="card card-pad">
+            <div class="card-title">Üretim Aşamaları</div>
+            <div class="list" style="margin-top:12px">
+              <div class="row-card"><div><strong>Kesim</strong><span>Ürün işe alınır.</span></div><span class="pill blue">1</span></div>
+              <div class="row-card"><div><strong>Döşeme / Dikim</strong><span>Atölye işçiliği takip edilir.</span></div><span class="pill blue">2</span></div>
+              <div class="row-card"><div><strong>Kontrol</strong><span>Teslim öncesi kalite.</span></div><span class="pill blue">3</span></div>
+              <div class="row-card"><div><strong>Teslim Edildi</strong><span>Cari ve stok etkisi kapanır.</span></div><span class="pill green">4</span></div>
+            </div>
+          </article>
+        </div>
+        <div class="card card-pad" style="margin-top:16px">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Üretim Stratejisi</div>
+              <div class="card-note">Bu bilgi sadece üretim kararında durur; panelin alakasız yerlerine dağıtılmaz.</div>
+            </div>
+            <span class="pill green">Saha kararı</span>
+          </div>
+          <div class="strategy-grid">
+            <div class="strategy-card">
+              <strong>Yatak</strong>
+              <span>Ana ustalık ve ana üretim odağı. Reçete, maliyet ve kalite burada derinleşir.</span>
+              <span class="pill green">İç üretim / ana odak</span>
+            </div>
+            <div class="strategy-card">
+              <strong>Başlık</strong>
+              <span>Kendi bünyenizde üretilecek. Gerektiğinde fason çalışan arkadaşlar çağrılır.</span>
+              <span class="pill green">İç üretim</span>
+            </div>
+            <div class="strategy-card">
+              <strong>Baza</strong>
+              <span>Eldeki ham madde ve yormama durumuna göre içeride; aksi halde istenen kalitede dış tedarik.</span>
+              <span class="pill amber">Karma / seçici üretim</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="stok">
+        <div class="two-col">
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Stok ve Ürün Kartları</div>
+                <div class="card-note">Maliyet girilmeden ERP kâr gösteremez. Önce maliyet disiplini.</div>
+              </div>
+              <button class="btn btn-dark" onclick="openModal('stock')">Stok Girişi Yap</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Kod</th><th>Ürün</th><th>Grup</th><th>Sınıf</th><th>Birim</th><th>Kritik</th><th>Maliyet</th></tr></thead>
+                <tbody id="itemsTable"></tbody>
+              </table>
+            </div>
+          </article>
+          <article class="card card-pad">
+            <div class="card-title">Stok Disiplini</div>
+            <div class="audit" style="margin-top:12px">
+              <div class="audit-item"><strong>Bitmiş Ürün Standardı</strong><span>Baza, yatak, başlık ve set modelleri stok kartında durur; kritik uyarı üretmez.</span></div>
+              <div class="audit-item"><strong>Kritik stok alarmı</strong><span>Sadece ham madde/malzeme için çalışır. Bitmiş ürünler alarm dışıdır.</span></div>
+              <div class="audit-item"><strong>Reçete zorunluluğu</strong><span>Baza, yatak ve başlık için malzeme reçetesi kurulmadan net maliyet çıkmaz.</span></div>
+              <div class="audit-item"><strong>Stok hareket izi</strong><span>Giriş, çıkış, iptal ve düzeltme ayrı tutulmalı.</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="cari">
+        <div class="two-col">
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Cari Hesaplar</div>
+                <div class="card-note">Müşteri ve tedarikçi tek listede ama tipleri net ayrılır.</div>
+              </div>
+              <button class="btn btn-dark" onclick="openModal('customer')">Cari Hesabı Aç</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Cari</th><th>Tip</th><th>Durum</th><th>Telefon</th><th>Not</th></tr></thead>
+                <tbody id="cariTable"></tbody>
+              </table>
+            </div>
+          </article>
+          <article class="card card-pad">
+            <div class="card-title">Cari Netlik</div>
+            <div class="list" style="margin-top:12px">
+              <div class="row-card"><div><strong>Açılış Alacağı</strong><span>Mevcut pilot kayda göre.</span></div><span class="pill green" id="recOpen">₺0</span></div>
+              <div class="row-card"><div><strong>Açılış Borcu</strong><span>Tedarikçi veya eski bakiye.</span></div><span class="pill red" id="debtOpen">₺0</span></div>
+              <div class="row-card"><div><strong>Net Açılış</strong><span>Alacak - borç.</span></div><span class="pill blue" id="netOpen">₺0</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="kasa">
+        <div class="two-col">
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Kasa & POS Kontrolü</div>
+                <div class="card-note">Nakit, banka ve POS ayrı izlenir. Gün sonu mutabakat şart.</div>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end">
+                <button class="btn btn-dark" onclick="openModal('collection')">Tahsilat Kaydet</button>
+                <button class="btn btn-soft" onclick="openModal('debtplan')">Borç Planı Aç</button>
+                <button class="btn btn-soft" onclick="openModal('fixedexpense')">Sabit Gider Ekle</button>
+              </div>
+            </div>
+            <div class="grid kpi-grid" id="accountGrid" style="margin-bottom:0"></div>
+          </article>
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Borç Planı</div>
+                <div class="card-note">Vadesi olan ödeme burada takip edilir.</div>
+              </div>
+              <button class="btn btn-soft" onclick="openModal('debtplan')">Borç Planı Aç</button>
+            </div>
+            <div class="list" style="margin-top:12px" id="debtList"></div>
+          </article>
+        </div>
+
+        <div class="card card-pad" style="margin-top:16px">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Aylık Sabit Giderler</div>
+              <div class="card-note">Her ay düzenli çıkan giderler. Kâr-zarar hesabının temelidir.</div>
+            </div>
+            <button class="btn btn-dark" onclick="openModal('fixedexpense')">Sabit Gider Ekle</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Gider</th><th>Kategori</th><th>Tutar</th><th>Vade Günü</th><th>Hesap</th><th>Durum</th></tr></thead>
+              <tbody id="fixedExpenseTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="rapor">
+        <div class="two-col">
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Rapor Merkezi</div>
+                <div class="card-note">Günlük/haftalık karar raporu sade ve işletme diliyle çıkar.</div>
+              </div>
+              <button class="btn btn-soft" onclick="copyReport()">Raporu Kopyala</button>
+            </div>
+            <div class="audit" id="reportText"></div>
+          </article>
+          <article class="card card-pad">
+            <div class="card-title">Son 5 İşlem</div>
+            <div class="table-wrap" style="margin-top:12px">
+              <table>
+                <thead><tr><th>Tarih</th><th>Taraf</th><th>Tip</th><th>Tutar</th><th>Durum</th></tr></thead>
+                <tbody id="reportTransactions"></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="sistem">
+        <div class="two-col">
+          <article class="card card-pad">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Sistem Sağlığı</div>
+                <div class="card-note">Teknik detay ana menüde değil; burada kontrollü durur.</div>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end">
+                <button class="btn btn-soft" onclick="exportLocalBackup()">Yerel Yedeği İndir</button>
+                <button class="btn btn-red" onclick="clearLocalData()">Yerel Veriyi Sıfırla</button>
+              </div>
+            </div>
+            <div class="audit" id="systemHealth"></div>
+          </article>
+          <article class="card card-pad">
+            <div class="card-title">Ana Ekrandan Saklananlar</div>
+            <div class="audit" style="margin-top:12px">
+              <div class="audit-item"><strong>Legacy ID / teknik ID</strong><span>Gerektiğinde sistem bölümünde tutulur, iş sahibinin karar ekranına çıkarılmaz.</span></div>
+              <div class="audit-item"><strong>Log kalabalığı</strong><span>Denetim için saklanır; günlük ekranda görünmez.</span></div>
+              <div class="audit-item"><strong>Arşiv kayıtları</strong><span>Ana akış sadece aktif ve geçerli kayıtları gösterir.</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom" id="mobileBottom">
+    <button class="active" data-section="karargah">K<br>Karargâh</button>
+    <button data-section="siparis">S<br>Sipariş</button>
+    <button data-section="uretim">Ü<br>Üretim</button>
+    <button data-section="kasa">₺<br>Kasa</button>
+    <button type="button" onclick="installPwa()">＋<br>Mobil</button>
+  </nav>
+
+  <div class="install-card" id="installCard">
+    <strong>Paneli mobil ana ekrana ekle</strong>
+    <p>Tek dokunuşla Miraç ERP telefonda uygulama gibi açılır. Android’de buton çalışır; iPhone’da Paylaş menüsünden “Ana Ekrana Ekle” seçilir.</p>
+    <div class="install-actions">
+      <button class="btn btn-dark" type="button" onclick="installPwa()">Ana Ekrana Ekle</button>
+      <button class="install-close" type="button" onclick="hideInstallCard()">×</button>
+    </div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <h3 id="modalTitle">Hızlı İşlem</h3>
+          <p id="modalDesc">Bu form ön yüz akışını gösterir. Firebase bağlandığında gerçek kayda dönüşür.</p>
+        </div>
+        <button class="x" onclick="closeModal()" aria-label="Kapat">×</button>
+      </div>
+      <form class="form" id="modalForm" onsubmit="saveEntry(event)"></form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let DATA = {"updatedAt": "2026-07-08", "lastLogAt": "2026-07-08T01:22:48.866Z", "accounts": [{"opening": 0, "legacyId": "Nakit Kasa", "name": "Nakit Kasa"}, {"name": "Banka", "opening": 0, "legacyId": "Banka"}, {"name": "POS", "opening": 0, "legacyId": "POS"}], "items": [{"legacyId": "URN-BAZA-ELIT-90X180", "name": "Baza - Elit - 90x180", "cost": 0, "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "code": "URN-BAZA-ELIT-90X180", "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Baza", "productionType": "Karma / Seçici Üretim"}, {"code": "URN-BAZA-SILVER-90X190", "opening": 0, "unit": "adet", "kind": "Mamül", "min": 0, "cost": 0, "name": "Baza - Silver - 90x190", "legacyId": "URN-BAZA-SILVER-90X190", "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Baza", "productionType": "Karma / Seçici Üretim"}, {"name": "Baza - Silver - 160x200", "cost": 0, "kind": "Mamül", "unit": "tk", "min": 0, "legacyId": "URN-BAZA-SILVER-160X200", "code": "URN-BAZA-SILVER-160X200", "opening": 0, "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Baza", "productionType": "Karma / Seçici Üretim"}, {"opening": 0, "code": "URN-BAZA-SILVER-120X200", "legacyId": "URN-BAZA-SILVER-120X200", "name": "Baza - Silver - 120x200", "cost": 0, "min": 0, "kind": "Mamül", "unit": "adet", "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Baza", "productionType": "Karma / Seçici Üretim"}, {"opening": 0, "code": "URN-BASLIK-ROYAL-90-CM", "legacyId": "URN-BASLIK-ROYAL-90-CM", "min": 0, "kind": "Mamül", "unit": "adet", "name": "Başlık - Royal - 90 Cm", "cost": 0, "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Başlık", "productionType": "İç Üretim"}, {"min": 0, "kind": "Mamül", "unit": "adet", "name": "Başlık - Royal - 120 Cm - Baza/Başlığı", "cost": 0, "legacyId": "URN-BASLIK-ROYAL-120-CM-BAZA-BASLIGI", "code": "URN-BASLIK-ROYAL-120-CM-BAZA-BASLIGI", "opening": 0, "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Başlık", "productionType": "İç Üretim"}, {"code": "URN-BASLIK-ROYAL-160-CM-BAZA-BASLIGI", "opening": 0, "cost": 0, "name": "Başlık - Royal - 160 Cm - Baza/Başlığı", "min": 0, "kind": "Mamül", "unit": "adet", "legacyId": "URN-BASLIK-ROYAL-160-CM-BAZA-BASLIGI", "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Başlık", "productionType": "İç Üretim"}, {"code": "URN-YATAK-ELIT-90X190-22-DNS", "opening": 0, "unit": "adet", "kind": "Mamül", "min": 0, "name": "Yatak - Elit - 90x190 - 22 Dns", "cost": 0, "legacyId": "URN-YATAK-ELIT-90X190-22-DNS", "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Yatak", "productionType": "İç Üretim / Ana Odak"}, {"name": "Yatak - Elit - 120x200 - 22 Dns", "cost": 0, "min": 0, "unit": "adet", "kind": "Mamül", "legacyId": "URN-YATAK-ELIT-120X200-22-DNS", "code": "URN-YATAK-ELIT-120X200-22-DNS", "opening": 0, "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Yatak", "productionType": "İç Üretim / Ana Odak"}, {"opening": 0, "code": "URN-YATAK-ELIT-160X200-22-DNS", "legacyId": "URN-YATAK-ELIT-160X200-22-DNS", "cost": 0, "name": "Yatak - Elit - 160x200 - 22 Dns", "kind": "Mamül", "unit": "adet", "min": 0, "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Yatak", "productionType": "İç Üretim / Ana Odak"}, {"code": "URN-BASLIK-DUZ-YARMALI-120-CM", "opening": 0, "cost": 0, "name": "Başlık - Düz Yarmalı - 120 Cm", "unit": "adet", "kind": "Mamül", "min": 0, "legacyId": "URN-BASLIK-DUZ-YARMALI-120-CM", "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Başlık", "productionType": "İç Üretim"}, {"code": "URN-BAZA-ELIT-120X200", "opening": 0, "unit": "adet", "kind": "Mamül", "min": 0, "name": "Baza - Elit - 120x200", "cost": 0, "legacyId": "URN-BAZA-ELIT-120X200", "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Baza", "productionType": "Karma / Seçici Üretim"}, {"code": "URN-BASLIK-SUDE-100-CM", "opening": 0, "cost": 0, "name": "Başlık - Sude - 100 Cm", "min": 0, "kind": "Mamül", "unit": "adet", "legacyId": "URN-BASLIK-SUDE-100-CM", "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Başlık", "productionType": "İç Üretim"}, {"cost": 0, "name": "Yatak - Elit Lüx - 90x190", "unit": "adet", "kind": "Mamül", "min": 1, "legacyId": "URN-YATAK-ELIT-LUX-90X190", "code": "URN-YATAK-ELIT-LUX-90X190", "opening": 0, "itemClass": "Bitmiş Ürün", "criticalAlert": false, "category": "Yatak", "productionType": "İç Üretim / Ana Odak"}, {"id": "URN-SET-CANSAS-SET", "legacyId": "URN-SET-CANSAS-SET", "code": "URN-SET-CANSAS-SET", "name": "Cansas Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-SET-ROYAL-SET", "legacyId": "URN-SET-ROYAL-SET", "code": "URN-SET-ROYAL-SET", "name": "Royal Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-SET-SOFT-SET", "legacyId": "URN-SET-SOFT-SET", "code": "URN-SET-SOFT-SET", "name": "Soft Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-SET-SILVER-GOLD-SET", "legacyId": "URN-SET-SILVER-GOLD-SET", "code": "URN-SET-SILVER-GOLD-SET", "name": "Silver Gold Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-SET-NIRVANA-SET", "legacyId": "URN-SET-NIRVANA-SET", "code": "URN-SET-NIRVANA-SET", "name": "Nirvana Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-SET-NOVA-SET", "legacyId": "URN-SET-NOVA-SET", "code": "URN-SET-NOVA-SET", "name": "Nova Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-SET-BUSE-SET", "legacyId": "URN-SET-BUSE-SET", "code": "URN-SET-BUSE-SET", "name": "Buse Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-SET-TERAPI-SET", "legacyId": "URN-SET-TERAPI-SET", "code": "URN-SET-TERAPI-SET", "name": "Terapi Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-SET-SUDE-SET", "legacyId": "URN-SET-SUDE-SET", "code": "URN-SET-SUDE-SET", "name": "Sude Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-SET-SILVER-SET", "legacyId": "URN-SET-SILVER-SET", "code": "URN-SET-SILVER-SET", "name": "Silver Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-SET-MIRAC-SET", "legacyId": "URN-SET-MIRAC-SET", "code": "URN-SET-MIRAC-SET", "name": "Miraç Set", "category": "Set", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "tk", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Satış Paketi", "note": "Yatak + baza + başlık kombinasyonu. Stok kritik uyarısı dışında tutulur."}, {"id": "URN-YATAK-ELIT-YATAK", "legacyId": "URN-YATAK-ELIT-YATAK", "code": "URN-YATAK-ELIT-YATAK", "name": "Elit Yatak", "category": "Yatak", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim / Ana Odak", "note": "Ana ustalık alanı. Bitmiş ürün kritik uyarısı dışında tutulur."}, {"id": "URN-YATAK-ELIT-LUX-YATAK", "legacyId": "URN-YATAK-ELIT-LUX-YATAK", "code": "URN-YATAK-ELIT-LUX-YATAK", "name": "Elit Lüx Yatak", "category": "Yatak", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim / Ana Odak", "note": "Ana ustalık alanı. Bitmiş ürün kritik uyarısı dışında tutulur."}, {"id": "URN-YATAK-COMFORT-YATAK", "legacyId": "URN-YATAK-COMFORT-YATAK", "code": "URN-YATAK-COMFORT-YATAK", "name": "Comfort Yatak", "category": "Yatak", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim / Ana Odak", "note": "Ana ustalık alanı. Bitmiş ürün kritik uyarısı dışında tutulur."}, {"id": "URN-YATAK-ULTRA-LUX-YATAK", "legacyId": "URN-YATAK-ULTRA-LUX-YATAK", "code": "URN-YATAK-ULTRA-LUX-YATAK", "name": "Ultra Lüx Yatak", "category": "Yatak", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim / Ana Odak", "note": "Ana ustalık alanı. Bitmiş ürün kritik uyarısı dışında tutulur."}, {"id": "URN-YATAK-SOFT-YATAK", "legacyId": "URN-YATAK-SOFT-YATAK", "code": "URN-YATAK-SOFT-YATAK", "name": "Soft Yatak", "category": "Yatak", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim / Ana Odak", "note": "Ana ustalık alanı. Bitmiş ürün kritik uyarısı dışında tutulur."}, {"id": "URN-YATAK-BUSE-YATAK", "legacyId": "URN-YATAK-BUSE-YATAK", "code": "URN-YATAK-BUSE-YATAK", "name": "Buse Yatak", "category": "Yatak", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim / Ana Odak", "note": "Ana ustalık alanı. Bitmiş ürün kritik uyarısı dışında tutulur."}, {"id": "URN-YATAK-PELUS-COMFORT-YATAK", "legacyId": "URN-YATAK-PELUS-COMFORT-YATAK", "code": "URN-YATAK-PELUS-COMFORT-YATAK", "name": "Peluş Comfort Yatak", "category": "Yatak", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim / Ana Odak", "note": "Ana ustalık alanı. Bitmiş ürün kritik uyarısı dışında tutulur."}, {"id": "URN-YATAK-ULTRA-LUX-PELUS-YATAK", "legacyId": "URN-YATAK-ULTRA-LUX-PELUS-YATAK", "code": "URN-YATAK-ULTRA-LUX-PELUS-YATAK", "name": "Ultra Lüx Peluş Yatak", "category": "Yatak", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim / Ana Odak", "note": "Ana ustalık alanı. Bitmiş ürün kritik uyarısı dışında tutulur."}, {"id": "URN-BAZA-ELIT-BAZA", "legacyId": "URN-BAZA-ELIT-BAZA", "code": "URN-BAZA-ELIT-BAZA", "name": "Elit Baza", "category": "Baza", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Karma / Seçici Üretim", "note": "Eldeki ham madde ve yormama durumuna göre iç üretim; aksi halde dış tedarik."}, {"id": "URN-BAZA-SILVER-BAZA", "legacyId": "URN-BAZA-SILVER-BAZA", "code": "URN-BAZA-SILVER-BAZA", "name": "Silver Baza", "category": "Baza", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Karma / Seçici Üretim", "note": "Eldeki ham madde ve yormama durumuna göre iç üretim; aksi halde dış tedarik."}, {"id": "URN-BAZA-ROYAL-BAZA", "legacyId": "URN-BAZA-ROYAL-BAZA", "code": "URN-BAZA-ROYAL-BAZA", "name": "Royal Baza", "category": "Baza", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Karma / Seçici Üretim", "note": "Eldeki ham madde ve yormama durumuna göre iç üretim; aksi halde dış tedarik."}, {"id": "URN-BAZA-NOVA-BAZA", "legacyId": "URN-BAZA-NOVA-BAZA", "code": "URN-BAZA-NOVA-BAZA", "name": "Nova Baza", "category": "Baza", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "Karma / Seçici Üretim", "note": "Eldeki ham madde ve yormama durumuna göre iç üretim; aksi halde dış tedarik."}, {"id": "URN-BASLIK-CANSAS-BASLIK", "legacyId": "URN-BASLIK-CANSAS-BASLIK", "code": "URN-BASLIK-CANSAS-BASLIK", "name": "Cansas Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-ROYAL-BASLIK", "legacyId": "URN-BASLIK-ROYAL-BASLIK", "code": "URN-BASLIK-ROYAL-BASLIK", "name": "Royal Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-SOFT-BASLIK", "legacyId": "URN-BASLIK-SOFT-BASLIK", "code": "URN-BASLIK-SOFT-BASLIK", "name": "Soft Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-SILVER-GOLD-BASLIK", "legacyId": "URN-BASLIK-SILVER-GOLD-BASLIK", "code": "URN-BASLIK-SILVER-GOLD-BASLIK", "name": "Silver Gold Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-NIRVANA-BASLIK", "legacyId": "URN-BASLIK-NIRVANA-BASLIK", "code": "URN-BASLIK-NIRVANA-BASLIK", "name": "Nirvana Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-NOVA-BASLIK", "legacyId": "URN-BASLIK-NOVA-BASLIK", "code": "URN-BASLIK-NOVA-BASLIK", "name": "Nova Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-BUSE-BASLIK", "legacyId": "URN-BASLIK-BUSE-BASLIK", "code": "URN-BASLIK-BUSE-BASLIK", "name": "Buse Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-TERAPI-BASLIK", "legacyId": "URN-BASLIK-TERAPI-BASLIK", "code": "URN-BASLIK-TERAPI-BASLIK", "name": "Terapi Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-SUDE-BASLIK", "legacyId": "URN-BASLIK-SUDE-BASLIK", "code": "URN-BASLIK-SUDE-BASLIK", "name": "Sude Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-MIRAC-BASLIK", "legacyId": "URN-BASLIK-MIRAC-BASLIK", "code": "URN-BASLIK-MIRAC-BASLIK", "name": "Miraç Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-DUZ-YARMALI-BASLIK", "legacyId": "URN-BASLIK-DUZ-YARMALI-BASLIK", "code": "URN-BASLIK-DUZ-YARMALI-BASLIK", "name": "Düz Yarmalı Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}, {"id": "URN-BASLIK-PAPATYA-BASLIK", "legacyId": "URN-BASLIK-PAPATYA-BASLIK", "code": "URN-BASLIK-PAPATYA-BASLIK", "name": "Papatya Başlık", "category": "Başlık", "itemClass": "Bitmiş Ürün", "kind": "Mamül", "unit": "adet", "min": 0, "opening": 0, "cost": 0, "criticalAlert": false, "productionType": "İç Üretim", "note": "Kendi bünyesinde üretim. Gerekirse fason çalışan çağrılır."}], "transactions": [{"qty": 0, "legacyId": "TX-0001", "party": "Liderim Şeritçi", "note": "Eski Bakiye/Ödenmesi gereken", "item": "", "paid": 0, "amount": 2750, "debtPlanId": "", "id": "TX-0001", "date": "2026-06-17", "account": "", "type": "CARI_BORC_ACILIS", "unitPrice": 0, "status": "Açılış", "createdAt": "2026-06-17T07:52:16.116Z"}, {"amount": 30000, "debtPlanId": "", "id": "TX-0002", "account": "", "date": "2026-06-17", "type": "CARI_ALACAK_ACILIS", "unitPrice": 0, "status": "Açılış", "qty": 0, "legacyId": "TX-0002", "party": "Edibe Deniz", "note": "Eşi Cezaevinde/Hassas", "item": "", "paid": 0, "createdAt": "2026-06-17T07:53:38.111Z"}, {"party": "Elektrik Faturası", "legacyId": "TX-0003", "qty": 0, "paid": 0, "item": "", "note": "Dönem Borcu", "id": "TX-0003", "debtPlanId": "", "amount": 1710, "status": "Ödendi", "unitPrice": 0, "type": "MASRAF", "account": "Nakit Kasa", "date": "2026-06-17", "createdAt": ""}], "debtPlans": [{"priority": "Yüksek", "account": "Nakit Kasa", "scope": "Ticari", "type": "Diğer", "status": "Gecikti", "id": "BP-0005", "amount": 15000, "dueDate": "2026-06-15", "note": "Nakış Makine Panel Değişimi", "paid": 0, "legacyId": "BP-0005", "party": "Makine Teçhizat Yedek/Parça", "createdAt": "2026-06-17T12:11:43.808Z"}], "fixedExpenses": [{"amount": 80000, "id": "FG-0001", "dueDay": 31, "account": "Nakit Kasa", "category": "Üretim", "legacyId": "FG-0001", "name": "Personel Maaşı", "period": "monthly", "active": true}, {"account": "Nakit Kasa", "category": "Temel Gider", "dueDay": 31, "amount": 15833, "id": "FG-0002", "name": "Kira", "period": "monthly", "active": true, "legacyId": "FG-0002"}, {"id": "FG-0003", "amount": 6500, "dueDay": 31, "category": "Muhasebe", "account": "Nakit Kasa", "legacyId": "FG-0003", "name": "Mali Müşavir", "period": "monthly", "active": true}], "productionJobs": [], "cariCards": [{"type": "Müşteri", "status": "Aktif", "id": "CR-0001", "phone": "", "note": "", "name": "Hanifi Öztürk", "legacyId": "CR-0001", "createdAt": "2026-06-17T07:48:43.161Z", "updatedAt": ""}, {"id": "CR-0002", "type": "Müşteri", "status": "Aktif", "legacyId": "CR-0002", "phone": "", "note": "", "name": "Mahmud Işık", "createdAt": "2026-06-19T07:26:46.350Z", "updatedAt": ""}], "summary": {"monthlyFixed": 102333.0, "activeJobs": 0, "cancelledJobs": 0, "cancelledTxs": 0, "openDebts": 1, "overdueDebts": 1, "costMissing": 0, "recipeCount": 0, "receivableOpening": 30000.0, "debtOpening": 2750.0, "netOpening": 27250.0, "rawCriticalOnly": true, "finishedGoodsCount": 49}};
+
+
+    const STORAGE_KEY = "mirac_erp_karargah_v5_state";
+    const FLOW_KEY = "mirac_erp_karargah_v5_daily_flow_" + new Date().toISOString().slice(0,10);
+
+
+    function recordIsCancelled(x) {
+      const joined = [
+        String(x?.status || ""),
+        String(x?.stage || ""),
+        String(x?.note || "")
+      ].join(" ").toLocaleLowerCase("tr-TR");
+
+      return joined.includes("iptal") || joined.includes("i̇ptal") || Boolean(x?.cancelledAt);
+    }
+
+    function purgeCancelledData() {
+      DATA.transactions = DATA.transactions.filter(x => !recordIsCancelled(x));
+      DATA.debtPlans = DATA.debtPlans.filter(x => !recordIsCancelled(x));
+      DATA.productionJobs = DATA.productionJobs.filter(x => !recordIsCancelled(x));
+    }
+
+    function hydrateLocalState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        if (Array.isArray(saved.transactions)) DATA.transactions = saved.transactions;
+        if (Array.isArray(saved.debtPlans)) DATA.debtPlans = saved.debtPlans;
+        if (Array.isArray(saved.fixedExpenses)) DATA.fixedExpenses = saved.fixedExpenses;
+        if (Array.isArray(saved.productionJobs)) DATA.productionJobs = saved.productionJobs;
+        if (Array.isArray(saved.cariCards)) DATA.cariCards = saved.cariCards;
+        if (Array.isArray(saved.items)) DATA.items = saved.items;
+        purgeCancelledData();
+        recalcSummary();
+        persistLocalState();
+      } catch (error) {
+        console.warn("Local state okunamadı", error);
+      }
+    }
+
+    function persistLocalState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        transactions: DATA.transactions,
+        debtPlans: DATA.debtPlans,
+        fixedExpenses: DATA.fixedExpenses,
+        productionJobs: DATA.productionJobs,
+        cariCards: DATA.cariCards,
+        items: DATA.items
+      }));
+    }
+
+    function recalcSummary() {
+      purgeCancelledData();
+      const activeFixed = DATA.fixedExpenses.filter(x => x.active !== false && x.active !== "Pasif");
+      const activeJobs = DATA.productionJobs.filter(j => !["İptal", "Tamamlandı"].includes(j.stage));
+      const cancelledJobs = [];
+      const cancelledTxs = [];
+      const openDebts = DATA.debtPlans.filter(d => !["Ödendi", "Kapandı"].includes(d.status));
+      const today = new Date().toISOString().slice(0,10);
+      const overdueDebts = DATA.debtPlans.filter(d => d.status === "Gecikti" || (d.dueDate && d.status !== "Ödendi" && d.dueDate < today));
+      const costMissing = DATA.items.filter(i => {
+        const cls = String(i.itemClass || "");
+        const kind = String(i.kind || "");
+        const category = String(i.category || "");
+        const raw = ["Ham Madde", "Hammadde", "Malzeme", "Yarı Mamül"].includes(cls)
+          || ["Ham Madde", "Hammadde", "Malzeme", "Yarı Mamül"].includes(kind)
+          || ["Ham Madde", "Hammadde", "Malzeme", "Yarı Mamül"].includes(category)
+          || i.criticalAlert === true;
+        return raw && !Number(i.cost || 0);
+      });
+      const receivableOpening = DATA.transactions.filter(t => t.type === "CARI_ALACAK_ACILIS").reduce((a,t) => a + Number(t.amount || 0), 0);
+      const debtOpening = DATA.transactions.filter(t => t.type === "CARI_BORC_ACILIS").reduce((a,t) => a + Number(t.amount || 0), 0);
+
+      DATA.summary.monthlyFixed = activeFixed.reduce((a,x) => a + Number(x.amount || 0), 0);
+      DATA.summary.activeJobs = activeJobs.length;
+      DATA.summary.cancelledJobs = cancelledJobs.length;
+      DATA.summary.cancelledTxs = cancelledTxs.length;
+      DATA.summary.openDebts = openDebts.length;
+      DATA.summary.overdueDebts = overdueDebts.length;
+      DATA.summary.costMissing = costMissing.length;
+      DATA.summary.receivableOpening = receivableOpening;
+      DATA.summary.debtOpening = debtOpening;
+      DATA.summary.netOpening = receivableOpening - debtOpening;
+    }
+
+    hydrateLocalState();
+
+    const pageMeta = {
+      karargah: ["Bugünün ticari kontrol merkezi", "Karargâh", "Kasa, cari, üretim, stok ve borç durumunu tek ekranda toplayan karar paneli."],
+      siparis: ["Satış ve teslim disiplini", "Sipariş", "Yeni sipariş, teslim tarihi, kapora ve üretim bağlantısı."],
+      uretim: ["Atölye akış kontrolü", "Üretim", "İş emri, aşama, teslim ve iptal ayrımı."],
+      stok: ["Malzeme ve maliyet disiplini", "Stok", "Ürün kartları, kritik stok ve reçete eksikleri."],
+      cari: ["Borç ve alacak netliği", "Cari", "Müşteri, tedarikçi ve açılış bakiyeleri."],
+      kasa: ["Para hareketi kontrolü", "Kasa & POS", "Nakit, banka, POS, tahsilat ve ödeme takibi."],
+      rapor: ["Yönetim özeti", "Rapor", "Günlük/haftalık işletme raporları."],
+      sistem: ["Teknik denetim alanı", "Sistem Sağlığı", "Yedek, log, iptal ve veri tutarlılığı."]
+    };
+
+    const modalConfig = {
+      quick: ["Hızlı İşlem", "Saha ekranından işlem seçin ve not düşün.", [
+        ["İşlem Türü", "select", "type", ["Yeni Sipariş", "Tahsilat", "Ödeme", "Borç Planı", "Sabit Gider", "Stok Girişi", "Üretim Emri", "Cari Kart"]],
+        ["Taraf / Cari", "text", "party"],
+        ["Tutar / Adet", "number", "amount"],
+        ["Not", "textarea", "note"]
+      ]],
+      order: ["Yeni Sipariş Aç", "Sipariş kaydı sade ve üretime hazır girilir.", [
+        ["Müşteri", "text", "customer"],
+        ["Ürün", "select", "item", DATA.items.map(i => i.name)],
+        ["Ölçü / Renk", "text", "variant"],
+        ["Adet", "number", "qty"],
+        ["Teslim Tarihi", "date", "dueDate"],
+        ["Kapora", "number", "paid"],
+        ["Not", "textarea", "note"]
+      ]],
+      collection: ["Tahsilat Kaydet", "Nakit, banka veya POS tahsilatını işleyin.", [
+        ["Cari", "text", "party"],
+        ["Hesap", "select", "account", DATA.accounts.map(a => a.name)],
+        ["Tutar", "number", "amount"],
+        ["Açıklama", "textarea", "note"]
+      ]],
+      payment: ["Ödeme Kaydet", "Masraf veya borç ödemesi kaydı.", [
+        ["Ödeme Yapılan", "text", "party"],
+        ["Hesap", "select", "account", DATA.accounts.map(a => a.name)],
+        ["Tutar", "number", "amount"],
+        ["Kategori", "select", "category", ["Tedarikçi", "Resmi Ödeme", "Personel", "Kira", "Masraf", "Diğer"]],
+        ["Açıklama", "textarea", "note"]
+      ]],
+      debtplan: ["Borç Planı Aç", "Vadesi olan borç ve ödeme taahhüdünü netleştirin.", [
+        ["Ödenecek Taraf", "text", "party"],
+        ["Borç Türü", "select", "type", ["Tedarikçi", "Resmi Ödeme", "Personel", "Banka", "Kira", "Makine/Teçhizat", "Diğer"]],
+        ["Kapsam", "select", "scope", ["Ticari", "Şahsi", "Karma"]],
+        ["Tutar", "number", "amount"],
+        ["Ödenen", "number", "paid"],
+        ["Vade Tarihi", "date", "dueDate"],
+        ["Ödeme Hesabı", "select", "account", DATA.accounts.map(a => a.name)],
+        ["Öncelik", "select", "priority", ["Normal", "Yüksek", "Acil"]],
+        ["Not", "textarea", "note"]
+      ]],
+      fixedexpense: ["Sabit Gider Ekle", "Her ay düzenli çıkan gideri işletme hafızasına alın.", [
+        ["Gider Adı", "text", "name"],
+        ["Kategori", "select", "category", ["Personel", "Kira", "Muhasebe", "SGK/Bağkur", "Elektrik/Su", "İletişim/Yazılım", "Nakliye", "Yeme İçme", "Vergi", "Üretim", "Diğer"]],
+        ["Aylık Tutar", "number", "amount"],
+        ["Vade Günü", "number", "dueDay"],
+        ["Ödeme Hesabı", "select", "account", DATA.accounts.map(a => a.name)],
+        ["Periyot", "select", "period", ["monthly", "weekly", "yearly"]],
+        ["Durum", "select", "active", ["Aktif", "Pasif"]],
+        ["Not", "textarea", "note"]
+      ]],
+      stock: ["Stok Girişi Yap", "Ürün/malzeme stok hareketi.", [
+        ["Ürün / Malzeme", "text", "item"],
+        ["Birim", "select", "unit", ["adet", "tk", "kg", "mt", "paket"]],
+        ["Miktar", "number", "qty"],
+        ["Birim Maliyet", "number", "cost"],
+        ["Açıklama", "textarea", "note"]
+      ]],
+      production: ["Üretim Emri Aç", "Siparişi atölye iş emrine çevirin.", [
+        ["Müşteri", "text", "customer"],
+        ["Ürün", "select", "product", DATA.items.map(i => i.name)],
+        ["Adet", "number", "qty"],
+        ["Teslim Tarihi", "date", "dueDate"],
+        ["Öncelik", "select", "priority", ["Normal", "Yüksek", "Acil"]],
+        ["Not", "textarea", "note"]
+      ]],
+      customer: ["Cari Hesabı Aç", "Müşteri veya tedarikçi kartı oluşturun.", [
+        ["Ad / Firma", "text", "name"],
+        ["Tip", "select", "type", ["Müşteri", "Tedarikçi", "Personel", "Diğer"]],
+        ["Telefon", "text", "phone"],
+        ["Not", "textarea", "note"]
+      ]]
+    };
+
+    function money(n) {
+      const value = Number(n || 0);
+      return new Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY", maximumFractionDigits: 0 }).format(value);
+    }
+
+    function shortDate(v) {
+      if (!v) return "-";
+      return String(v).slice(0, 10);
+    }
+
+    function statusPill(status) {
+      const s = status || "Aktif";
+      let cls = "green";
+      if (s.includes("Gecikti")) cls = "red";
+      else if (s.includes("Gecikti") || s.includes("Planlandı")) cls = "amber";
+      else if (s.includes("Açılış")) cls = "blue";
+      return `<span class="pill ${cls}">${s}</span>`;
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(window.__toast);
+      window.__toast = setTimeout(() => t.classList.remove("show"), 1900);
+    }
+
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("open");
+    }
+
+    function navTo(id) {
+      document.querySelectorAll(".section").forEach(s => s.classList.toggle("active", s.id === id));
+      document.querySelectorAll("[data-section]").forEach(b => b.classList.toggle("active", b.dataset.section === id));
+      const meta = pageMeta[id] || pageMeta.karargah;
+      document.getElementById("pageKicker").textContent = meta[0];
+      document.getElementById("pageTitle").textContent = meta[1];
+      document.getElementById("pageSubtitle").textContent = meta[2];
+      document.getElementById("sidebar").classList.remove("open");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll("[data-section]").forEach(b => b.addEventListener("click", () => navTo(b.dataset.section)));
+
+    function globalSearch(q) {
+      q = (q || "").trim().toLowerCase();
+      if (!q) return;
+      const hit =
+        DATA.items.find(x => String(x.name).toLowerCase().includes(q)) ||
+        DATA.cariCards.find(x => String(x.name).toLowerCase().includes(q)) ||
+        DATA.transactions.find(x => String(x.party).toLowerCase().includes(q));
+      showToast(hit ? "Kayıt bulundu: " + (hit.name || hit.party) : "Bu kelimeyle kayıt bulunamadı.");
+    }
+
+    function openModal(type) {
+      const cfg = modalConfig[type] || modalConfig.quick;
+      document.getElementById("modalTitle").textContent = cfg[0];
+      document.getElementById("modalDesc").textContent = cfg[1];
+      document.getElementById("modalForm").dataset.op = type;
+
+      const fields = cfg[2].map(([label, inputType, name, options]) => {
+        if (inputType === "select") {
+          return `<label>${label}<select name="${name}">${(options || []).map(o => `<option>${o}</option>`).join("")}</select></label>`;
+        }
+        if (inputType === "textarea") {
+          return `<label>${label}<textarea name="${name}" placeholder="${label} yazın"></textarea></label>`;
+        }
+        return `<label>${label}<input name="${name}" type="${inputType}" placeholder="${label}"></label>`;
+      }).join("");
+
+      document.getElementById("modalForm").innerHTML = fields + `
+        <div class="form-row">
+          <button class="btn btn-soft" type="button" onclick="closeModal()">Vazgeç</button>
+          <button class="btn btn-dark" type="submit">Kaydı Hazırla</button>
+        </div>
+      `;
+      document.getElementById("modal").classList.add("show");
+    }
+
+    function closeModal() {
+      document.getElementById("modal").classList.remove("show");
+    }
+
+
+    function formDataObject(form) {
+      return Object.fromEntries(new FormData(form).entries());
+    }
+
+    function saveEntry(e) {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const op = form.dataset.op || "quick";
+      const v = formDataObject(form);
+      const today = new Date().toISOString().slice(0,10);
+      const stamp = new Date().toISOString();
+
+      if (op === "debtplan") {
+        DATA.debtPlans.push({
+          id: "BP-L-" + Date.now(),
+          party: v.party || "Belirtilmedi",
+          type: v.type || "Diğer",
+          scope: v.scope || "Ticari",
+          amount: Number(v.amount || 0),
+          paid: Number(v.paid || 0),
+          dueDate: v.dueDate || today,
+          account: v.account || "Nakit Kasa",
+          priority: v.priority || "Normal",
+          status: (v.dueDate && v.dueDate < today) ? "Gecikti" : "Planlandı",
+          note: v.note || "",
+          createdAt: stamp
+        });
+      } else if (op === "fixedexpense") {
+        DATA.fixedExpenses.push({
+          id: "FG-L-" + Date.now(),
+          name: v.name || "Sabit Gider",
+          category: v.category || "Diğer",
+          amount: Number(v.amount || 0),
+          dueDay: Number(v.dueDay || 1),
+          account: v.account || "Nakit Kasa",
+          period: v.period || "monthly",
+          active: v.active !== "Pasif",
+          note: v.note || ""
+        });
+      } else if (op === "order") {
+        DATA.transactions.push({
+          id: "TX-L-" + Date.now(),
+          date: today,
+          party: v.customer || "Müşteri",
+          type: "SIPARIS",
+          item: v.item || "",
+          qty: Number(v.qty || 1),
+          unitPrice: 0,
+          amount: Number(v.paid || 0),
+          paid: Number(v.paid || 0),
+          account: "Nakit Kasa",
+          status: "Açık",
+          note: [v.variant, v.note, v.dueDate ? "Teslim: " + v.dueDate : ""].filter(Boolean).join(" | "),
+          createdAt: stamp
+        });
+      } else if (op === "collection") {
+        DATA.transactions.push({
+          id: "TX-L-" + Date.now(),
+          date: today,
+          party: v.party || "Cari",
+          type: "TAHSILAT",
+          amount: Number(v.amount || 0),
+          paid: Number(v.amount || 0),
+          account: v.account || "Nakit Kasa",
+          status: "Ödendi",
+          note: v.note || "",
+          createdAt: stamp
+        });
+      } else if (op === "payment") {
+        DATA.transactions.push({
+          id: "TX-L-" + Date.now(),
+          date: today,
+          party: v.party || "Ödeme",
+          type: "ODEME",
+          amount: Number(v.amount || 0),
+          paid: Number(v.amount || 0),
+          account: v.account || "Nakit Kasa",
+          status: "Ödendi",
+          note: [v.category, v.note].filter(Boolean).join(" | "),
+          createdAt: stamp
+        });
+      } else if (op === "production") {
+        DATA.productionJobs.push({
+          id: "IS-L-" + Date.now(),
+          customer: v.customer || "Müşteri",
+          product: v.product || "",
+          qty: Number(v.qty || 1),
+          dueDate: v.dueDate || today,
+          priority: v.priority || "Normal",
+          stage: "Planlandı",
+          note: v.note || ""
+        });
+      } else if (op === "customer") {
+        DATA.cariCards.push({
+          id: "CR-L-" + Date.now(),
+          name: v.name || "Cari",
+          type: v.type || "Müşteri",
+          status: "Aktif",
+          phone: v.phone || "",
+          note: v.note || "",
+          createdAt: stamp
+        });
+      } else if (op === "stock") {
+        DATA.items.push({
+          id: "URN-L-" + Date.now(),
+          code: "URN-L-" + Date.now(),
+          name: v.item || "Yeni Ürün/Malzeme",
+          unit: v.unit || "adet",
+          kind: "Stok",
+          min: 0,
+          opening: Number(v.qty || 0),
+          cost: Number(v.cost || 0)
+        });
+      } else {
+        DATA.transactions.push({
+          id: "TX-L-" + Date.now(),
+          date: today,
+          party: v.party || "Hızlı İşlem",
+          type: v.type || "HIZLI_ISLEM",
+          amount: Number(v.amount || 0),
+          paid: 0,
+          account: "Nakit Kasa",
+          status: "Taslak",
+          note: v.note || "",
+          createdAt: stamp
+        });
+      }
+
+      recalcSummary();
+      persistLocalState();
+  
+    let deferredInstallPrompt = null;
+
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      if (!localStorage.getItem("mirac_erp_install_card_closed")) {
+        document.getElementById("installCard")?.classList.add("show");
+      }
+    });
+
+    window.addEventListener("appinstalled", () => {
+      deferredInstallPrompt = null;
+      document.getElementById("installCard")?.classList.remove("show");
+      showToast("Miraç ERP ana ekrana eklendi.");
+    });
+
+    function isStandaloneMode() {
+      return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+    }
+
+    function hideInstallCard() {
+      localStorage.setItem("mirac_erp_install_card_closed", "1");
+      document.getElementById("installCard")?.classList.remove("show");
+    }
+
+    async function installPwa() {
+      if (isStandaloneMode()) {
+        showToast("Panel zaten uygulama gibi açılmış durumda.");
+        return;
+      }
+
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        document.getElementById("installCard")?.classList.remove("show");
+        return;
+      }
+
+      const ua = navigator.userAgent || "";
+      if (/iphone|ipad|ipod/i.test(ua)) {
+        showToast("iPhone: Paylaş > Ana Ekrana Ekle.");
+      } else {
+        showToast("Tarayıcı menüsü > Ana ekrana ekle / Uygulamayı yükle.");
+      }
+    }
+
+    if ("serviceWorker" in navigator && location.protocol !== "file:") {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      });
+    }
+
+
+    render();
+      showToast("Kayıt panel içinde işlendi.");
+      closeModal();
+    }
+
+    function copyReport() {
+      const s = DATA.summary;
+      const text = [
+        "Miraç ERP Karargâh Raporu",
+        "Güncelleme: " + (DATA.updatedAt || "-"),
+        "Aylık sabit gider: " + money(s.monthlyFixed),
+        "Açılış alacağı: " + money(s.receivableOpening),
+        "Açılış borcu: " + money(s.debtOpening),
+        "Net açılış: " + money(s.netOpening),
+        "Geciken borç planı: " + s.overdueDebts,
+        "Maliyeti girilmemiş ürün: " + s.costMissing,
+        "Reçete sayısı: " + s.recipeCount
+      ].join("\n");
+
+      navigator.clipboard?.writeText(text).then(() => showToast("Rapor kopyalandı.")).catch(() => showToast("Kopyalama desteklenmedi."));
+    }
+
+
+    function renderDailyFlow() {
+      const base = [
+        ["cash", "Kasa/Banka/POS kontrolü", "Bugünkü gerçek nakit durumu netleşsin.", "Para"],
+        ["collect", "Tahsilat listesi", "Bugün aranacak/mesaj atılacak alacaklılar belirlensin.", "Tahsilat"],
+        ["debt", "Borç planı", "Acil, pazarlık, bekleyebilir ayrımı yapılsın.", "Borç"],
+        ["production", "Üretim seçimi", "Yatak ve başlık önceliği; baza seçici/karma.", "Üretim"],
+        ["stock", "Ham madde/stok kontrolü", "Ham madde/malzeme kritik stok ve maliyet eksikleri kapatılsın.", "Stok"],
+        ["report", "Gün sonu notu", "Bugün ne tahsil edildi, ne ödendi, ne kaldı?", "Rapor"]
+      ];
+
+      let done = {};
+      try { done = JSON.parse(localStorage.getItem(FLOW_KEY) || "{}"); } catch {}
+
+      const el = document.getElementById("dailyFlow");
+      if (!el) return;
+
+      el.innerHTML = base.map(x => `
+        <label class="check-item">
+          <input type="checkbox" ${done[x[0]] ? "checked" : ""} onchange="toggleDaily('${x[0]}', this.checked)">
+          <div><strong>${x[1]}</strong><span>${x[2]}</span></div>
+          <span class="pill blue">${x[3]}</span>
+        </label>
+      `).join("");
+    }
+
+    function toggleDaily(key, value) {
+      let done = {};
+      try { done = JSON.parse(localStorage.getItem(FLOW_KEY) || "{}"); } catch {}
+      done[key] = value;
+      localStorage.setItem(FLOW_KEY, JSON.stringify(done));
+      showToast(value ? "Tamamlandı işaretlendi." : "İşaret kaldırıldı.");
+    }
+
+    function resetDailyFlow() {
+      localStorage.removeItem(FLOW_KEY);
+      renderDailyFlow();
+      showToast("Günlük akış sıfırlandı.");
+    }
+
+    function exportLocalBackup() {
+      const blob = new Blob([JSON.stringify({
+        exportedAt: new Date().toISOString(),
+        data: {
+          transactions: DATA.transactions,
+          debtPlans: DATA.debtPlans,
+          fixedExpenses: DATA.fixedExpenses,
+          productionJobs: DATA.productionJobs,
+          cariCards: DATA.cariCards,
+          items: DATA.items
+        }
+      }, null, 2)], { type: "application/json" });
+
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "mirac_erp_karargah_yerel_yedek.json";
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast("Yerel yedek indirildi.");
+    }
+
+    function clearLocalData() {
+      if (!confirm("Tarayıcı içindeki V5 yerel kayıtları sıfırlansın mı?")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      showToast("Yerel veri sıfırlandı. Sayfa yenileniyor.");
+      setTimeout(() => location.reload(), 700);
+    }
+
+    function render() {
+      recalcSummary();
+      renderDailyFlow();
+      const s = DATA.summary;
+
+      document.getElementById("lastBackup").textContent = DATA.updatedAt || "-";
+      document.getElementById("lastLog").textContent = DATA.lastLogAt ? shortDate(DATA.lastLogAt) : "-";
+
+      const kpis = [
+        ["Aylık Sabit Gider", money(s.monthlyFixed), "Personel, kira, mali müşavir toplamı."],
+        ["Net Açılış", money(s.netOpening), "Cari açılış alacağı - borcu."],
+        ["Geciken Borç", s.overdueDebts + " kayıt", "Öncelik ödeme planında."],
+        ["Ham Madde Uyarısı", s.costMissing + " ürün", "Sadece ham madde/malzeme için çalışır."]
+      ];
+      document.getElementById("kpiGrid").innerHTML = kpis.map(k => `
+        <article class="card kpi">
+          <div class="label">${k[0]}</div>
+          <div class="value">${k[1]}</div>
+          <div class="hint">${k[2]}</div>
+        </article>
+      `).join("");
+
+      const priorities = [
+        ["1", "Geciken ödeme kapat", "Nakış makine panel değişimi gibi geciken borçlar ayrı takip edilmeli."],
+        ["2", "Ürün maliyetlerini doldur", "Maliyet 0 kaldıkça panel satıştan kâr okuyamaz."],
+        ["3", "Reçeteleri kur", "Baza, yatak, başlık ürün reçetesi olmadan üretim maliyeti eksik kalır."],
+        ["4", "Aktif üretim emri oluştur", "Saha akışı aktif ve geçerli iş üzerinden ilerlemeli."]
+      ];
+      document.getElementById("priorityList").innerHTML = priorities.map(x => `
+        <div class="focus-item"><div class="badge">${x[0]}</div><div><strong>${x[1]}</strong><span>${x[2]}</span></div></div>
+      `).join("");
+
+      const alerts = [];
+      if (s.overdueDebts > 0) alerts.push(["Geciken ödeme var", "Ödeme planında gecikmiş kayıt bulunuyor.", "red"]);
+      if (s.costMissing > 0) alerts.push(["Ham madde/malzeme uyarısı var", s.costMissing + " ham madde/malzeme kartında maliyet 0 görünüyor.", "amber"]);
+      if (s.recipeCount === 0) alerts.push(["Reçete/BOM boş", "Üretim maliyeti ve stok düşümü için reçete kurulmalı.", "amber"]);
+      if (s.activeJobs === 0) alerts.push(["Aktif üretim işi yok", "Mevcut üretim işleri iptal durumunda.", "blue"]);
+      
+
+      document.getElementById("alertCount").textContent = alerts.length + " uyarı";
+      document.getElementById("alerts").innerHTML = alerts.map(a => `
+        <div class="row-card"><div><strong>${a[0]}</strong><span>${a[1]}</span></div><span class="pill ${a[2]}">kontrol</span></div>
+      `).join("");
+
+      const txRows = DATA.transactions.slice(-5).reverse().map(t => `
+        <tr><td>${shortDate(t.date)}</td><td><strong>${t.party || "-"}</strong></td><td>${t.type || "-"}</td><td>${money(t.amount)}</td><td>${statusPill(t.status)}</td></tr>
+      `).join("");
+      document.getElementById("lastTransactions").innerHTML = txRows;
+      document.getElementById("reportTransactions").innerHTML = txRows;
+
+      document.getElementById("healthList").innerHTML = [
+        ["Maliyet disiplini", s.costMissing === 0 ? "Tamam" : s.costMissing + " ürün maliyeti eksik.", s.costMissing === 0 ? "green" : "amber"],
+        ["Reçete altyapısı", s.recipeCount > 0 ? "Kurulu" : "Henüz reçete yok.", s.recipeCount > 0 ? "green" : "red"],
+        ["Üretim akışı", s.activeJobs > 0 ? "Aktif iş var" : "Aktif üretim işi görünmüyor.", s.activeJobs > 0 ? "green" : "amber"],
+        ["Kayıt temizliği", "Ana ekranda sadece aktif ve geçerli kayıtlar tutuluyor.", "green"]
+      ].map(x => `<div class="audit-item"><strong>${x[0]}</strong><span>${x[1]}</span><div style="margin-top:8px"><span class="pill ${x[2]}">durum</span></div></div>`).join("");
+
+      const pRows = DATA.productionJobs.map(j => `
+        <tr><td><strong>${j.customer || "-"}</strong></td><td>${j.product || "-"}</td><td>${j.qty || 0}</td><td>${shortDate(j.dueDate)}</td><td>${statusPill(j.stage)}</td></tr>
+      `).join("");
+      document.getElementById("productionTable").innerHTML = pRows || `<tr><td colspan="5">Üretim işi yok.</td></tr>`;
+
+      document.getElementById("itemsTable").innerHTML = DATA.items.map(i => {
+        const isFinished = String(i.itemClass || "") === "Bitmiş Ürün" || String(i.kind || "") === "Mamül";
+        const critical = isFinished ? '<span class="pill green">yok</span>' : (i.criticalAlert || Number(i.min || 0) > 0 ? '<span class="pill amber">var</span>' : '<span class="pill blue">pasif</span>');
+        const costCell = isFinished ? '<span class="pill green">alarm dışı</span>' : (i.cost ? money(i.cost) : '<span class="pill red">eksik</span>');
+        return `<tr>
+          <td>${i.code || "-"}</td>
+          <td><strong>${i.name || "-"}</strong><br><span style="color:var(--muted);font-size:12px">${i.productionType || ""}</span></td>
+          <td>${i.category || "-"}</td>
+          <td>${i.itemClass || i.kind || "-"}</td>
+          <td>${i.unit || "-"}</td>
+          <td>${critical}</td>
+          <td>${costCell}</td>
+        </tr>`;
+      }).join("");
+
+      document.getElementById("cariTable").innerHTML = DATA.cariCards.map(c => `
+        <tr><td><strong>${c.name || "-"}</strong></td><td>${c.type || "-"}</td><td>${statusPill(c.status)}</td><td>${c.phone || "-"}</td><td>${c.note || "-"}</td></tr>
+      `).join("");
+
+      document.getElementById("recOpen").textContent = money(s.receivableOpening);
+      document.getElementById("debtOpen").textContent = money(s.debtOpening);
+      document.getElementById("netOpen").textContent = money(s.netOpening);
+
+      document.getElementById("accountGrid").innerHTML = DATA.accounts.map(a => `
+        <article class="card kpi">
+          <div class="label">${a.name}</div>
+          <div class="value">${money(a.opening || 0)}</div>
+          <div class="hint">Açılış bakiyesi.</div>
+        </article>
+      `).join("");
+
+      document.getElementById("debtList").innerHTML = DATA.debtPlans.map(d => `
+        <div class="row-card"><div><strong>${d.party || "-"}</strong><span>${d.type || "-"} · Vade: ${shortDate(d.dueDate)} · ${d.note || ""}</span></div><div style="text-align:right"><strong>${money(d.amount)}</strong><br>${statusPill(d.status)}</div></div>
+      `).join("");
+
+      const fixedBody = document.getElementById("fixedExpenseTable");
+      if (fixedBody) {
+        fixedBody.innerHTML = DATA.fixedExpenses.map(f => `
+          <tr>
+            <td><strong>${f.name || "-"}</strong></td>
+            <td>${f.category || "-"}</td>
+            <td>${money(f.amount)}</td>
+            <td>${f.dueDay || "-"}</td>
+            <td>${f.account || "-"}</td>
+            <td>${f.active === false ? '<span class="pill red">Pasif</span>' : '<span class="pill green">Aktif</span>'}</td>
+          </tr>
+        `).join("");
+      }
+
+      document.getElementById("reportText").innerHTML = [
+        ["Para", "Aylık sabit gider " + money(s.monthlyFixed) + ". Gün sonu kasa/banka/POS mutabakatı ana disiplin olmalı."],
+        ["Cari", "Açılış alacağı " + money(s.receivableOpening) + ", açılış borcu " + money(s.debtOpening) + ", net " + money(s.netOpening) + "."],
+        ["Üretim", "Aktif üretim işi " + s.activeJobs + ". Saha akışı sadece geçerli işlerle yürümeli."],
+        ["Stok", s.costMissing + " ham madde/malzeme maliyeti eksik. Reçete sayısı " + s.recipeCount + "."]
+      ].map(x => `<div class="audit-item"><strong>${x[0]}</strong><span>${x[1]}</span></div>`).join("");
+
+      document.getElementById("systemHealth").innerHTML = [
+        ["Yedek tarihi", DATA.updatedAt || "-"],
+        ["Son log", DATA.lastLogAt || "-"],
+        ["Hesap sayısı", DATA.accounts.length + " hesap"],
+        ["Ürün kartı", DATA.items.length + " kart"],
+        ["Cari kart", DATA.cariCards.length + " kart"],
+        ["İşlem", DATA.transactions.length + " işlem"],
+        ["Borç planı", DATA.debtPlans.length + " plan"],
+        ["Sabit gider", DATA.fixedExpenses.length + " kalem"],
+        ["Log", "Teknik izler ana ekrandan gizlendi; sistem bölümünde tutulur."]
+      ].map(x => `<div class="audit-item"><strong>${x[0]}</strong><span>${x[1]}</span></div>`).join("");
+    }
+
+    render();
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    document.getElementById("modal").addEventListener("click", (e) => {
+      if (e.target.id === "modal") closeModal();
+    });
+  </script>
+</body>
+</html>

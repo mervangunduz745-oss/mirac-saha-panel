@@ -1,0 +1,296 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Authorization source: /allowedUsers/{uid}. There is deliberately no
+    // client-side "first user" exception. Bootstrap the first owner through a
+    // trusted Admin SDK process or the Firebase Console with this shape:
+    // {
+    //   active: true, role: "owner", orgId: "mirac",
+    //   displayName: "...", email: "...",
+    //   createdAt: <timestamp>, updatedAt: <timestamp>
+    // }
+    // Admin operations bypass these rules. Never temporarily allow self-create.
+    // A hard-coded owner UID is also closed, but couples deployment to one
+    // identity; this ruleset deliberately uses the allowedUsers model.
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isMiracOrg(orgId) {
+      return orgId == 'mirac';
+    }
+
+    function memberPath() {
+      return /databases/$(database)/documents/allowedUsers/$(request.auth.uid);
+    }
+
+    function isAllowedUser(orgId) {
+      return signedIn()
+        && isMiracOrg(orgId)
+        && exists(memberPath())
+        && get(memberPath()).data.active == true
+        && get(memberPath()).data.orgId == orgId
+        && get(memberPath()).data.role in ['owner', 'editor', 'viewer', 'worker'];
+    }
+
+    function memberRole() {
+      return get(memberPath()).data.role;
+    }
+
+    function isOwner(orgId) {
+      return isAllowedUser(orgId)
+        && memberRole() == 'owner';
+    }
+
+    function canWrite(orgId) {
+      return isAllowedUser(orgId)
+        && memberRole() in ['owner', 'editor'];
+    }
+
+    function isWorker(orgId) {
+      return isAllowedUser(orgId)
+        && memberRole() == 'worker';
+    }
+
+    function canWriteProduction(orgId) {
+      return canWrite(orgId) || isWorker(orgId);
+    }
+
+    function workerTransaction(data) {
+      return data.type in ['SIPARIS', 'URETIM'];
+    }
+
+    function validMember(data) {
+      return data.keys().hasAll([
+          'active', 'role', 'orgId', 'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'active', 'role', 'orgId', 'displayName', 'email',
+          'createdAt', 'updatedAt'
+        ])
+        && data.active is bool
+        && data.role is string
+        && data.role in ['owner', 'editor', 'viewer', 'worker']
+        && data.orgId == 'mirac'
+        && (!('displayName' in data)
+          || (data.displayName is string && data.displayName.size() <= 120))
+        && (!('email' in data)
+          || (data.email is string && data.email.size() <= 254))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    match /allowedUsers/{uid} {
+      allow get: if isAllowedUser('mirac')
+        && (request.auth.uid == uid || isOwner('mirac'));
+      allow list: if isOwner('mirac');
+
+      allow create: if isOwner('mirac')
+        && validMember(request.resource.data)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      allow update: if isOwner('mirac')
+        && validMember(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time
+        // An owner cannot remove their own final route back into the system.
+        && (uid != request.auth.uid
+          || (request.resource.data.active == true
+            && request.resource.data.role == 'owner'));
+
+      allow delete: if isOwner('mirac') && uid != request.auth.uid;
+    }
+
+    // Every business document has optimistic concurrency and immutable origin
+    // metadata. Firestore still enforces its 1 MiB per-document hard limit;
+    // keep each entity small and place growing history in transactions/logs.
+    function validCreate(data, maxFields) {
+      return data.keys().hasAll([
+          'schemaVersion', 'revision', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'
+        ])
+      && data.keys().size() <= maxFields
+        && data.schemaVersion is int
+        && data.schemaVersion == 2
+        && data.revision is int
+        && data.revision == 1
+        && data.createdAt is timestamp
+        && data.createdAt == request.time
+        && data.updatedAt is timestamp
+        && data.updatedAt == request.time
+        && data.createdBy == request.auth.uid
+        && data.updatedBy == request.auth.uid;
+    }
+
+    function validUpdate(maxFields) {
+      return request.resource.data.keys().hasAll([
+          'schemaVersion', 'revision', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'
+        ])
+      && request.resource.data.keys().size() <= maxFields
+        && request.resource.data.schemaVersion is int
+        && request.resource.data.schemaVersion == 2
+        && request.resource.data.revision is int
+        && request.resource.data.revision == resource.data.revision + 1
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.createdBy == resource.data.createdBy
+        && request.resource.data.updatedAt is timestamp
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.updatedBy == request.auth.uid;
+    }
+
+    // Master data may be hard-deleted only by an owner. Editors can create and
+    // update it; viewers are read-only.
+    match /orgs/{orgId}/accounts/{docId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if canWrite(orgId) && validCreate(request.resource.data, 24);
+      allow update: if canWrite(orgId) && validUpdate(24);
+      allow delete: if isOwner(orgId);
+    }
+
+    match /orgs/{orgId}/cariCards/{docId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if canWrite(orgId) && validCreate(request.resource.data, 32);
+      allow update: if canWrite(orgId) && validUpdate(32);
+      allow delete: if isOwner(orgId);
+    }
+
+    match /orgs/{orgId}/items/{docId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if canWrite(orgId) && validCreate(request.resource.data, 40);
+      allow update: if canWrite(orgId) && validUpdate(40);
+      allow delete: if isOwner(orgId);
+    }
+
+    match /orgs/{orgId}/recipes/{docId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if canWrite(orgId) && validCreate(request.resource.data, 24);
+      allow update: if canWrite(orgId) && validUpdate(24);
+      allow delete: if isOwner(orgId);
+    }
+
+    match /orgs/{orgId}/fixedExpenses/{docId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if canWrite(orgId) && validCreate(request.resource.data, 32);
+      allow update: if canWrite(orgId) && validUpdate(32);
+      allow delete: if isOwner(orgId);
+    }
+
+    // Financial and operational history is never hard-deleted by a client.
+    // Cancellation/correction must be represented by an update or a new record.
+    match /orgs/{orgId}/transactions/{docId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if (canWrite(orgId)
+          || (isWorker(orgId) && workerTransaction(request.resource.data)))
+        && validCreate(request.resource.data, 48);
+      allow update: if (canWrite(orgId)
+          || (isWorker(orgId)
+            && workerTransaction(resource.data)
+            && workerTransaction(request.resource.data)))
+        && validUpdate(48);
+      allow delete: if false;
+    }
+
+    match /orgs/{orgId}/debtPlans/{docId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if canWrite(orgId) && validCreate(request.resource.data, 40);
+      allow update: if canWrite(orgId) && validUpdate(40);
+      allow delete: if false;
+    }
+
+    match /orgs/{orgId}/productionJobs/{docId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if canWriteProduction(orgId) && validCreate(request.resource.data, 40);
+      allow update: if canWriteProduction(orgId) && validUpdate(40);
+      allow delete: if false;
+    }
+
+    match /orgs/{orgId}/logs/{logId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if canWriteProduction(orgId) && validCreate(request.resource.data, 32);
+      allow update: if canWriteProduction(orgId) && validUpdate(32);
+      allow delete: if false;
+    }
+
+    function validBackupRun(data) {
+      return data.keys().hasAll([
+          'backupSchemaVersion', 'createdAt', 'createdBy', 'clientId',
+          'recordCount', 'chunkCount', 'totalBytes'
+        ])
+        && data.keys().hasOnly([
+          'backupSchemaVersion', 'stateVersion', 'appVersion', 'note',
+          'recordCount', 'chunkCount', 'totalBytes',
+          'createdAt', 'createdBy', 'clientId'
+        ])
+        && data.backupSchemaVersion is int
+        && data.backupSchemaVersion == 1
+        && (!('stateVersion' in data) || (data.stateVersion is string && data.stateVersion.size() <= 80))
+        && (!('appVersion' in data) || (data.appVersion is string && data.appVersion.size() <= 80))
+        && (!('note' in data) || (data.note is string && data.note.size() <= 240))
+        && data.recordCount is int
+        && data.recordCount >= 0
+        && data.chunkCount is int
+        && data.chunkCount > 0
+        && data.chunkCount <= 80
+        && data.totalBytes is int
+        && data.totalBytes >= 0
+        && data.createdAt is timestamp
+        && data.createdAt == request.time
+        && data.createdBy == request.auth.uid
+        && data.clientId is string
+        && data.clientId.size() <= 160;
+    }
+
+    function validBackupChunk(data) {
+      return data.keys().hasAll([
+          'backupSchemaVersion', 'runId', 'collectionName', 'part',
+          'totalParts', 'json', 'byteLength', 'createdAt', 'createdBy', 'clientId'
+        ])
+        && data.keys().hasOnly([
+          'backupSchemaVersion', 'runId', 'collectionName', 'part',
+          'totalParts', 'json', 'byteLength', 'createdAt', 'createdBy', 'clientId'
+        ])
+        && data.backupSchemaVersion is int
+        && data.backupSchemaVersion == 1
+        && data.runId is string
+        && data.runId.size() <= 80
+        && data.collectionName in [
+          'accounts', 'cariCards', 'items', 'recipes', 'transactions',
+          'debtPlans', 'fixedExpenses', 'productionJobs', 'logs'
+        ]
+        && data.part is int
+        && data.part > 0
+        && data.totalParts is int
+        && data.totalParts > 0
+        && data.part <= data.totalParts
+        && data.totalParts <= 40
+        && data.json is string
+        && data.json.size() <= 500000
+        && data.byteLength is int
+        && data.byteLength >= 0
+        && data.createdAt is timestamp
+        && data.createdAt == request.time
+        && data.createdBy == request.auth.uid
+        && data.clientId is string
+        && data.clientId.size() <= 160;
+    }
+
+    match /orgs/{orgId}/backupRuns/{backupId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if canWrite(orgId) && validBackupRun(request.resource.data);
+      allow update, delete: if false;
+    }
+
+    match /orgs/{orgId}/backupChunks/{chunkId} {
+      allow read: if isAllowedUser(orgId);
+      allow create: if canWrite(orgId) && validBackupChunk(request.resource.data);
+      allow update, delete: if false;
+    }
+
+    // Public access, the old single-state path, unknown organizations,
+    // undeclared collections and deeper subcollections are all denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Miraç ERP">
+  <rect width="512" height="512" rx="96" fill="#13213d"/>
+  <path fill="#2da36f" d="M96 96h320v320H96z"/>
+  <path fill="#fff" d="M154 354V158h48l54 86 54-86h48v196h-50V236l-52 80-52-80v118z"/>
+</svg>

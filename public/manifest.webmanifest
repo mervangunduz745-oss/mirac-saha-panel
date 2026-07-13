@@ -1,0 +1,19 @@
+{
+  "name": "Miraç ERP",
+  "short_name": "Miraç ERP",
+  "description": "Cari, stok, kasa, borç ve üretim yönetimi",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#13213d",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
