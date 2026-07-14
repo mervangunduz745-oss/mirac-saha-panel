@@ -375,6 +375,24 @@
       gap: 6px;
       justify-content: flex-end;
     }
+    .action-menu {
+      display: grid;
+      grid-template-columns: minmax(170px, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      min-width: 260px;
+    }
+    .action-menu select {
+      min-height: 36px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 780;
+    }
+    .action-menu .btn {
+      min-height: 36px;
+      justify-self: end;
+    }
     .delivery-queue {
       display: grid;
       gap: 12px;
@@ -2316,6 +2334,10 @@
         align-items: flex-start;
         flex-direction: column;
       }
+      .action-menu {
+        grid-template-columns: minmax(170px, 1fr) auto;
+        min-width: 250px;
+      }
       table { min-width: 680px; }
     }
     @media print {
@@ -2363,7 +2385,7 @@
         <p class="auth-state" id="authLoadMessage">Giriş hazırlanıyor...</p>
         <div class="auth-recovery" id="authRecovery">
           <button class="btn" id="retryAuthButton" type="button">Tekrar Dene</button>
-          <a class="btn secondary" href="/?fresh=1&v=mobile-v26">Temiz Mobil Giriş</a>
+          <a class="btn secondary" href="/?fresh=1&v=mobile-v27">Temiz Mobil Giriş</a>
         </div>
       </div>
       <div id="configSetup" class="setup-panel hidden">
@@ -4226,7 +4248,7 @@
     }
 
     function retryAuthInit() {
-      window.location.href = "/?fresh=1&v=mobile-v26";
+      window.location.href = "/?fresh=1&v=mobile-v27";
     }
 
     function authErrorText(error) {
@@ -6448,14 +6470,46 @@
         : `<div class="empty">Sabit gider kaydı yok.</div>`;
     }
 
+    function productionJobActionOptions(job) {
+      const currentStage = normalizeProductionStage(job.stage);
+      const stageOptions = productionStageOrder()
+        .filter(stage => stage !== "İptal" && stage !== currentStage)
+        .map(stage => `<option value="stage:${safe(stage)}">Aşama: ${safe(stage)}</option>`);
+      const utilityOptions = [];
+      if (job.sourceTx) utilityOptions.push(`<option value="print:${safe(job.sourceTx)}">Fiş yazdır</option>`);
+      if (!isWorkerMode()) {
+        utilityOptions.push(`<option value="edit">Düzenle</option>`);
+        utilityOptions.push(`<option value="cancel">İptal et</option>`);
+      }
+      return [
+        `<option value="">İşlem seç</option>`,
+        ...stageOptions,
+        ...utilityOptions
+      ].join("");
+    }
+
     function productionJobActions(job) {
-      const print = job.sourceTx
-        ? `<button class="btn compact-action" data-print-order="${job.sourceTx}" type="button">Fiş Yazdır</button>`
-        : "";
-      const owner = isWorkerMode()
-        ? ""
-        : `<button class="btn compact-action" data-edit-job="${job.id}" type="button">Düzenle</button><button class="btn compact-action" data-back-job="${job.id}" type="button">Geri Al</button><button class="btn danger compact-action" data-cancel-job="${job.id}" type="button">İptal</button>`;
-      return `<div class="row-actions">${print}<button class="btn compact-action" data-advance-job="${job.id}" type="button">Aşamayı İlerlet</button>${owner}</div>`;
+      return `
+        <div class="action-menu">
+          <select data-production-action="${safe(job.id)}" aria-label="${safe(job.id)} üretim işlemi">
+            ${productionJobActionOptions(job)}
+          </select>
+          <button class="btn compact-action primary" data-apply-production-action="${safe(job.id)}" type="button">Uygula</button>
+        </div>
+      `;
+    }
+
+    function deliveryJobActions(job) {
+      return `
+        <div class="action-menu">
+          <select data-delivery-action="${safe(job.id)}" aria-label="${safe(job.id)} teslim işlemi">
+            <option value="">İşlem seç</option>
+            <option value="sale">Satışa aktar</option>
+            ${job.sourceTx ? `<option value="print:${safe(job.sourceTx)}">Fiş yazdır</option>` : ""}
+          </select>
+          <button class="btn compact-action primary" data-apply-delivery-action="${safe(job.id)}" type="button">Uygula</button>
+        </div>
+      `;
     }
 
     function deliveredJobsForSale() {
@@ -6492,7 +6546,7 @@
             <td>${safe(jobProductLabel(job))}</td>
             <td class="money">${qty(job.qty)}</td>
             <td>${job.note || ""}</td>
-            <td><button class="btn primary compact-action" data-sale-job="${job.id}" type="button">Satışa Aktar</button></td>
+            <td>${deliveryJobActions(job)}</td>
           </tr>`).join("")}</tbody>
         </table>
       `;
@@ -6880,6 +6934,42 @@
       state.logs.push({ at: new Date().toISOString(), event: "ADVANCE_PRODUCTION_JOB", id: job.id, stage: job.stage });
       saveState();
       renderAll();
+    }
+
+    function setProductionJobStage(id, stage) {
+      const job = (state.productionJobs || []).find(row => row.id === id);
+      if (!job) return;
+      const nextStage = normalizeProductionStage(stage);
+      const stages = productionStageOrder().filter(row => row !== "İptal");
+      if (!stages.includes(nextStage)) return alert("Geçerli bir üretim aşaması seç.");
+      job.stage = normalizeProductionStage(job.stage);
+      if (job.stage === nextStage) return;
+      backupState("before-set-production-stage");
+      job.stage = nextStage;
+      job.updatedAt = new Date().toISOString();
+      state.logs.push({ at: new Date().toISOString(), event: "SET_PRODUCTION_STAGE", id: job.id, stage: job.stage });
+      saveState();
+      renderAll();
+    }
+
+    function applyProductionJobAction(id) {
+      const select = Array.from(document.querySelectorAll("select[data-production-action]"))
+        .find(input => input.dataset.productionAction === id);
+      const action = select?.value || "";
+      if (!action) return alert("Önce üretim işlemi seç.");
+      if (action.startsWith("stage:")) return setProductionJobStage(id, action.slice(6));
+      if (action.startsWith("print:")) return printOrderSlip(action.slice(6));
+      if (action === "edit") return editProductionJob(id);
+      if (action === "cancel") return cancelProductionJob(id);
+    }
+
+    function applyDeliveryJobAction(id) {
+      const select = Array.from(document.querySelectorAll("select[data-delivery-action]"))
+        .find(input => input.dataset.deliveryAction === id);
+      const action = select?.value || "";
+      if (!action) return alert("Önce teslim işlemi seç.");
+      if (action === "sale") return saleFromProductionJob(id);
+      if (action.startsWith("print:")) return printOrderSlip(action.slice(6));
     }
 
     function backProductionJob(id) {
@@ -7617,6 +7707,8 @@
     byId("workOrderForm").addEventListener("submit", addWorkOrder);
     byId("clearWorkOrder").addEventListener("click", clearWorkOrderForm);
     byId("productionWorkTable").addEventListener("click", event => {
+      const applyButton = event.target.closest("button[data-apply-production-action]");
+      if (applyButton) return applyProductionJobAction(applyButton.dataset.applyProductionAction);
       const printButton = event.target.closest("button[data-print-order]");
       if (printButton) return printOrderSlip(printButton.dataset.printOrder);
       const editButton = event.target.closest("button[data-edit-job]");
@@ -7631,6 +7723,8 @@
       if (cancelButton) cancelProductionJob(cancelButton.dataset.cancelJob);
     });
     byId("deliverySalesQueue").addEventListener("click", event => {
+      const applyButton = event.target.closest("button[data-apply-delivery-action]");
+      if (applyButton) return applyDeliveryJobAction(applyButton.dataset.applyDeliveryAction);
       const saleButton = event.target.closest("button[data-sale-job]");
       if (saleButton) return saleFromProductionJob(saleButton.dataset.saleJob);
     });
