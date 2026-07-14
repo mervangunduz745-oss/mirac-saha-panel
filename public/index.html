@@ -2385,7 +2385,7 @@
         <p class="auth-state" id="authLoadMessage">Giriş hazırlanıyor...</p>
         <div class="auth-recovery" id="authRecovery">
           <button class="btn" id="retryAuthButton" type="button">Tekrar Dene</button>
-          <a class="btn secondary" href="/?fresh=1&v=mobile-v27">Temiz Mobil Giriş</a>
+          <a class="btn secondary" href="/?fresh=1&v=mobile-v28">Temiz Mobil Giriş</a>
         </div>
       </div>
       <div id="configSetup" class="setup-panel hidden">
@@ -3288,7 +3288,7 @@
           <div class="panel">
             <div class="panel-head">
               <h2>Üretim İş Listesi</h2>
-              <span class="status warn">İşleme Alındı / Üretimde / Teslimata Hazır / Teslim Edildi</span>
+              <span class="status warn">İşleme Alındı / Üretim Aşamasında / Teslimata Hazır / Teslim Edildi</span>
             </div>
             <form id="workOrderForm">
               <input id="jobEditId" type="hidden">
@@ -3313,7 +3313,7 @@
                   <label for="jobStage">Aşama</label>
                   <select id="jobStage">
                     <option>İşleme Alındı</option>
-                    <option>Üretimde</option>
+                    <option>Üretim Aşamasında</option>
                     <option>Teslimata Hazır</option>
                     <option>Teslim Edildi</option>
                   </select>
@@ -4248,7 +4248,7 @@
     }
 
     function retryAuthInit() {
-      window.location.href = "/?fresh=1&v=mobile-v27";
+      window.location.href = "/?fresh=1&v=mobile-v28";
     }
 
     function authErrorText(error) {
@@ -4878,8 +4878,9 @@
       const value = String(stage || "").trim();
       const map = {
         "Kesim": "İşleme Alındı",
-        "Döşeme": "Üretimde",
-        "Montaj": "Üretimde",
+        "Döşeme": "Üretim Aşamasında",
+        "Montaj": "Üretim Aşamasında",
+        "Üretimde": "Üretim Aşamasında",
         "Paket": "Teslimata Hazır",
         "Teslim": "Teslim Edildi"
       };
@@ -4887,7 +4888,7 @@
     }
 
     function productionStageOrder() {
-      return ["İşleme Alındı", "Üretimde", "Teslimata Hazır", "Teslim Edildi", "İptal"];
+      return ["İşleme Alındı", "Üretim Aşamasında", "Teslimata Hazır", "Teslim Edildi", "İptal"];
     }
 
     function daysUntil(dateText) {
@@ -4911,7 +4912,7 @@
         open,
         urgent: open.filter(job => job.priority === "Acil" || (job.dueIn != null && job.dueIn <= 0)),
         intake: open.filter(job => job.stage === "İşleme Alındı"),
-        inProduction: open.filter(job => job.stage === "Üretimde"),
+        inProduction: open.filter(job => job.stage === "Üretim Aşamasında"),
         ready: open.filter(job => job.stage === "Teslimata Hazır"),
         delivered: rows.filter(job => job.stage === "Teslim Edildi"),
         stages
@@ -6556,7 +6557,7 @@
       const stats = productionJobStats();
       const data = [
         ["İşleme Alındı", `${stats.intake.length}`, "başlanacak", stats.intake.length ? "amber" : "green", "1"],
-        ["Üretimde", `${stats.inProduction.length}`, "atölyede", stats.inProduction.length ? "amber" : "green", "2"],
+        ["Üretim Aşamasında", `${stats.inProduction.length}`, "atölyede", stats.inProduction.length ? "amber" : "green", "2"],
         ["Teslimata Hazır", `${stats.ready.length}`, "müşteriye hazırlanacak", stats.ready.length ? "red" : "green", "3"],
         ["Acil/Geciken", `${stats.urgent.length}`, "bugün bakılacak", stats.urgent.length ? "red" : "green", "!"]
       ];
@@ -6584,7 +6585,7 @@
             <td>${safe(jobProductLabel(job))}</td>
             <td class="money">${qty(job.qty)}</td>
             <td>${job.assignee || "-"}</td>
-            <td><span class="status ${job.stage === "Üretimde" || job.stage === "Teslimata Hazır" ? "warn" : "ok"}">${job.stage}</span></td>
+            <td><span class="status ${job.stage === "Üretim Aşamasında" || job.stage === "Teslimata Hazır" ? "warn" : "ok"}">${job.stage}</span></td>
             <td>${job.dueIn == null ? "" : job.dueIn < 0 ? `<span class="status bad">${Math.abs(job.dueIn)} gün gecikti</span>` : job.dueIn === 0 ? `<span class="status bad">Bugün</span>` : `${job.dueIn} gün`}</td>
             <td><span class="status ${job.priority === "Acil" ? "bad" : job.priority === "Yüksek" ? "warn" : "ok"}">${job.priority}</span></td>
             <td>${job.note || ""}</td>
