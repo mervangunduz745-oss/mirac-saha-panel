@@ -417,6 +417,25 @@
     h1, h2, h3 { margin: 0; }
     h1 { font-size: 30px; }
     .subtitle { margin-top: 6px; color: var(--muted); }
+    .cockpit-stamps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+    .cockpit-stamps span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 10px;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      color: #f8fbff;
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
     .badge {
       display: inline-flex;
       align-items: center;
@@ -588,6 +607,113 @@
     .command-kpi.warn { border-top: 4px solid var(--amber); }
     .command-kpi.bad { border-top: 4px solid var(--red); }
     .command-kpi.info { border-top: 4px solid var(--blue); }
+    .live-rhythm-strip {
+      display: grid;
+      grid-template-columns: minmax(260px, 1.25fr) repeat(4, minmax(170px, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+    .rhythm-card {
+      position: relative;
+      min-height: 118px;
+      overflow: hidden;
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid #9fb2cd;
+      border-radius: 8px;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 16px 34px rgba(18, 33, 61, .12);
+    }
+    .rhythm-card::after {
+      content: "";
+      position: absolute;
+      left: -45%;
+      right: -45%;
+      bottom: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, currentColor, transparent);
+      opacity: .42;
+      animation: liveSweep 4.8s linear infinite;
+    }
+    .rhythm-card.anchor {
+      color: #f8fbff;
+      background:
+        linear-gradient(135deg, rgba(0, 168, 107, .20), rgba(0, 103, 216, .17)),
+        linear-gradient(135deg, #06101f, #102f58 60%, #0a5967);
+      border-color: rgba(255,255,255,.24);
+    }
+    .rhythm-card.good { color: #005b3b; }
+    .rhythm-card.warn { color: #8a4b00; }
+    .rhythm-card.bad { color: #9f1239; }
+    .rhythm-card.info { color: #005ed6; }
+    .rhythm-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+    .rhythm-label {
+      color: currentColor;
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      opacity: .86;
+    }
+    .rhythm-icon {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(255,255,255,.16);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.16);
+      font-size: 12px;
+      font-weight: 950;
+    }
+    .rhythm-card:not(.anchor) .rhythm-icon {
+      background: #07111f;
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(7, 17, 31, .16);
+    }
+    .rhythm-value {
+      color: inherit;
+      font-size: 24px;
+      font-weight: 950;
+      line-height: 1.04;
+      font-variant-numeric: tabular-nums;
+    }
+    .rhythm-card.anchor .rhythm-value {
+      color: #fff;
+      font-size: 25px;
+    }
+    .rhythm-note {
+      color: #52647f;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .rhythm-card.anchor .rhythm-note {
+      color: #dce9fb;
+    }
+    .rhythm-meter {
+      height: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(18, 33, 61, .10);
+    }
+    .rhythm-card.anchor .rhythm-meter {
+      background: rgba(255,255,255,.16);
+    }
+    .rhythm-meter span {
+      display: block;
+      width: var(--meter, 35%);
+      height: 100%;
+      border-radius: inherit;
+      background: currentColor;
+      min-width: 8%;
+    }
     .dashboard-layout-quiet {
       grid-template-columns: minmax(320px, .82fr) minmax(520px, 1.18fr);
     }
@@ -1867,6 +1993,22 @@
       color: #fff;
       box-shadow: 0 8px 18px rgba(7, 17, 31, .16);
     }
+    body:not(.auth-locked) .quick-action[data-tone="money"]::before,
+    body:not(.auth-locked) .quick-action[data-tone="entry"]::before {
+      background: linear-gradient(135deg, #005b3b, #00a86b);
+    }
+    body:not(.auth-locked) .quick-action[data-tone="production"]::before,
+    body:not(.auth-locked) .quick-action[data-tone="stock"]::before {
+      background: linear-gradient(135deg, #07111f, #005ed6);
+    }
+    body:not(.auth-locked) .quick-action[data-tone="risk"]::before,
+    body:not(.auth-locked) .quick-action[data-tone="debt"]::before {
+      background: linear-gradient(135deg, #8a4b00, #ffb000);
+      color: #07111f;
+    }
+    body:not(.auth-locked) .quick-action[data-tone="control"]::before {
+      background: linear-gradient(135deg, #7f1d1d, #e03131);
+    }
     body:not(.auth-locked) .daily-flow {
       display: grid;
       grid-template-columns: repeat(3, minmax(210px, 1fr));
@@ -1909,7 +2051,8 @@
       .command-board,
       .dashboard-layout,
       .action-compass,
-      .daily-command-grid {
+      .daily-command-grid,
+      .live-rhythm-strip {
         grid-template-columns: 1fr;
       }
       .command-matrix {
@@ -2076,6 +2219,7 @@
       .action-compass,
       .action-compass-actions,
       .quick-action-grid,
+      .live-rhythm-strip,
       .dashboard-layout {
         grid-template-columns: minmax(0, 1fr);
       }
@@ -2094,6 +2238,13 @@
       }
       .command-hero h2 {
         font-size: 24px;
+      }
+      .rhythm-card {
+        min-height: 104px;
+        padding: 14px;
+      }
+      .rhythm-value {
+        font-size: 21px;
       }
       .command-hero-footer {
         grid-template-columns: 1fr;
@@ -2212,7 +2363,7 @@
         <p class="auth-state" id="authLoadMessage">Giriş hazırlanıyor...</p>
         <div class="auth-recovery" id="authRecovery">
           <button class="btn" id="retryAuthButton" type="button">Tekrar Dene</button>
-          <a class="btn secondary" href="/?fresh=1&v=mobile-v25">Temiz Mobil Giriş</a>
+          <a class="btn secondary" href="/?fresh=1&v=mobile-v26">Temiz Mobil Giriş</a>
         </div>
       </div>
       <div id="configSetup" class="setup-panel hidden">
@@ -2343,6 +2494,13 @@
           <div>
             <h1 id="pageTitle">Karargâh</h1>
             <div class="subtitle" id="pageSubtitle">Saha karar ekranı: para, teslim, borç, stok ve üretim önceliği.</div>
+            <div class="cockpit-stamps" aria-label="Karargâh odakları">
+              <span>Canlı saha</span>
+              <span>Para</span>
+              <span>Stok</span>
+              <span>Üretim</span>
+              <span>Cari</span>
+            </div>
           </div>
           <div class="badge" id="saveBadge">Bulut bağlantısı hazırlanıyor</div>
         </div>
@@ -2350,6 +2508,9 @@
 
         <section class="tab-view active" id="dashboard">
           <div class="command-board command-board-quiet" id="kpiCards"></div>
+          <div class="live-rhythm-strip" id="liveRhythmStrip"></div>
+          <div class="action-compass" id="actionCompass"></div>
+          <div class="quick-action-panel" id="dashboardQuickActions"></div>
           <div class="dashboard-layout dashboard-layout-quiet">
             <div class="panel">
               <div class="panel-head">
@@ -2367,8 +2528,6 @@
             </div>
           </div>
           <div class="command-panels-grid" id="secondaryCards"></div>
-          <div class="action-compass" id="actionCompass"></div>
-          <div class="quick-action-panel" id="dashboardQuickActions"></div>
           <div class="daily-flow" id="dailyFlow"></div>
           <div class="automation-grid" id="automationGrid"></div>
           <button class="btn compact-action daily-flow-reset" id="resetDailyFlow" type="button">Bugünü Sıfırla</button>
@@ -4067,7 +4226,7 @@
     }
 
     function retryAuthInit() {
-      window.location.href = "/?fresh=1&v=mobile-v24";
+      window.location.href = "/?fresh=1&v=mobile-v26";
     }
 
     function authErrorText(error) {
@@ -4976,28 +5135,108 @@
         ])
       ].join("");
       const quickActions = [
-        ["entry", "+", "Yeni Sipariş", "Müşteri, ürün, ölçü, kapora."],
-        ["sales", "$", "Satış", "Teslim edilen işi ciroya ve cariye bağla."],
-        ["purchase", "A", "Alış", "Tedarik, stok ve borcu aynı kayıtta bağla."],
-        ["entry", "P", "Tahsilat / Ödeme", "Kasa, banka, POS hareketi."],
-        ["debt", "!", "Borç Planı", "Banka, senet, resmi ödeme."],
-        ["stock", "#", "Stok", "Stok kartlarını ve mevcut durumu gör."],
-        ["production", "U", "Üretim Emri", "İşleme al, üretimde, teslimata hazır ve teslim edildi takibi."],
-        ["cari", "C", "Cari Aç", "Müşteri veya tedarikçi kartı."],
-        ["fixed", "G", "Sabit Gider", "Kira, maaş, muhasebe yükü."],
-        ["control", "D", "Denetim", "Kayıt ve formül sağlığı."]
-      ].filter(([view, icon, title]) => canOpenView(view) && (!isWorkerMode() || ["Yeni Sipariş", "Stok", "Üretim Emri"].includes(title)));
+        { view: "entry", icon: "+", title: "Sipariş Aç", text: "Ürün, ölçü, kapora ve teslim tarihi.", tone: "entry", worker: true },
+        { view: "cari", icon: "T", title: "Tahsilat Listesi", text: "Açık alacağı gör, arama sırasını kur.", tone: "money" },
+        { view: "production", icon: "U", title: "Üretim Sırası", text: "Acil işleri ve teslim kilidini çöz.", tone: "production", worker: true },
+        { view: "stock", icon: "#", title: "Stok Alarmı", text: "Kritik malzeme ve maliyet körlüğünü gör.", tone: "stock", worker: true },
+        { view: "sales", icon: "$", title: "Satışa Bağla", text: "Teslim edilen işi ciro ve cariye bağla.", tone: "money" },
+        { view: "purchase", icon: "A", title: "Alış Gir", text: "Tedarik, stok ve borcu tek kayıtta tut.", tone: "stock" },
+        { view: "fixed", icon: "P", title: "Kasa / POS", text: "Nakit, banka, POS ve sabit gider yükü.", tone: "money" },
+        { view: "debt", icon: "!", title: "Borç Planı", text: "Banka, senet ve yakın ödeme sırası.", tone: "debt" },
+        { view: "control", icon: "D", title: "Sistem Sağlığı", text: "Kayıt tutarlılığı ve kritik uyarılar.", tone: "control" }
+      ].filter(action => canOpenView(action.view) && (!isWorkerMode() || action.worker));
       byId("dashboardQuickActions").innerHTML = `
         <div class="panel-head">
           <div>
-            <h2>Hızlı İşlem Merkezi</h2>
-            <div class="hint">Sahada en çok gereken kayıtlar tek dokunuşta.</div>
+            <h2>Saha Komutları</h2>
+            <div class="hint">Para, üretim, stok ve cari aksiyonları tek dokunuşta.</div>
           </div>
           <span class="status ok">Saha modu</span>
         </div>
         <div class="quick-action-grid">
-          ${quickActions.map(([view, icon, title, text]) => `<button class="quick-action" type="button" data-icon="${icon}" data-jump-view="${view}"><strong>${title}</strong><span>${text}</span></button>`).join("")}
+          ${quickActions.map(action => `<button class="quick-action" type="button" data-icon="${safe(action.icon)}" data-tone="${safe(action.tone)}" data-jump-view="${safe(action.view)}"><strong>${safe(action.title)}</strong><span>${safe(action.text)}</span></button>`).join("")}
         </div>
+      `;
+    }
+
+    function renderLiveRhythm() {
+      const m = metrics();
+      const control = validateState();
+      const sevenDayLoad = m.debt.dueSoonTotal + m.fixed.weeklyTotal;
+      const cashBreath = m.cashTotal + m.receivable - sevenDayLoad;
+      const openCustomerCount = m.customers.filter(c => c.receivable > 0).length;
+      const urgentJobs = m.jobs.urgent.length;
+      const stockRisk = m.lowCount + m.missingStockCostCount;
+      const focus = control.badCount
+        ? "Veri emniyeti"
+        : cashBreath < 0
+          ? "Tahsilat / ödeme"
+          : urgentJobs
+            ? "Teslim / üretim"
+            : stockRisk
+              ? "Stok kilidi"
+              : "Saha akışı";
+      const anchorKind = control.badCount ? "bad" : cashBreath < 0 ? "warn" : stockRisk || urgentJobs ? "info" : "good";
+      const percent = (value, base) => Math.max(8, Math.min(100, Math.round(Math.abs(Number(value || 0)) / Math.max(Math.abs(Number(base || 0)), 1) * 100)));
+      const cards = [
+        {
+          kind: cashBreath >= 0 ? "good" : "bad",
+          icon: "P",
+          label: "Nakit Nefes",
+          value: money(cashBreath),
+          note: cashBreath >= 0 ? `7 gün yük ${money(sevenDayLoad)} karşılanıyor.` : `${money(Math.abs(cashBreath))} açık için tahsilat öne alınmalı.`,
+          meter: percent(cashBreath, Math.max(sevenDayLoad, m.cashTotal, m.receivable))
+        },
+        {
+          kind: m.receivable > 0 ? "warn" : "good",
+          icon: "T",
+          label: "Tahsilat",
+          value: money(m.receivable),
+          note: openCustomerCount ? `${openCustomerCount} müşteri açıkta.` : "Açık müşteri görünmüyor.",
+          meter: percent(m.receivable, Math.max(m.receivable + m.cashTotal, sevenDayLoad))
+        },
+        {
+          kind: urgentJobs ? "bad" : m.jobs.open.length ? "warn" : "good",
+          icon: "U",
+          label: "Üretim",
+          value: `${m.jobs.open.length} iş`,
+          note: urgentJobs ? `${urgentJobs} acil/geciken iş var.` : "Açık iş teslim sırasına göre izleniyor.",
+          meter: percent(urgentJobs || m.jobs.open.length, Math.max(m.jobs.open.length, 1))
+        },
+        {
+          kind: stockRisk ? "bad" : "good",
+          icon: "#",
+          label: "Stok",
+          value: `${m.lowCount} kritik`,
+          note: m.missingStockCostCount ? `${m.missingStockCostCount} maliyet eksik.` : "Maliyet alarmı görünmüyor.",
+          meter: percent(stockRisk, Math.max(m.stockRows.length, 1))
+        }
+      ];
+      byId("liveRhythmStrip").innerHTML = `
+        <article class="rhythm-card anchor ${anchorKind}">
+          <div class="rhythm-top">
+            <div class="rhythm-label">Canlı Saha Nabzı</div>
+            <div class="rhythm-icon">M</div>
+          </div>
+          <div>
+            <div class="rhythm-value">${safe(focus)}</div>
+            <div class="rhythm-note">Skor ${control.score}/100 · ${safe(todayLabel)} · saha kokpiti aktif.</div>
+          </div>
+          <div class="rhythm-meter" style="--meter:${control.score}%"><span></span></div>
+        </article>
+        ${cards.map(card => `
+          <article class="rhythm-card ${card.kind}">
+            <div class="rhythm-top">
+              <div class="rhythm-label">${safe(card.label)}</div>
+              <div class="rhythm-icon">${safe(card.icon)}</div>
+            </div>
+            <div>
+              <div class="rhythm-value">${safe(card.value)}</div>
+              <div class="rhythm-note">${safe(card.note)}</div>
+            </div>
+            <div class="rhythm-meter" style="--meter:${card.meter}%"><span></span></div>
+          </article>
+        `).join("")}
       `;
     }
 
@@ -5138,6 +5377,19 @@
           text: `7 günlük yük ${money(sevenDayLoad)}. Gün kapatmadan gerçek kasa hareketi netleşsin.`,
           action: "Kasa Aç",
           view: "fixed"
+        });
+      }
+
+      if (actions.length < 3) {
+        addAction({
+          key: "new-order",
+          kind: "good",
+          tag: "Sipariş",
+          title: "Yeni işi sahada bekletme",
+          value: `${m.openOrders.length} açık`,
+          text: "Müşteri, ürün, kapora ve teslim tarihini aynı kayda bağla; akılda iş taşıma.",
+          action: "Sipariş Aç",
+          view: "entry"
         });
       }
 
@@ -7018,6 +7270,7 @@
       populateFormLists();
       renderSearchResults();
       renderCards();
+      renderLiveRhythm();
       renderActionCompass();
       renderMoves();
       renderTradeChannel("SATIS");

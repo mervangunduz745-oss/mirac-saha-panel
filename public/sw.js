@@ -1,4 +1,4 @@
-const CACHE_NAME = "mirac-erp-shell-v37";
+const CACHE_NAME = "mirac-erp-shell-v38";
 const APP_SHELL = [
   "/",
   "/index.html",

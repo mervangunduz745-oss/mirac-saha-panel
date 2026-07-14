@@ -1,6 +1,7 @@
 .firebase/
 backups/
 audit_*/
+output/
 bin/
 node_modules/
 __pycache__/
