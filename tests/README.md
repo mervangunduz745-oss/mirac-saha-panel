@@ -27,6 +27,14 @@ Uyarıları da başarısız saymak için:
 powershell -ExecutionPolicy Bypass -File .\outputs\mirac_erp_cloud\tests\run-tests.ps1 -StrictWarnings
 ```
 
+Yalnızca bu GitHub deposunda bulunan bulut paneli kaynaklarını doğrulamak için:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tests\run-tests.ps1 -CloudOnly -StrictWarnings
+```
+
+GitHub Actions bu depo-içi modu kullanır; repo dışındaki eski Excel/yerel panel kaynaklarına bağımlı değildir.
+
 ## Sonuç Kodları
 
 - `0`: engelleyici hata yok.
@@ -47,4 +55,3 @@ Manuel senaryolar yalnızca ayrı Firebase test projesi/emülatör, test hesabı
 - İşlem/borç/üretim kimlikleri cihazdan bağımsız ve çakışmaya dayanıklı olmalı; `array.length + 1` kullanılmamalı.
 - Toplam veri büyümesi tek belgeyi Firestore'un 1 MiB sınırına taşımamalı.
 - Panel, bulut adaptörü ve Firestore kuralları aynı alan ve hata sözleşmesini kullanmalı.
-
