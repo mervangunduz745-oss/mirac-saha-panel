@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
-  [switch]$StrictWarnings
+  [switch]$StrictWarnings,
+  [switch]$CloudOnly
 )
 
 Set-StrictMode -Version Latest
@@ -70,13 +71,13 @@ function Test-HtmlIds {
   param([string]$Html, [string]$Label)
   if ($null -eq $Html) { return }
 
-  $idPattern = @'
-\bid\s*=\s*["']([^"']+)["']
+  $idTagPattern = @'
+<[A-Za-z][^<>]*\bid\s*=\s*["']([^"']+)["'][^<>]*>
 '@
   $byIdPattern = @'
 byId\(\s*["']([^"']+)["']\s*\)
 '@
-  $ids = @([regex]::Matches($Html, $idPattern, "IgnoreCase") | ForEach-Object { $_.Groups[1].Value })
+  $ids = @([regex]::Matches($Html, $idTagPattern, "IgnoreCase") | ForEach-Object { $_.Groups[1].Value })
   $duplicates = $ids | Group-Object | Where-Object Count -gt 1 | Select-Object -ExpandProperty Name
   if ($duplicates) {
     Add-Result "FAIL" "HTML" "$Label benzersiz ID" ("Tekrarlanan ID: " + ($duplicates -join ", "))
@@ -172,17 +173,24 @@ $cloudConfigExamplePath = Join-Path $cloudPublic "firebase-config.js.example"
 $cloudConfigPath = Join-Path $cloudPublic "firebase-config.js"
 $rulesPath = Join-Path $cloudRoot "firestore.rules"
 
-$localHtml = Read-Source $localHtmlPath "Yerel panel HTML"
+$localHtml = $null
+$localBridge = $null
+if (-not $CloudOnly) {
+  $localHtml = Read-Source $localHtmlPath "Yerel panel HTML"
+  $localBridge = Read-Source $localBridgePath "Excel kopru"
+}
 $cloudHtml = Read-Source $cloudHtmlPath "Bulut panel HTML"
 $cloudAdapter = Read-Source $cloudAdapterPath "Firebase adaptor"
 $rules = Read-Source $rulesPath "Firestore kurallari"
-$localBridge = Read-Source $localBridgePath "Excel kopru"
 $configExample = Read-Source $cloudConfigExamplePath "Firebase ayar ornegi"
 
-foreach ($target in @(
-  @{ Label = "Yerel"; Html = $localHtml; Path = $localHtmlPath },
-  @{ Label = "Bulut"; Html = $cloudHtml; Path = $cloudHtmlPath }
-)) {
+$targets = @()
+if ($null -ne $localHtml) {
+  $targets += @{ Label = "Yerel"; Html = $localHtml; Path = $localHtmlPath }
+}
+$targets += @{ Label = "Bulut"; Html = $cloudHtml; Path = $cloudHtmlPath }
+
+foreach ($target in $targets) {
   if ($null -eq $target.Html) { continue }
   Add-PatternCheck $target.Html '<meta\s+name=["'']viewport["''][^>]*width=device-width' "Mobil" "$($target.Label) viewport" "Mobil viewport mevcut." "Mobil viewport eksik."
   Add-PatternCheck $target.Html '@media\s*\(\s*max-width\s*:\s*760px\s*\)' "Mobil" "$($target.Label) telefon kirilimi" "760px telefon kirilimi mevcut." "Telefon kirilimi bulunamadi."
@@ -193,15 +201,17 @@ foreach ($target in @(
   Add-PatternCheck $target.Html 'function\s+cancelTransaction\b[\s\S]*?backupState\([\s\S]*?status\s*=\s*["'']' "Silme" "$($target.Label) yumusak hareket iptali" "Hareket iptali yedek ve durum degisikligi kullaniyor." "Hareket iptali hard-delete riski tasiyor."
   Add-PatternCheck $target.Html 'function\s+payDebtPlan\b[\s\S]*?payAmount\s*>\s*remaining[\s\S]*?type\s*:\s*["'']BORC_ODEME["'']' "Borc" "$($target.Label) kismi odeme" "Fazla odeme engeli ve bagli odeme hareketi mevcut." "Kismi odeme korumalari eksik."
   Add-PatternCheck $target.Html 'function\s+addOrder\b[\s\S]*?state\.transactions\.push\(tx\)[\s\S]*?state\.productionJobs\.push\(job\)' "Siparis" "$($target.Label) siparis-uretim bagi" "Siparis ve uretim isi birlikte olusturuluyor." "Siparis-uretim bagi eksik."
-  Add-PatternCheck $target.Html 'low\s*:\s*Number\(item\.min[\s\S]*?<=\s*Number\(item\.min' "Stok" "$($target.Label) minimum alarmi" "Minimuma esit ve altinda stok alarmi var." "Stok minimum alarmi bulunamadi."
+  Add-PatternCheck $target.Html 'low\s*:\s*[^\r\n]*<=\s*Number\(item\.min' "Stok" "$($target.Label) minimum alarmi" "Minimuma esit ve altinda stok alarmi var." "Stok minimum alarmi bulunamadi."
   Test-HtmlIds $target.Html $target.Label
   Test-LocalAssets $target.Html $target.Path $target.Label
   Test-JavaScriptSyntax $target.Html $target.Label
 }
 
-Add-PatternCheck $localHtml 'async\s+function\s+pushStateToExcel[\s\S]*?/api/state[\s\S]*?method\s*:\s*["'']POST' "Yerel senkron" "Excel push" "Excel state POST hatti mevcut." "Excel push hatti eksik."
-Add-PatternCheck $localHtml 'async\s+function\s+pullStateFromExcel[\s\S]*?backupState\([\s\S]*?saveState\(\{\s*sync\s*:\s*false\s*\}\)' "Yerel senkron" "Excel pull guvenligi" "Pull oncesi yedek ve dongu engeli mevcut." "Excel pull yedek/dongu korumasi eksik."
-Add-PatternCheck $localBridge 'threading\.Lock\(\)[\s\S]*?with\s+LOCK[\s\S]*?write_workbook_state' "Yerel senkron" "Excel yazma kilidi" "Kopru yazmalari process ici kilitliyor." "Excel koprude yazma kilidi bulunamadi."
+if (-not $CloudOnly) {
+  Add-PatternCheck $localHtml 'async\s+function\s+pushStateToExcel[\s\S]*?/api/state[\s\S]*?method\s*:\s*["'']POST' "Yerel senkron" "Excel push" "Excel state POST hatti mevcut." "Excel push hatti eksik."
+  Add-PatternCheck $localHtml 'async\s+function\s+pullStateFromExcel[\s\S]*?backupState\([\s\S]*?saveState\(\{\s*sync\s*:\s*false\s*\}\)' "Yerel senkron" "Excel pull guvenligi" "Pull oncesi yedek ve dongu engeli mevcut." "Excel pull yedek/dongu korumasi eksik."
+  Add-PatternCheck $localBridge 'threading\.Lock\(\)[\s\S]*?with\s+LOCK[\s\S]*?write_workbook_state' "Yerel senkron" "Excel yazma kilidi" "Kopru yazmalari process ici kilitliyor." "Excel koprude yazma kilidi bulunamadi."
+}
 
 Add-PatternCheck $cloudHtml 'type=["'']module["''][\s\S]*?firebase-cloud\.js' "Bulut" "Firebase modul baglantisi" "Bulut panel Firebase adaptorunu modul olarak yukluyor." "Firebase adaptor panel HTML'ine bagli degil."
 Add-PatternCheck $cloudHtml 'signInWithEmailAndPassword|cloud\.signIn' "Login" "Firebase login" "Bulut panel Firebase e-posta/parola login kullaniyor." "Bulut panel Firebase login kullanmiyor."
