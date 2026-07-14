@@ -226,8 +226,7 @@
       cursor: pointer;
       font-weight: 750;
     }
-    .nav button.active,
-    .nav button:hover {
+    .nav button.active {
       background: #111827;
       color: #fff;
       box-shadow: 0 14px 28px rgba(17, 24, 39, .17);
@@ -343,11 +342,6 @@
       transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease;
       touch-action: manipulation;
     }
-    .btn:hover {
-      border-color: #9cafcc;
-      box-shadow: 0 12px 24px rgba(18, 33, 61, .10);
-      transform: translateY(-1px);
-    }
     .btn.primary {
       background: var(--nav);
       color: #fff;
@@ -357,10 +351,6 @@
       color: var(--red);
       background: #fff7f7;
       border-color: #ffd3d3;
-    }
-    .btn.danger:hover {
-      background: #ffecec;
-      border-color: #ffadad;
     }
     .btn.compact-action {
       min-height: 36px;
@@ -907,12 +897,6 @@
       box-shadow: 0 8px 18px rgba(18, 33, 61, .05);
       transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease, background .16s ease;
     }
-    .quick-action:hover {
-      border-color: #7e93b4;
-      background: #f6f9ff;
-      box-shadow: 0 12px 24px rgba(18, 33, 61, .12);
-      transform: translateY(-1px);
-    }
     .quick-action strong {
       font-size: 14px;
     }
@@ -939,7 +923,6 @@
       box-shadow: 0 8px 18px rgba(18, 33, 61, .05);
       transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
     }
-    .stock-mode:hover,
     .stock-mode.active {
       border-color: #0f766e;
       box-shadow: 0 14px 28px rgba(15, 118, 110, .16);
@@ -974,11 +957,6 @@
       padding: 0 12px;
       font-weight: 800;
       font-size: 12px;
-    }
-    .preset-chip:hover,
-    .stock-family-action:hover {
-      background: #eaf3ff;
-      border-color: #8bb8f5;
     }
     .stock-family-grid {
       display: grid;
@@ -1783,8 +1761,7 @@
       border: 1px solid transparent;
       transition: transform .16s ease, background .16s ease, color .16s ease, border-color .16s ease;
     }
-    body:not(.auth-locked) .nav button.active,
-    body:not(.auth-locked) .nav button:hover {
+    body:not(.auth-locked) .nav button.active {
       border-color: #0b1220;
       background: linear-gradient(135deg, #07111f, #123f78);
       color: #fff;
@@ -1796,9 +1773,6 @@
       border-color: #07111f;
       color: #fff;
       box-shadow: 0 14px 30px rgba(0, 94, 214, .22);
-    }
-    body:not(.auth-locked) .btn.primary:hover {
-      box-shadow: 0 18px 38px rgba(0, 94, 214, .30);
     }
     body:not(.auth-locked) .search,
     body:not(.auth-locked) input,
@@ -1878,7 +1852,6 @@
       border-color: #9fb2cd;
       background: #fff;
     }
-    body:not(.auth-locked) .quick-action:hover,
     body:not(.auth-locked) .mobile-command-bar button:active {
       border-color: #0067d8;
       background: #e8f2ff;
@@ -1966,8 +1939,7 @@
       line-height: 1;
       box-shadow: inset 0 0 0 1px rgba(0, 103, 216, .18);
     }
-    body:not(.auth-locked) .nav button.active::before,
-    body:not(.auth-locked) .nav button:hover::before {
+    body:not(.auth-locked) .nav button.active::before {
       background: #dff9ea;
       color: #005b3b;
       box-shadow: inset 0 0 0 1px rgba(0, 184, 117, .34);
@@ -2054,13 +2026,201 @@
       justify-self: end;
       margin-top: -4px;
     }
+
+    /* Karar canlılığı: derin fon + ölçülü geri bildirim; veri ve alarm anlamları sabit. */
+    @keyframes decisionAmbientDrift {
+      from { opacity: .34; transform: translate3d(-4px, -4px, 0); }
+      to { opacity: .48; transform: translate3d(4px, 4px, 0); }
+    }
+    body:not(.auth-locked) .content::before {
+      z-index: 0;
+      opacity: .82;
+      background:
+        linear-gradient(rgba(62, 83, 121, .032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(62, 83, 121, .032) 1px, transparent 1px),
+        radial-gradient(circle at 18% 3%, rgba(109, 76, 255, .13), transparent 34%),
+        radial-gradient(circle at 82% 16%, rgba(0, 103, 216, .11), transparent 30%);
+      background-size: 56px 56px, 56px 56px, auto, auto;
+    }
+    body:not(.auth-locked) .content::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      top: 92px;
+      right: -170px;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(109, 76, 255, .24), rgba(0, 103, 216, .12) 44%, transparent 70%);
+      filter: blur(34px);
+      animation: decisionAmbientDrift 8s ease-in-out infinite alternate;
+    }
+    body:not(.auth-locked) #actionCompass {
+      position: relative;
+      isolation: isolate;
+    }
+    body:not(.auth-locked) #actionCompass::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: -10px;
+      border-radius: 16px;
+      pointer-events: none;
+      background: radial-gradient(circle at 18% 15%, rgba(109, 76, 255, .20), transparent 44%);
+      filter: blur(16px);
+    }
+    body:not(.auth-locked) #actionCompass > * { position: relative; z-index: 1; }
+    body:not(.auth-locked) #actionCompass .action-compass-lead {
+      background:
+        radial-gradient(circle at 88% 10%, rgba(109, 76, 255, .20), transparent 36%),
+        linear-gradient(135deg, #fff, #edf5ff 58%, #f2efff);
+      box-shadow: 0 24px 54px rgba(49, 46, 129, .22);
+    }
+    body:not(.auth-locked) #actionCompass .action-compass-stack {
+      background: radial-gradient(circle at 94% 8%, rgba(109, 76, 255, .09), transparent 34%), #fff;
+      box-shadow: 0 18px 40px rgba(18, 33, 61, .14);
+    }
+    body:not(.auth-locked) .action-compass-lead-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    body:not(.auth-locked) #kpiCards .command-kpi {
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 8px 20px rgba(18, 33, 61, .08);
+    }
+    body:not(.auth-locked) #dashboardQuickActions {
+      border-top-color: #00a86b;
+      background: radial-gradient(circle at 92% 12%, rgba(109, 76, 255, .10), transparent 34%), #fff;
+      box-shadow: 0 16px 36px rgba(18, 33, 61, .12);
+    }
+    body:not(.auth-locked) #dashboard .dashboard-layout .panel,
+    body:not(.auth-locked) #secondaryCards .command-panel,
+    body:not(.auth-locked) #dailyFlow,
+    body:not(.auth-locked) #automationGrid .automation-card {
+      box-shadow: 0 7px 18px rgba(18, 33, 61, .07);
+    }
+    body:not(.auth-locked) .btn.primary {
+      border-color: #243a8f;
+      background: linear-gradient(120deg, #06101f, #005ed6 52%, #6d4cff);
+      background-size: 180% 100%;
+      box-shadow: 0 12px 28px rgba(65, 64, 196, .23);
+    }
+    body:not(.auth-locked) :is(.action-card, .quick-action, .btn, .nav button) {
+      transition: transform .2s cubic-bezier(.2, .8, .2, 1), box-shadow .2s ease, border-color .2s ease, background .2s ease, background-position .24s ease, filter .2s ease;
+    }
+    body:not(.auth-locked) .quick-action[data-icon]::before {
+      transition: transform .2s cubic-bezier(.2, .8, .2, 1);
+    }
+    body:not(.auth-locked) :is(.btn, .quick-action, .nav button, .stock-mode, .preset-chip, .stock-family-action):focus-visible {
+      outline: 2px solid #4c3bb8;
+      outline-offset: 3px;
+      box-shadow: 0 0 0 4px rgba(0, 103, 216, .12);
+    }
+    body:not(.auth-locked) .action-card:focus-within {
+      outline: 2px solid rgba(109, 76, 255, .22);
+      outline-offset: 2px;
+    }
+    body:not(.auth-locked)::before,
+    body:not(.auth-locked) :is(.command-hero, .badge, .mobile-command-bar button.pulse),
+    body:not(.auth-locked) .rhythm-card::after {
+      animation: none;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      body:not(.auth-locked) .btn:hover {
+        border-color: rgba(109, 76, 255, .46);
+        box-shadow: 0 12px 26px rgba(44, 58, 130, .14);
+        transform: translateY(-1px);
+      }
+      body:not(.auth-locked) .btn.danger:hover {
+        background: #ffecec;
+        border-color: #ffadad;
+        box-shadow: 0 10px 22px rgba(210, 31, 60, .14);
+      }
+      body:not(.auth-locked) .stock-mode:hover {
+        border-color: #0f766e;
+        box-shadow: 0 14px 28px rgba(15, 118, 110, .16);
+        transform: translateY(-1px);
+      }
+      body:not(.auth-locked) :is(.preset-chip, .stock-family-action):hover {
+        background: #eaf3ff;
+        border-color: #8bb8f5;
+      }
+      body:not(.auth-locked) .nav button:hover {
+        border-color: rgba(109, 76, 255, .48);
+        background: linear-gradient(135deg, #06101f, #123f78 60%, #4c3bb8);
+        color: #fff;
+        box-shadow: 0 12px 26px rgba(49, 46, 129, .22);
+        transform: translateX(3px);
+      }
+      body:not(.auth-locked) .nav button:hover::before {
+        background: #e9e5ff;
+        color: #4c3bb8;
+      }
+      body:not(.auth-locked) .btn.primary:hover {
+        border-color: rgba(143, 120, 255, .50);
+        background-position: 100% 50%;
+        box-shadow: 0 16px 36px rgba(88, 74, 214, .32);
+      }
+      body:not(.auth-locked) .quick-action:hover {
+        border-color: rgba(109, 76, 255, .48);
+        background: linear-gradient(135deg, #fff, #f1efff);
+        box-shadow: 0 12px 26px rgba(73, 65, 170, .14);
+        transform: translateY(-2px);
+      }
+      body:not(.auth-locked) .quick-action[data-icon]:hover::before { transform: translateX(3px); }
+      body:not(.auth-locked) .action-card:hover {
+        border-top-color: rgba(109, 76, 255, .48);
+        border-right-color: rgba(109, 76, 255, .48);
+        border-bottom-color: rgba(109, 76, 255, .48);
+        filter: drop-shadow(0 9px 12px rgba(65, 64, 196, .13));
+        transform: translateY(-2px);
+      }
+      body:not(.auth-locked) .action-card.good:hover { filter: drop-shadow(0 9px 12px rgba(0, 143, 93, .16)); }
+      body:not(.auth-locked) .action-card.warn:hover { filter: drop-shadow(0 9px 12px rgba(212, 122, 0, .18)); }
+      body:not(.auth-locked) .action-card.bad:hover { filter: drop-shadow(0 9px 12px rgba(210, 31, 60, .18)); }
+    }
+    body:not(.auth-locked) .btn.danger:focus-visible {
+      outline-color: #b01832;
+      box-shadow: 0 0 0 4px rgba(210, 31, 60, .12);
+    }
+    body:not(.auth-locked) :is(.btn, .quick-action, .nav button):active { transform: scale(.98); }
+    @media (max-width: 760px) {
+      body:not(.auth-locked) .content::before { opacity: .58; }
+      body:not(.auth-locked) .content::after {
+        right: -150px;
+        width: 280px;
+        height: 280px;
+        opacity: .28;
+      }
+      body:not(.auth-locked) #actionCompass::before { inset: -4px; }
+      body:not(.auth-locked) #actionCompass .action-compass-lead {
+        min-height: 0;
+        gap: 12px;
+        padding: 16px;
+      }
+      body:not(.auth-locked) #actionCompass .action-compass-stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+      }
+      body:not(.auth-locked) #actionCompass .action-compass-stat { padding: 7px; }
+      body:not(.auth-locked) #actionCompass .action-compass-stat strong { font-size: 12px; }
+      body:not(.auth-locked) #actionCompass .action-card {
+        min-height: 0;
+        padding: 12px;
+      }
+      body:not(.auth-locked) .action-compass-lead-actions .btn.primary { flex: 1 0 100%; }
+    }
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
         scroll-behavior: auto !important;
+      }
+      body:not(.auth-locked) .content::after,
+      body:not(.auth-locked) :is(.action-card, .quick-action, .btn, .nav button, .stock-mode) {
+        transform: none !important;
       }
     }
     @media (max-width: 1100px) {
@@ -2340,8 +2500,102 @@
       }
       table { min-width: 680px; }
     }
+    /* Mobil ilk karar: araçlar tek şeritte kalır, Pusula CTA ilk ekrana yaklaşır. */
+    @media (max-width: 760px) {
+      header {
+        width: 100%;
+        min-height: 60px;
+        max-width: 100%;
+        flex-wrap: nowrap;
+        gap: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 10px;
+        scrollbar-width: none;
+        overscroll-behavior-inline: contain;
+      }
+      header::-webkit-scrollbar { display: none; }
+      header .search {
+        flex: 0 0 220px;
+        min-width: 220px;
+        height: 42px;
+      }
+      header .btn {
+        flex: 0 0 auto;
+        min-width: max-content;
+        min-height: 42px;
+        padding: 0 11px;
+        font-size: 12px;
+      }
+      .content {
+        gap: 10px;
+        padding: 10px;
+      }
+      body:not(.auth-locked) .title-row {
+        display: block;
+        padding: 10px 12px;
+      }
+      body:not(.auth-locked) .title-row h1 {
+        font-size: 21px;
+        line-height: 1.1;
+      }
+      body:not(.auth-locked) .title-row .subtitle {
+        margin-top: 3px;
+        font-size: 12px;
+        line-height: 1.25;
+      }
+      body:not(.auth-locked) .title-row .cockpit-stamps { display: none; }
+      body:not(.auth-locked) .title-row .badge {
+        min-height: 28px;
+        margin-top: 6px;
+        padding: 0 9px;
+        font-size: 11px;
+      }
+      body:not(.auth-locked) #dashboard { gap: 12px; }
+      body:not(.auth-locked) #actionCompass .action-compass-lead {
+        gap: 8px;
+        padding: 12px;
+      }
+      body:not(.auth-locked) #actionCompass .action-compass-lead h2 {
+        margin-top: 4px;
+        font-size: 18px;
+        line-height: 1.12;
+      }
+      body:not(.auth-locked) #actionCompass .action-compass-lead p {
+        margin-top: 4px;
+        font-size: 11px;
+        line-height: 1.28;
+      }
+      body:not(.auth-locked) #actionCompass .action-compass-score strong { font-size: 28px; }
+      body:not(.auth-locked) #actionCompass .action-compass-stats { gap: 4px; }
+      body:not(.auth-locked) #actionCompass .action-compass-stat { padding: 5px; }
+      body:not(.auth-locked) #actionCompass .action-compass-stat span { font-size: 9px; }
+      body:not(.auth-locked) #actionCompass .action-compass-stat strong {
+        margin-top: 2px;
+        font-size: 11px;
+      }
+      body:not(.auth-locked) .action-compass-lead-actions {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 6px;
+      }
+      body:not(.auth-locked) .action-compass-lead-actions .btn,
+      body:not(.auth-locked) .action-compass-lead-actions .btn.primary {
+        min-width: 0;
+        min-height: 40px;
+        padding: 0 9px;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+    }
     @media print {
       body { background: #fff; }
+      body:not(.auth-locked) .content::before,
+      body:not(.auth-locked) .content::after,
+      body:not(.auth-locked) #actionCompass::before {
+        display: none !important;
+        animation: none !important;
+      }
       aside,
       header,
       .title-row,
@@ -2529,9 +2783,9 @@
         <div class="search-results hidden" id="searchResults"></div>
 
         <section class="tab-view active" id="dashboard">
+          <div class="action-compass" id="actionCompass"></div>
           <div class="command-board command-board-quiet" id="kpiCards"></div>
           <div class="live-rhythm-strip" id="liveRhythmStrip"></div>
-          <div class="action-compass" id="actionCompass"></div>
           <div class="quick-action-panel" id="dashboardQuickActions"></div>
           <div class="dashboard-layout dashboard-layout-quiet">
             <div class="panel">
@@ -5065,38 +5319,22 @@
       const m = metrics();
       const control = validateState();
       const sevenDayLoad = m.debt.dueSoonTotal + m.fixed.weeklyTotal;
-      const cashBreath = m.cashTotal + m.receivable - sevenDayLoad;
-      const pressure = Math.max(0, -cashBreath);
+      const realCashBreath = m.cashTotal - sevenDayLoad;
+      const collectionScenario = m.cashTotal + m.receivable - sevenDayLoad;
+      const pressure = Math.max(0, -realCashBreath);
       const netPosition = m.cashTotal + m.receivable - m.plannedPayable - m.debt.personalTotal;
       const openCustomerCount = m.customers.filter(c => c.receivable > 0).length;
       const openSupplierCount = m.suppliers.filter(c => c.payable > 0).length;
-      const hero = control.badCount
-        ? {
-            title: "Önce Veri Emniyeti",
-            text: `${control.badCount} ciddi tutarlılık uyarısı var. Yeni kayıt öncesi Kontrol / Denetim ekranı temizlenmeli.`,
-            kind: "bad"
-          }
-        : pressure > 0
-          ? {
-              title: "7 Günlük Nakit Nefes Açığı",
-              text: `${money(pressure)} seviyesinde yakın vade açığı görünüyor. Bugünün ağırlığı tahsilat, kasa ve ödeme önceliği.`,
-              kind: "warn"
-            }
-          : {
-              title: "Bugün Önce Para, Sonra Teslim, Sonra Stok",
-              text: "Kritik veri hatası görünmüyor. Tahsilat, teslim ve stok aksiyonlarını sahadaki sıraya göre işle.",
-              kind: "good"
-            };
 
       const kpis = [
-        ["Nakit Nefes", money(cashBreath), "Kasa + alacak - 7 gün yük", cashBreath >= 0 ? "good" : "bad"],
-        ["Tahsil Edilecek", money(m.receivable), `${openCustomerCount} açık müşteri`, m.receivable > 0 ? "warn" : "good"],
+        ["Gerçek Nakit Nefesi", money(realCashBreath), "Kasa - 7 gün yük", realCashBreath >= 0 ? "good" : "bad"],
+        ["Tahsilatlı Senaryo", money(collectionScenario), `${openCustomerCount} açık müşteri tahsil edilirse`, collectionScenario >= 0 ? "good" : "bad"],
         ["Ticari Borç", money(m.plannedPayable), `${openSupplierCount} cari + ${m.debt.commercialOpen.length} plan`, m.plannedPayable > 0 ? "bad" : "good"],
         ["Net Pozisyon", money(netPosition), "Nakit + alacak - borç", netPosition >= 0 ? "good" : "bad"]
       ];
       const priorityRows = [];
       if (control.badCount) priorityRows.push(["Önce denetim", `${control.badCount} ciddi kontrol uyarısı var. Kontrol / Denetim ekranına bak.`]);
-      if (pressure > 0) priorityRows.push(["Nakit nefesi aç", `${money(pressure)} yakın vade açığı için tahsilat ve kasa kontrolü öne alınmalı.`]);
+      if (pressure > 0) priorityRows.push(["Gerçek nakit nefesini aç", `${money(pressure)} kasa açığı var; tahsilatlı senaryo ${money(collectionScenario)}.`]);
       if (m.debt.dueSoonTotal > 0) priorityRows.push(["Yakın ödeme takibi", `${money(m.debt.dueSoonTotal)} yakın vade yükü ödeme planında izlenmeli.`]);
       if (m.receivable > 0) priorityRows.push(["Tahsilat listesi", `${openCustomerCount} müşteri için ${money(m.receivable)} açık alacak görünüyor.`]);
       if (m.openOrders.length) priorityRows.push(["Teslim disiplini", `${m.openOrders.length} açık sipariş üretim ve teslim takibinde tutulmalı.`]);
@@ -5108,17 +5346,6 @@
         ["Gün sonu kontrolü", "Kasa, banka ve POS hareketlerini kapatmadan çıkma."]
       );
       byId("kpiCards").innerHTML = `
-        <section class="command-hero">
-          <div>
-            <div class="label">Bugünün Ticari Kontrol Merkezi</div>
-            <h2>${hero.title}</h2>
-            <p>${hero.text}</p>
-          </div>
-          <div class="command-hero-footer">
-            <div class="command-hero-stat"><span>Denetim Skoru</span><strong>${control.score}/100</strong></div>
-            <div class="command-hero-stat"><span>Yakın Vade</span><strong>${money(m.debt.dueSoonTotal)}</strong></div>
-          </div>
-        </section>
         <section class="command-kpis">
           ${kpis.map(([label, value, hint, kind]) => `
             <article class="command-kpi ${kind}">
@@ -5186,37 +5413,38 @@
       const m = metrics();
       const control = validateState();
       const sevenDayLoad = m.debt.dueSoonTotal + m.fixed.weeklyTotal;
-      const cashBreath = m.cashTotal + m.receivable - sevenDayLoad;
+      const realCashBreath = m.cashTotal - sevenDayLoad;
+      const collectionScenario = m.cashTotal + m.receivable - sevenDayLoad;
       const openCustomerCount = m.customers.filter(c => c.receivable > 0).length;
       const urgentJobs = m.jobs.urgent.length;
       const stockRisk = m.lowCount + m.missingStockCostCount;
       const focus = control.badCount
         ? "Veri emniyeti"
-        : cashBreath < 0
+        : realCashBreath < 0
           ? "Tahsilat / ödeme"
           : urgentJobs
             ? "Teslim / üretim"
             : stockRisk
               ? "Stok kilidi"
               : "Saha akışı";
-      const anchorKind = control.badCount ? "bad" : cashBreath < 0 ? "warn" : stockRisk || urgentJobs ? "info" : "good";
+      const anchorKind = control.badCount ? "bad" : realCashBreath < 0 ? "warn" : stockRisk || urgentJobs ? "info" : "good";
       const percent = (value, base) => Math.max(8, Math.min(100, Math.round(Math.abs(Number(value || 0)) / Math.max(Math.abs(Number(base || 0)), 1) * 100)));
       const cards = [
         {
-          kind: cashBreath >= 0 ? "good" : "bad",
+          kind: realCashBreath >= 0 ? "good" : "bad",
           icon: "P",
-          label: "Nakit Nefes",
-          value: money(cashBreath),
-          note: cashBreath >= 0 ? `7 gün yük ${money(sevenDayLoad)} karşılanıyor.` : `${money(Math.abs(cashBreath))} açık için tahsilat öne alınmalı.`,
-          meter: percent(cashBreath, Math.max(sevenDayLoad, m.cashTotal, m.receivable))
+          label: "Gerçek Nakit",
+          value: money(realCashBreath),
+          note: realCashBreath >= 0 ? `Kasa 7 gün yükü karşılıyor.` : `${money(Math.abs(realCashBreath))} gerçek kasa açığı var.`,
+          meter: percent(realCashBreath, Math.max(sevenDayLoad, m.cashTotal))
         },
         {
-          kind: m.receivable > 0 ? "warn" : "good",
+          kind: collectionScenario >= 0 ? "good" : "warn",
           icon: "T",
-          label: "Tahsilat",
-          value: money(m.receivable),
-          note: openCustomerCount ? `${openCustomerCount} müşteri açıkta.` : "Açık müşteri görünmüyor.",
-          meter: percent(m.receivable, Math.max(m.receivable + m.cashTotal, sevenDayLoad))
+          label: "Tahsilatlı Senaryo",
+          value: money(collectionScenario),
+          note: openCustomerCount ? `${openCustomerCount} müşteriden ${money(m.receivable)} tahsil edilirse.` : "Açık alacak görünmüyor.",
+          meter: percent(collectionScenario, Math.max(m.receivable + m.cashTotal, sevenDayLoad))
         },
         {
           kind: urgentJobs ? "bad" : m.jobs.open.length ? "warn" : "good",
@@ -5279,9 +5507,11 @@
       const m = metrics();
       const control = validateState();
       const sevenDayLoad = m.debt.dueSoonTotal + m.fixed.weeklyTotal;
-      const cashBreath = m.cashTotal + m.receivable - sevenDayLoad;
-      const pressure = Math.max(0, -cashBreath);
-      const collectionTarget = Math.max(0, sevenDayLoad - m.cashTotal);
+      const realCashBreath = m.cashTotal - sevenDayLoad;
+      const collectionScenario = m.cashTotal + m.receivable - sevenDayLoad;
+      const cashGap = Math.max(0, -realCashBreath);
+      const collectionTarget = Math.min(cashGap, m.receivable);
+      const collectionCoverage = cashGap > 0 ? Math.min(1, m.receivable / cashGap) : 0;
       const topCustomers = topMoneyRows(m.customers, "receivable");
       const topSuppliers = topMoneyRows(m.suppliers, "payable");
       const dueDebtRows = m.debt.priorityRows
@@ -5303,6 +5533,8 @@
       if (control.badCount) {
         addAction({
           key: "control",
+          priority: 10,
+          score: 100 + Math.min(20, control.badCount * 4),
           kind: "bad",
           tag: "Emniyet",
           title: "Önce kayıt sağlığını kilitle",
@@ -5311,22 +5543,40 @@
           action: "Denetime Git",
           view: "control"
         });
+        if (!canOpenView("control")) {
+          addAction({
+            key: "control-escalation",
+            priority: 10,
+            score: 119,
+            kind: "bad",
+            tag: "Emniyet",
+            title: "Yeni işlem açma, yetkiliye bildir",
+            value: `${control.badCount} ciddi`,
+            text: `${control.badCount} ciddi ve ${control.warnCount} takip uyarısını yetkiliye ilet; kayıt emniyeti görülmeden devam etme.`,
+            action: "Özeti Kopyala",
+            copy: true
+          });
+        }
       }
 
-      if (collectionTarget > 0 && topCustomers.length) {
+      if (cashGap > 0 && m.receivable > 0 && topCustomers.length) {
         addAction({
           key: "collection",
-          kind: pressure > 0 ? "bad" : "warn",
+          priority: 20,
+          score: 85 + Math.round(collectionCoverage * 10),
+          kind: collectionScenario < 0 ? "bad" : "warn",
           tag: "Tahsilat",
-          title: pressure > 0 ? "Nefes açığı tahsilatla kapanır" : "Yakın vadeyi tahsilatla rahatlat",
-          value: money(Math.min(collectionTarget, m.receivable)),
-          text: `${namedMoneyList(topCustomers, "name", "receivable")}. Bugün arama ve ödeme sözü öncelikli.`,
+          title: collectionScenario < 0 ? "Tahsilat açığı azaltır, tek başına kapatmaz" : "Gerçek nakit açığını tahsilatla kapat",
+          value: money(collectionTarget),
+          text: `${namedMoneyList(topCustomers, "name", "receivable")}. Tahsilatlı 7 gün senaryosu ${money(collectionScenario)}.`,
           action: "Cariyi Aç",
           view: "cari"
         });
       } else if (m.receivable > 0 && topCustomers.length) {
         addAction({
           key: "collection-soft",
+          priority: 50,
+          score: 50 + Math.min(20, topCustomers.length * 4),
           kind: "warn",
           tag: "Fırsat",
           title: "Açık alacağı sıcak tut",
@@ -5348,6 +5598,8 @@
             : "yakın borç kaydı yok";
         addAction({
           key: "payment",
+          priority: 20,
+          score: 80 + Math.min(15, dueDebtRows.length * 4 + fixedDueRows.length * 2),
           kind: m.debt.dueSoonTotal > m.cashTotal ? "bad" : "warn",
           tag: "Ödeme",
           title: "Ödeme sırasını bugünden netleştir",
@@ -5364,6 +5616,8 @@
           : `${m.openOrders.length} açık sipariş var`;
         addAction({
           key: "production",
+          priority: urgentJobs.length ? 30 : 60,
+          score: urgentJobs.length ? 75 + Math.min(15, urgentJobs.length * 4) : 42 + Math.min(12, m.openOrders.length),
           kind: urgentJobs.length ? "bad" : "warn",
           tag: "Teslim",
           title: "Teslimden para doğur",
@@ -5380,6 +5634,8 @@
           : `${m.missingStockCostCount} kartta maliyet eksik`;
         addAction({
           key: "stock",
+          priority: 40,
+          score: 68 + Math.min(20, stockRiskRows.length * 4 + m.missingStockCostCount * 2),
           kind: stockRiskRows.length ? "bad" : "warn",
           tag: "Stok",
           title: "Stok kilidini üretimden önce çöz",
@@ -5390,22 +5646,44 @@
         });
       }
 
-      if (actions.length < 3) {
+      const hasAccessibleMoneyAction = () => actions.some(row =>
+        ["collection", "payment", "cash"].includes(row.key) &&
+        (!row.view || canOpenView(row.view))
+      );
+      if (!hasAccessibleMoneyAction()) {
         addAction({
           key: "cash",
-          kind: cashBreath >= 0 ? "good" : "warn",
+          priority: cashGap > 0 ? 20 : 60,
+          score: cashGap > 0 ? 78 : 35,
+          kind: realCashBreath >= 0 ? "good" : "warn",
           tag: "Para",
-          title: "Kasa, banka ve POS nefesini say",
+          title: "Kasa, banka ve POS sayımını kapat",
           value: money(m.cashTotal),
-          text: `7 günlük yük ${money(sevenDayLoad)}. Gün kapatmadan gerçek kasa hareketi netleşsin.`,
+          text: `Gerçek 7 gün nefesi ${money(realCashBreath)}. Gün kapatmadan kasa hareketi netleşsin.`,
           action: "Kasa Aç",
           view: "fixed"
         });
       }
+      if (cashGap > 0 && !hasAccessibleMoneyAction()) {
+        addAction({
+          key: "cash-escalation",
+          priority: 20,
+          score: 118,
+          kind: collectionScenario < 0 ? "bad" : "warn",
+          tag: "Para / Yetki",
+          title: "Nakit açığını yetkiliye bildir",
+          value: money(cashGap),
+          text: `Gerçek 7 gün nefesi ${money(realCashBreath)}, tahsilatlı senaryo ${money(collectionScenario)}. Erişebildiğin finans aksiyonu yok; özeti yetkiliye ilet.`,
+          action: "Özeti Kopyala",
+          copy: true
+        });
+      }
 
-      if (actions.length < 3) {
+      if (!control.badCount && cashGap <= 0) {
         addAction({
           key: "new-order",
+          priority: 80,
+          score: 20,
           kind: "good",
           tag: "Sipariş",
           title: "Yeni işi sahada bekletme",
@@ -5416,49 +5694,56 @@
         });
       }
 
-      if (actions.length < 3) {
-        addAction({
-          key: "report",
-          kind: "good",
-          tag: "Rapor",
-          title: "Gün sonu kararını yazıya al",
-          value: `${control.score}/100`,
-          text: "Kasa, cari, stok ve üretim özeti tek metin olarak paylaşılabilir.",
-          action: "Kopyala",
-          copy: true
-        });
-      }
+      addAction({
+        key: "report",
+        priority: 90,
+        score: 10,
+        kind: "good",
+        tag: "Rapor",
+        title: "Gün sonu kararını yazıya al",
+        value: `${control.score}/100`,
+        text: "Kasa, cari, stok ve üretim özeti tek metin olarak paylaşılabilir.",
+        action: "Kopyala",
+        copy: true
+      });
+
+      const rankedActions = actions
+        .slice()
+        .filter(card => card.copy || !card.view || canOpenView(card.view))
+        .sort((a, b) => a.priority - b.priority || b.score - a.score || (a.key < b.key ? -1 : a.key > b.key ? 1 : 0))
+        .slice(0, 3);
 
       let score = control.score;
-      if (pressure > 0) score -= 16;
-      else if (collectionTarget > 0) score -= 8;
+      if (cashGap > 0) score -= collectionScenario < 0 ? 18 : 10;
       if (m.debt.dueSoonTotal > 0) score -= 6;
       if (m.lowCount) score -= Math.min(12, m.lowCount * 3);
       if (urgentJobs.length) score -= Math.min(12, urgentJobs.length * 4);
       score = Math.max(0, Math.min(100, Math.round(score)));
       const kind = score >= 75 ? "good" : score >= 50 ? "warn" : "bad";
-      const title = control.badCount
-        ? "Sistem freni: önce kayıt emniyeti"
-        : pressure > 0
-          ? "Bugünün ana oyunu: tahsilatla nefes aç"
-          : urgentJobs.length
-            ? "Teslim ve üretim kilidini çöz"
-            : m.lowCount
-              ? "Stok kilidini kapat, satışı kör bırakma"
-              : "Akış açık: fırsatı kayda çevir";
-      const text = pressure > 0
-        ? `${money(pressure)} nakit nefes açığı var. Pusula tahsilat, ödeme sırası ve teslim kilidine odaklandı.`
-        : `Nakit nefesi ${money(cashBreath)}. Pusula bugünün en hızlı iş etkisini öne alıyor.`;
+      const leadAction = rankedActions[0];
+      const titleByAction = {
+        control: "Sistem freni: önce kayıt emniyeti",
+        "control-escalation": "Sistem freni: önce kayıt emniyeti",
+        "cash-escalation": "Gerçek nakit açığı: yetkili kararı gerekli",
+        payment: "Ödeme sırasını bugünden netleştir",
+        cash: "Kasa, banka ve POS sayımını kapat",
+        production: "Teslim ve üretim kilidini çöz",
+        stock: "Stok kilidini kapat, satışı kör bırakma",
+        "new-order": "Akış açık: yeni işi kayda çevir",
+        report: "Gün sonu kararını yazıya al"
+      };
+      const title = titleByAction[leadAction.key] || leadAction.title;
+      const text = leadAction.text;
 
       return {
         score,
         kind,
         title,
         text,
-        actions: actions.slice(0, 3),
+        actions: rankedActions,
         stats: [
-          ["Nefes", money(cashBreath)],
-          ["Tahsilat", money(m.receivable)],
+          ["Gerçek nefes", money(realCashBreath)],
+          ["Tahsilatlı", money(collectionScenario)],
           ["7 gün yük", money(sevenDayLoad)]
         ]
       };
@@ -5476,6 +5761,10 @@
 
     function renderActionCompass() {
       const plan = actionCompassPlan();
+      const firstAction = plan.actions[0];
+      const firstActionTarget = firstAction.copy
+        ? "data-copy-compass"
+        : `data-jump-view="${safe(firstAction.view)}"`;
       byId("actionCompass").innerHTML = `
         <section class="action-compass-lead ${plan.kind}">
           <div>
@@ -5487,12 +5776,15 @@
           <div class="action-compass-stats">
             ${plan.stats.map(([label, value]) => `<div class="action-compass-stat"><span>${safe(label)}</span><strong>${safe(value)}</strong></div>`).join("")}
           </div>
-          <button class="btn primary" type="button" data-copy-compass>3 Hamleyi Kopyala</button>
+          <div class="action-compass-lead-actions">
+            <button class="btn primary" type="button" ${firstActionTarget}>${safe(firstAction.action)}</button>
+            <button class="btn" type="button" data-copy-compass>${plan.actions.length} Hamleyi Kopyala</button>
+          </div>
         </section>
         <section class="action-compass-stack">
           <div class="action-compass-head">
             <div>
-              <h3>Bugünün 3 Hamlesi</h3>
+              <h3>Bugünün ${plan.actions.length} Hamlesi</h3>
               <div class="hint">Panel veriyi okur, sahadaki sırayı kısaltır.</div>
             </div>
             <span class="status ${plan.kind === "bad" ? "bad" : plan.kind === "warn" ? "warn" : "ok"}">Akıllı sıra</span>
