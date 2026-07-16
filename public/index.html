@@ -2588,6 +2588,244 @@
         white-space: nowrap;
       }
     }
+    /* Lovable-inspired interface: quiet canvas, crisp hierarchy, one violet accent. */
+    :root {
+      --lv-bg: #f5f6fa;
+      --lv-surface: rgba(255, 255, 255, .94);
+      --lv-line: #e5e7ef;
+      --lv-text: #161823;
+      --lv-muted: #6f7380;
+      --lv-violet: #6d4aff;
+      --lv-violet-dark: #5138d8;
+      --lv-violet-soft: #f0edff;
+      --lv-green: #087f5b;
+      --lv-shadow: 0 14px 34px rgba(24, 28, 44, .075);
+    }
+    body:not(.auth-locked) {
+      color: var(--lv-text);
+      background: var(--lv-bg);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body:not(.auth-locked) .app {
+      background:
+        radial-gradient(circle at 74% -8%, rgba(109, 74, 255, .10), transparent 28%),
+        var(--lv-bg);
+    }
+    body:not(.auth-locked) aside {
+      border-right: 0;
+      background: linear-gradient(180deg, #121420 0%, #191b2b 100%);
+      box-shadow: 16px 0 42px rgba(18, 20, 32, .08);
+    }
+    body:not(.auth-locked) aside .brand,
+    body:not(.auth-locked) aside .brand strong,
+    body:not(.auth-locked) aside .brand span { color: #fff; }
+    body:not(.auth-locked) .nav button {
+      border: 1px solid transparent;
+      border-radius: 12px;
+      color: #aeb2c2;
+      background: transparent;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) .nav button::before {
+      color: #c6cad8;
+      background: rgba(255, 255, 255, .07);
+      box-shadow: none;
+    }
+    body:not(.auth-locked) .nav button.active {
+      color: #fff;
+      border-color: rgba(255, 255, 255, .08);
+      background: linear-gradient(135deg, rgba(109, 74, 255, .96), rgba(85, 54, 220, .92));
+      box-shadow: 0 12px 26px rgba(75, 51, 190, .28);
+    }
+    body:not(.auth-locked) header {
+      border-bottom: 1px solid rgba(229, 231, 239, .9);
+      background: rgba(250, 250, 252, .86);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    body:not(.auth-locked) .content::before,
+    body:not(.auth-locked) .content::after,
+    body:not(.auth-locked) #actionCompass::before { display: none; }
+    body:not(.auth-locked) .title-row {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) .title-row h1 {
+      color: var(--lv-text);
+      letter-spacing: -.035em;
+    }
+    body:not(.auth-locked) .subtitle,
+    body:not(.auth-locked) .hint { color: var(--lv-muted); }
+    body:not(.auth-locked) :is(.panel, .card, .command-panel, .quick-action-panel, .rhythm-card, .automation-card) {
+      border: 1px solid var(--lv-line);
+      border-radius: 18px;
+      background: var(--lv-surface);
+      box-shadow: var(--lv-shadow);
+    }
+    body:not(.auth-locked) .panel-head h2 {
+      color: var(--lv-text);
+      font-size: 18px;
+      letter-spacing: -.025em;
+    }
+    body:not(.auth-locked) .status {
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 10px;
+      letter-spacing: .02em;
+      text-transform: none;
+    }
+    body:not(.auth-locked) :is(input, select, textarea, .search) {
+      border-color: #dddfea;
+      border-radius: 11px;
+      color: var(--lv-text);
+      background: #fbfbfd;
+      box-shadow: inset 0 1px 2px rgba(21, 24, 35, .025);
+    }
+    body:not(.auth-locked) :is(input, select, textarea, .search):focus-within,
+    body:not(.auth-locked) :is(input, select, textarea):focus {
+      border-color: rgba(109, 74, 255, .62);
+      outline: 0;
+      box-shadow: 0 0 0 4px rgba(109, 74, 255, .10);
+    }
+    body:not(.auth-locked) .btn {
+      border-color: #dddfea;
+      border-radius: 11px;
+      color: #2f3341;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(21, 24, 35, .045);
+    }
+    body:not(.auth-locked) .btn.primary {
+      border-color: transparent;
+      color: #fff;
+      background: linear-gradient(135deg, var(--lv-violet), var(--lv-violet-dark));
+      box-shadow: 0 10px 24px rgba(109, 74, 255, .24);
+    }
+    body:not(.auth-locked) table {
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    body:not(.auth-locked) th {
+      color: #7b7f8d;
+      background: #f8f8fb;
+      font-size: 10px;
+      letter-spacing: .045em;
+      text-transform: uppercase;
+    }
+    body:not(.auth-locked) td { border-color: #ececf2; }
+    body:not(.auth-locked) #actionCompass .action-compass-lead {
+      color: #fff;
+      border: 0;
+      background:
+        radial-gradient(circle at 90% 0%, rgba(176, 161, 255, .38), transparent 34%),
+        linear-gradient(135deg, #171927 0%, #34246f 58%, #6847ed 100%);
+      box-shadow: 0 22px 48px rgba(52, 36, 111, .24);
+    }
+    body:not(.auth-locked) #actionCompass .action-compass-lead :is(h2, p, span, strong) { color: inherit; }
+    body:not(.auth-locked) #actionCompass .action-compass-stat {
+      border-color: rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .09);
+    }
+    body:not(.auth-locked) #dashboardQuickActions {
+      border-top-color: var(--lv-violet);
+      background: var(--lv-surface);
+      box-shadow: var(--lv-shadow);
+    }
+    body:not(.auth-locked) .flow-rail {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 9px;
+      margin: 2px 0 18px;
+      padding: 10px;
+      border: 1px solid #e4e0ff;
+      border-radius: 14px;
+      color: #6d7080;
+      background: linear-gradient(135deg, #fbfaff, #f3f0ff);
+    }
+    body:not(.auth-locked) .flow-rail span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    body:not(.auth-locked) .flow-rail b {
+      display: grid;
+      width: 26px;
+      height: 26px;
+      place-items: center;
+      border-radius: 9px;
+      color: #fff;
+      background: #a9a0d8;
+    }
+    body:not(.auth-locked) .flow-rail .active { color: #4c34be; }
+    body:not(.auth-locked) .flow-rail .active b { background: var(--lv-violet); }
+    body:not(.auth-locked) .flow-rail i { color: #aaa5c5; font-style: normal; }
+    body:not(.auth-locked) .technical-panel { padding: 0; overflow: hidden; }
+    body:not(.auth-locked) .technical-panel details > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+      padding: 0 18px;
+      cursor: pointer;
+      color: #555968;
+      font-weight: 800;
+      list-style: none;
+    }
+    body:not(.auth-locked) .technical-panel details > summary::-webkit-details-marker { display: none; }
+    body:not(.auth-locked) .technical-panel details[open] > summary { border-bottom: 1px solid var(--lv-line); }
+    body:not(.auth-locked) .technical-panel .mono {
+      padding: 16px 18px 20px;
+      color: #646877;
+      background: #fafafd;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    body:not(.auth-locked) .mobile-command-bar {
+      border: 1px solid rgba(221, 223, 234, .88);
+      border-radius: 20px 20px 0 0;
+      background: rgba(255, 255, 255, .92);
+      box-shadow: 0 -14px 38px rgba(24, 28, 44, .10);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    body:not(.auth-locked) .mobile-command-bar button {
+      border: 0;
+      border-radius: 12px;
+      color: #6f7380;
+      background: transparent;
+      box-shadow: none;
+      font-weight: 750;
+    }
+    body:not(.auth-locked) .mobile-command-bar button::before { display: none; }
+    body:not(.auth-locked) .mobile-command-bar button.active,
+    body:not(.auth-locked) .mobile-command-bar button.pulse {
+      color: #fff;
+      background: linear-gradient(135deg, var(--lv-violet), var(--lv-violet-dark));
+      box-shadow: 0 9px 20px rgba(109, 74, 255, .22);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      body:not(.auth-locked) :is(.panel, .card, .quick-action):hover {
+        border-color: #d8d3f5;
+        transform: translateY(-1px);
+        box-shadow: 0 18px 38px rgba(41, 38, 65, .09);
+      }
+    }
+    @media (max-width: 760px) {
+      body:not(.auth-locked) .content { padding: 10px 10px 92px; }
+      body:not(.auth-locked) .title-row { padding: 6px 2px 2px; }
+      body:not(.auth-locked) :is(.panel, .card, .command-panel, .quick-action-panel) { border-radius: 16px; }
+      body:not(.auth-locked) .flow-rail { gap: 5px; padding: 8px; }
+      body:not(.auth-locked) .flow-rail span { gap: 4px; font-size: 10px; }
+      body:not(.auth-locked) .flow-rail b { width: 22px; height: 22px; border-radius: 7px; font-size: 10px; }
+      body:not(.auth-locked) .mobile-command-bar { left: 8px; right: 8px; bottom: 8px; width: auto; border-radius: 18px; padding: 7px; }
+      body:not(.auth-locked) .mobile-command-bar button { min-height: 50px; padding: 0 5px; font-size: 11px; }
+      body:not(.auth-locked) .technical-panel details > summary { min-height: 56px; padding: 0 14px; }
+    }
     @media print {
       body { background: #fff; }
       body:not(.auth-locked) .content::before,
@@ -2839,6 +3077,13 @@
               </div>
               <span class="status warn">Cari + üretim işi bağlar</span>
             </div>
+            <div class="flow-rail" aria-label="Siparişten satışa iş akışı">
+              <span class="active"><b>1</b>Sipariş</span>
+              <i aria-hidden="true">→</i>
+              <span><b>2</b>Üretim</span>
+              <i aria-hidden="true">→</i>
+              <span><b>3</b>Teslim &amp; Satış</span>
+            </div>
             <form id="orderForm">
               <div class="entry-grid">
                 <div class="field">
@@ -2951,21 +3196,19 @@
           <div class="panel secondary-entry-panel">
             <div class="panel-head">
               <h2>Tek Kapı İşlem Girişi</h2>
-              <span class="status ok">Satış / Alış / Tahsilat / Ödeme / Personel / Üretim</span>
+              <span class="status ok">Satış / Alış / Tahsilat / Ödeme / Personel</span>
             </div>
             <form id="entryForm">
               <div class="entry-grid">
                 <div class="field">
                   <label for="txType">İşlem Tipi</label>
                   <select id="txType">
-                    <option value="SIPARIS">Sipariş</option>
                     <option value="SATIS">Satış</option>
                     <option value="ALIS">Alış</option>
                     <option value="TAHSILAT">Tahsilat</option>
                     <option value="ODEME">Ödeme</option>
                     <option value="MASRAF">Masraf</option>
                     <option value="PERSONEL_ODEME">Personel Ödeme</option>
-                    <option value="URETIM">Üretim</option>
                   </select>
                 </div>
                 <div class="field">
@@ -3671,9 +3914,11 @@
                 <p class="hint">Taşınabilir emniyet kopyası gerektiğinde JSON veya CSV dışa aktar.</p>
               </div>
             </div>
-            <div class="panel">
-              <div class="panel-head"><h2>Teknik Durum</h2><span class="status warn">Pilot</span></div>
-              <div class="mono" id="techStatus"></div>
+            <div class="panel technical-panel">
+              <details>
+                <summary><span>Teknik ayrıntılar</span><span class="status ok">İsteğe bağlı</span></summary>
+                <div class="mono" id="techStatus"></div>
+              </details>
             </div>
           </div>
         </section>
@@ -3782,7 +4027,7 @@
     <button type="button" data-icon="K" data-mobile-view="dashboard">Karargâh</button>
     <button type="button" data-icon="+" data-mobile-view="entry">Sipariş</button>
     <button type="button" data-icon="U" data-mobile-view="production">Üretim</button>
-    <button type="button" data-icon="#" data-mobile-view="stock">Stok</button>
+    <button type="button" data-icon="$" data-mobile-view="sales">Satış</button>
     <button class="pulse" type="button" data-icon="!" data-open-command-sheet>Pusula</button>
   </nav>
   <div class="command-sheet-backdrop hidden" id="commandSheetBackdrop"></div>
@@ -3849,7 +4094,7 @@
     const trNum = new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 2 });
 
     const defaultState = {
-      meta: { app: "Mirac ERP Cloud", version: "1.4.1-size-card-migration", startDate: "2026-06-01", updatedAt: today },
+      meta: { app: "Mirac ERP Cloud", version: "1.5.0-order-flow-lovable", startDate: "2026-06-01", updatedAt: today },
       accounts: [],
       items: [],
       recipes: [],
@@ -3878,6 +4123,7 @@
     let authInitSlow = false;
     let stopCloudSubscription = null;
     let pendingInventoryImage = "";
+    let pendingTradeLink = null;
     const clientId = getClientId();
     const WORKER_ALLOWED_VIEWS = new Set(["entry", "production", "stock"]);
     const WORKER_ALLOWED_TX_TYPES = new Set(["SIPARIS", "URETIM"]);
@@ -4540,6 +4786,78 @@
       await cloud?.signOut?.();
     }
 
+    function migrateOrderFlowLinks(targetState) {
+      const result = { changed: 0, orders: 0, sales: 0, jobs: 0, duplicates: 0 };
+      const allTransactions = targetState.transactions || [];
+      const transactions = allTransactions.filter(tx => !isCanceled(tx));
+      const jobs = (targetState.productionJobs || []).filter(job => !isCanceled({ status: job?.stage }));
+      const orders = new Map(allTransactions.filter(tx => tx.type === "SIPARIS").map(tx => [String(tx.id || ""), tx]));
+      const jobsById = new Map(jobs.map(job => [String(job.id || ""), job]));
+      const salesByJob = new Map();
+
+      function assign(row, key, value, bucket) {
+        if (!row || value == null || value === "" || row[key] === value) return;
+        if (row[key] != null && row[key] !== "") return;
+        row[key] = value;
+        result.changed += 1;
+        result[bucket] += 1;
+      }
+
+      for (const job of jobs) {
+        const order = orders.get(String(job.sourceTx || ""));
+        if (order) assign(order, "productionJobId", job.id, "orders");
+      }
+
+      for (const sale of transactions.filter(tx => tx.type === "SATIS")) {
+        const legacyJobId = String(sale.note || "").match(/Üretim işi:\s*([A-Z0-9-]+)/i)?.[1] || "";
+        const jobId = String(sale.productionJobId || legacyJobId || "");
+        if (!jobId) continue;
+        const job = jobsById.get(jobId);
+        const orderId = String(sale.sourceOrderId || job?.sourceTx || "");
+        const order = orders.get(orderId);
+        assign(sale, "productionJobId", jobId, "sales");
+        assign(sale, "sourceOrderId", orderId, "sales");
+        assign(sale, "sizeVariant", job?.sizeVariant || order?.sizeVariant || "", "sales");
+        assign(sale, "colorVariant", job?.colorVariant || order?.colorVariant || "", "sales");
+        assign(sale, "variantKey", job?.variantKey || order?.variantKey || "", "sales");
+        const rows = salesByJob.get(jobId) || [];
+        rows.push(sale);
+        salesByJob.set(jobId, rows);
+      }
+
+      for (const [jobId, sales] of salesByJob) {
+        if (sales.length !== 1) {
+          if (sales.length > 1) result.duplicates += 1;
+          continue;
+        }
+        const sale = sales[0];
+        const job = jobsById.get(jobId);
+        const order = orders.get(String(sale.sourceOrderId || job?.sourceTx || ""));
+        assign(job, "saleTx", sale.id, "jobs");
+        assign(order, "saleTx", sale.id, "orders");
+        if (order && order.status !== "Teslim") {
+          order.status = "Teslim";
+          result.changed += 1;
+          result.orders += 1;
+        }
+        if (order && Object.prototype.hasOwnProperty.call(order, "cancelledAt")) {
+          delete order.cancelledAt;
+          result.changed += 1;
+          result.orders += 1;
+        }
+        if (order?.note) {
+          const cleanedNote = String(order.note).replace(/\s*\|\s*İptal edildi; hesap etkisi kaldırıldı\.\s*$/i, "").trim();
+          if (cleanedNote !== order.note) {
+            order.note = cleanedNote;
+            result.changed += 1;
+            result.orders += 1;
+          }
+        }
+        assign(order, "deliveredAt", sale.date, "orders");
+      }
+      return result;
+    }
+
     function mergeIncomingState(incoming) {
       const next = { ...clone(defaultState), ...(incoming || {}) };
       next.meta = { ...clone(defaultState.meta), ...(incoming && incoming.meta ? incoming.meta : {}), version: defaultState.meta.version };
@@ -4609,6 +4927,10 @@
       return currentRole() === "worker";
     }
 
+    function canWriteCloudMigrations() {
+      return ["owner", "editor"].includes(currentRole());
+    }
+
     function canOpenView(id) {
       return !isWorkerMode() || WORKER_ALLOWED_VIEWS.has(id);
     }
@@ -4647,6 +4969,7 @@
       if (!remote?.state) return;
       backupState(reason);
       state = mergeIncomingState(remote.state);
+      const flowMigration = migrateOrderFlowLinks(state);
       const migrationDraft = clone(state);
       const sizeMigration = migrateSizeVariantStockCards(migrationDraft);
       if (sizeMigration.changed || sizeMigration.removed) {
@@ -4655,13 +4978,17 @@
       }
       const catalogMergeCount = mergePdfCatalogInventoryItems(state);
       cloudDocumentCount = Number(remote.documentCount || 0);
-      cloudDirty = catalogMergeCount > 0 || sizeMigration.changed > 0 || sizeMigration.removed > 0;
+      const migrationChanged = catalogMergeCount > 0 || sizeMigration.changed > 0 || sizeMigration.removed > 0 || flowMigration.changed > 0;
+      cloudDirty = canWriteCloudMigrations() && migrationChanged;
       cloudConflict = null;
       persistLocalState();
       if (cloudDirty) {
-        byId("saveBadge").textContent = "Ölçü varyantı kart geçişi / bulut bekliyor";
-        setCloudStatus("Mamul kartları sadeleştirildi", `${sizeMigration.removed} ölçü kartı ana modele birleştirildi; ${catalogMergeCount} katalog varyantı güncellendi.`, "ok");
+        byId("saveBadge").textContent = "Veri geçişi hazır / bulut bekliyor";
+        setCloudStatus("Veri bağları güncellendi", `${flowMigration.changed} sipariş-akış alanı onarıldı; ${sizeMigration.removed} ölçü kartı ana modele birleştirildi; ${catalogMergeCount} katalog varyantı güncellendi.`, flowMigration.duplicates ? "warn" : "ok");
         queueCloudSync();
+      } else if (migrationChanged) {
+        byId("saveBadge").textContent = "Veri geçişi yerel görünümde";
+        setCloudStatus("Veri bağları yerelde okundu", "Bulut veri geçişini owner veya editor rolü tamamlayabilir.", "warn");
       }
       renderAll();
     }
@@ -4670,13 +4997,13 @@
       cloudConflict = conflicts || [];
       cloudDirty = true;
       clearTimeout(cloudSyncTimer);
-      byId("saveBadge").textContent = "Çakışma: bulut kaydı durduruldu";
+      byId("saveBadge").textContent = "Bulut sürüm çakışması: kayıt durduruldu";
       const first = cloudConflict[0];
       const detail = first
         ? `${first.collectionName}/${first.legacyId || first.docId} beklenen v${first.expectedVersion}, bulut v${first.actualVersion}`
         : "Aynı kayıt başka cihazda değişti.";
       setCloudStatus(
-        "Kayıt çakışması",
+        "Bulut sürüm çakışması",
         `${detail}. ${cloudConflict.length > 1 ? `Toplam ${cloudConflict.length} kayıt çakıştı. ` : ""}Yerel JSON yedek alıp Buluttan Yenile ile karar ver.`,
         "bad"
       );
@@ -4876,6 +5203,7 @@
         }
         const parsed = JSON.parse(saved);
         const next = mergeIncomingState(parsed);
+        migrateOrderFlowLinks(next);
         mergePdfCatalogInventoryItems(next);
         return next;
       } catch {
@@ -4917,10 +5245,18 @@
       const stock = Object.fromEntries(state.items.map(item => [item.code, Number(item.opening || 0)]));
       const cari = {};
       const stockWarnings = [];
+      const transactions = activeTransactions();
+      const jobById = new Map((state.productionJobs || []).map(job => [String(job.id || ""), job]));
+      const finalizedOrderIds = new Set(
+        transactions
+          .filter(tx => tx.type === "SATIS")
+          .map(tx => tx.sourceOrderId || jobById.get(linkedProductionJobId(tx))?.sourceTx || linkedOrderIdForSale(tx) || "")
+          .filter(Boolean)
+      );
 
       function ensureCari(name) {
         if (!name) name = "Tanımsız";
-        if (!cari[name]) cari[name] = { name, sales: 0, collections: 0, purchases: 0, payments: 0, expenses: 0 };
+        if (!cari[name]) cari[name] = { name, sales: 0, collections: 0, advances: 0, purchases: 0, payments: 0, expenses: 0 };
         return cari[name];
       }
 
@@ -4930,7 +5266,7 @@
         cash[account] += Number(amount || 0);
       }
 
-      for (const tx of activeTransactions()) {
+      for (const tx of transactions) {
         const amount = Number(tx.amount || 0);
         const paid = Number(tx.paid || 0);
         const q = Number(tx.qty || 0);
@@ -4943,8 +5279,9 @@
         }
         if (tx.type === "SIPARIS") {
           const c = ensureCari(tx.party);
-          c.sales += amount;
-          c.collections += paid;
+          const hasFinalSale = finalizedOrderIds.has(tx.id);
+          if (hasFinalSale) c.collections += paid;
+          else c.advances += paid;
           cashAdd(tx.account, paid);
         }
         if (tx.type === "ALIS") {
@@ -4993,7 +5330,7 @@
       for (const row of Object.values(cari)) {
         const receivable = row.sales - row.collections;
         const payable = row.purchases - row.payments;
-        if (row.sales || row.collections) customers.push({ ...row, receivable });
+        if (row.sales || row.collections || row.advances) customers.push({ ...row, receivable });
         if (row.purchases || row.payments || row.expenses) suppliers.push({ ...row, payable });
       }
       const stockRows = state.items.map(item => ({
@@ -5173,14 +5510,114 @@
       };
     }
 
-    function validateState() {
+    function linkedProductionJobId(tx) {
+      if (tx?.productionJobId) return String(tx.productionJobId);
+      return String(tx?.note || "").match(/Üretim işi:\s*([A-Z0-9-]+)/i)?.[1] || "";
+    }
+
+    function linkedOrderIdForSale(tx) {
+      if (tx?.sourceOrderId) return String(tx.sourceOrderId);
+      const jobId = linkedProductionJobId(tx);
+      return jobId ? String((state.productionJobs || []).find(job => job.id === jobId)?.sourceTx || "") : "";
+    }
+
+    function flowIntegrityIssues() {
       const issues = [];
+      const transactions = activeTransactions();
+      const orders = transactions.filter(tx => tx.type === "SIPARIS");
+      const sales = transactions.filter(tx => tx.type === "SATIS");
+      const jobs = activeProductionJobs();
+      const transactionById = new Map(transactions.map(tx => [String(tx.id || ""), tx]));
+      const jobById = new Map();
+      const saleByJob = new Map();
+
+      for (const job of jobs) {
+        const key = String(job.id || "");
+        if (key && jobById.has(key)) issues.push({ severity: "bad", title: "Tekrarlı üretim işi", text: `${key} birden fazla kez kayıtlı.` });
+        if (key) jobById.set(key, job);
+        if (job.sourceTx) {
+          const source = transactionById.get(String(job.sourceTx));
+          if (!source || source.type !== "SIPARIS") issues.push({ severity: "bad", title: "Üretim-sipariş bağı kopuk", text: `${job.id}: ${job.sourceTx} siparişi bulunamadı.` });
+          if (source?.type === "SIPARIS") {
+            const contentMismatch = String(job.customer || "") !== String(source.party || "")
+              || String(job.product || "") !== String(source.item || "")
+              || Number(job.qty || 0) !== Number(source.qty || 0)
+              || String(job.sizeVariant || "") !== String(source.sizeVariant || "")
+              || String(job.colorVariant || "") !== String(source.colorVariant || "");
+            if (contentMismatch) issues.push({ severity: "bad", title: "Sipariş-üretim içeriği farklı", text: `${source.id} / ${job.id}: müşteri, ürün, adet veya varyant uyuşmuyor.` });
+          }
+        }
+      }
+
+      for (const order of orders) {
+        const linkedJobs = jobs.filter(job => String(job.sourceTx || "") === String(order.id));
+        if (!linkedJobs.length) issues.push({ severity: "warn", title: "Sipariş üretime bağlı değil", text: `${order.id}: ${order.party || "Müşteri"}` });
+        if (linkedJobs.length > 1) issues.push({ severity: "bad", title: "Sipariş birden fazla üretime bağlı", text: `${order.id}: ${linkedJobs.map(job => job.id).join(", ")}` });
+        if (order.productionJobId && linkedJobs.length === 1 && String(order.productionJobId) !== String(linkedJobs[0].id)) {
+          issues.push({ severity: "bad", title: "Sipariş-üretim kimliği uyuşmuyor", text: `${order.id}: ${order.productionJobId} / ${linkedJobs[0].id}` });
+        }
+      }
+
+      for (const sale of sales) {
+        const jobId = linkedProductionJobId(sale);
+        if (!jobId) continue;
+        const rows = saleByJob.get(jobId) || [];
+        rows.push(sale);
+        saleByJob.set(jobId, rows);
+        const job = jobById.get(jobId);
+        if (!job) issues.push({ severity: "bad", title: "Satış-üretim bağı kopuk", text: `${sale.id}: ${jobId} işi bulunamadı.` });
+        const orderId = linkedOrderIdForSale(sale) || job?.sourceTx || "";
+        const order = orderId ? transactionById.get(String(orderId)) : null;
+        if (orderId && (!order || order.type !== "SIPARIS")) issues.push({ severity: "bad", title: "Satış-sipariş bağı kopuk", text: `${sale.id}: ${orderId} siparişi bulunamadı.` });
+        if (!sale.productionJobId || !sale.sourceOrderId) issues.push({ severity: "warn", title: "Eski metin bağlantısı", text: `${sale.id}: satış bağlantısı yapılandırılmış kimliklere taşınmalı.` });
+        if (job?.saleTx && String(job.saleTx) !== String(sale.id)) issues.push({ severity: "bad", title: "Üretim-satış kimliği uyuşmuyor", text: `${job.id}: ${job.saleTx} / ${sale.id}` });
+        if (order?.saleTx && String(order.saleTx) !== String(sale.id)) issues.push({ severity: "bad", title: "Sipariş-satış kimliği uyuşmuyor", text: `${order.id}: ${order.saleTx} / ${sale.id}` });
+        if (order) {
+          const saleMismatch = String(sale.party || "") !== String(order.party || "")
+            || String(sale.item || "") !== String(order.item || "")
+            || Number(sale.qty || 0) !== Number(order.qty || 0)
+            || String(sale.sizeVariant || "") !== String(order.sizeVariant || "")
+            || String(sale.colorVariant || "") !== String(order.colorVariant || "");
+          if (saleMismatch) issues.push({ severity: "bad", title: "Sipariş-satış içeriği farklı", text: `${order.id} / ${sale.id}: müşteri, ürün, adet veya varyant uyuşmuyor.` });
+        }
+        if (order && order.status !== "Teslim") issues.push({ severity: "bad", title: "Satış var, sipariş açık", text: `${order.id}: satış ${sale.id} oluşmuş ancak sipariş kapanmamış.` });
+        if (order && Number(order.amount || 0) !== Number(sale.amount || 0)) issues.push({ severity: "warn", title: "Sipariş-satış tutarı farklı", text: `${order.id} ile ${sale.id} tutarları uyuşmuyor.` });
+      }
+
+      for (const [jobId, rows] of saleByJob) {
+        if (rows.length > 1) issues.push({ severity: "bad", title: "Aynı üretim iki kez satılmış", text: `${jobId}: ${rows.map(row => row.id).join(", ")}` });
+      }
+      return issues;
+    }
+
+    function unlinkFinalizedSale(tx) {
+      if (!tx || tx.type !== "SATIS") return;
+      const jobId = linkedProductionJobId(tx);
+      const job = jobId ? (state.productionJobs || []).find(row => row.id === jobId) : null;
+      const orderId = linkedOrderIdForSale(tx) || job?.sourceTx || "";
+      const order = orderId ? (state.transactions || []).find(row => row.id === orderId && row.type === "SIPARIS") : null;
+      if (order && order.saleTx === tx.id) {
+        order.status = "Sipariş";
+        delete order.saleTx;
+        delete order.deliveredAt;
+        order.updatedAt = new Date().toISOString();
+      }
+      if (job && job.saleTx === tx.id) {
+        delete job.saleTx;
+        job.updatedAt = new Date().toISOString();
+      }
+    }
+
+    function validateState() {
+      const issues = [...flowIntegrityIssues()];
       const d = derive();
       const itemCodes = new Set();
       const itemNames = new Set();
       const accountNames = new Set(state.accounts.map(acc => acc.name));
       const fixedIds = new Set();
       const cariCardNames = new Set();
+      const transactionIds = new Set();
+      const productionJobIds = new Set();
 
       for (const item of state.items) {
         if (!item.code) issues.push({ severity: "bad", title: "Stok kodu boş", text: item.name || "Adsız stok kartı" });
@@ -5194,6 +5631,9 @@
       }
 
       for (const tx of state.transactions) {
+        if (!tx.id) issues.push({ severity: "bad", title: "Hareket ID eksik", text: `${tx.type || "İşlem"} kaydında kimlik yok.` });
+        if (tx.id && transactionIds.has(tx.id)) issues.push({ severity: "bad", title: "Tekrarlı hareket ID", text: tx.id });
+        if (tx.id) transactionIds.add(tx.id);
         if (isCanceled(tx)) continue;
         if (!tx.date) issues.push({ severity: "bad", title: "Tarih eksik", text: `${tx.id} hareketinde tarih yok.` });
         if (!tx.type) issues.push({ severity: "bad", title: "İşlem tipi eksik", text: `${tx.id} hareketinde tip yok.` });
@@ -5266,7 +5706,10 @@
         }
       }
 
-      for (const job of activeProductionJobs()) {
+      for (const job of state.productionJobs || []) {
+        if (job.id && productionJobIds.has(job.id)) issues.push({ severity: "bad", title: "Tekrarlı üretim işi ID", text: job.id });
+        if (job.id) productionJobIds.add(job.id);
+        if (isCanceled({ status: job.stage })) continue;
         if (!job.id) issues.push({ severity: "warn", title: "Üretim işi ID eksik", text: job.customer || "Adsız iş" });
         if (!job.customer) issues.push({ severity: "warn", title: "Üretim işinde müşteri eksik", text: job.id || "İş kaydı" });
         if (job.product && !itemCodes.has(job.product)) issues.push({ severity: "bad", title: "Üretim işinde bilinmeyen ürün", text: `${job.id}: ${job.product}` });
@@ -5292,7 +5735,8 @@
       const sales = txRows.filter(tx => tx.type === "SATIS");
       const orders = txRows.filter(tx => tx.type === "SIPARIS");
       const personnelPayments = txRows.filter(tx => tx.type === "PERSONEL_ODEME");
-      const openOrders = orders.filter(tx => !["Teslim", "İptal"].includes(tx.status || ""));
+      const finalizedOrderIds = new Set(sales.map(linkedOrderIdForSale).filter(Boolean));
+      const openOrders = orders.filter(tx => !["Teslim", "İptal"].includes(tx.status || "") && !finalizedOrderIds.has(tx.id));
       const openOrderTotal = openOrders.reduce((sum, tx) => sum + Math.max(0, Number(tx.amount || 0) - Number(tx.paid || 0)), 0);
       const monthSales = sales
         .filter(tx => String(tx.date).startsWith(monthKey))
@@ -5916,14 +6360,14 @@
       return `<table>
         <thead><tr><th>Tarih</th><th>Tip</th><th>Cari</th><th>Stok/Ürün</th><th class="money">Miktar</th><th class="money">Tutar</th><th>Durum</th><th>İşlem</th></tr></thead>
         <tbody>${rows.map(tx => `<tr>
-          <td>${tx.date}</td>
-          <td><span class="status ${isCanceled(tx) ? "bad" : tx.type === "SATIS" || tx.type === "TAHSILAT" || tx.type === "CARI_ALACAK_ACILIS" ? "ok" : tx.type === "MASRAF" || tx.type === "ODEME" || tx.type === "BORC_ODEME" || tx.type === "PERSONEL_ODEME" || tx.type === "CARI_BORC_ACILIS" ? "bad" : "warn"}">${txTypeLabel(tx.type)}</span></td>
-          <td>${tx.party || ""}</td>
+          <td>${safe(tx.date)}</td>
+          <td><span class="status ${isCanceled(tx) ? "bad" : tx.type === "SATIS" || tx.type === "TAHSILAT" || tx.type === "CARI_ALACAK_ACILIS" ? "ok" : tx.type === "MASRAF" || tx.type === "ODEME" || tx.type === "BORC_ODEME" || tx.type === "PERSONEL_ODEME" || tx.type === "CARI_BORC_ACILIS" ? "bad" : "warn"}">${safe(txTypeLabel(tx.type))}</span></td>
+          <td>${safe(tx.party || "")}</td>
           <td>${safe(orderProductLabel(tx))}</td>
           <td class="money">${qty(tx.qty || 0)}</td>
           <td class="money">${money(tx.amount || 0)}</td>
-          <td><span class="status ${isCanceled(tx) ? "bad" : "ok"}">${tx.status || ""}</span></td>
-          <td>${isCanceled(tx) ? "Etkisiz" : `<div class="row-actions">${tx.type === "SIPARIS" ? `<button class="btn compact-action" data-print-order="${tx.id}" type="button">Fiş Yazdır</button>` : ""}<button class="btn danger compact-action" data-cancel-tx="${tx.id}" type="button">İptal</button></div>`}</td>
+          <td><span class="status ${isCanceled(tx) ? "bad" : "ok"}">${safe(tx.status || "")}</span></td>
+          <td>${isCanceled(tx) ? "Etkisiz" : `<div class="row-actions">${tx.type === "SIPARIS" ? `<button class="btn compact-action" data-print-order="${safe(tx.id)}" type="button">Fiş Yazdır</button>` : ""}<button class="btn danger compact-action" data-cancel-tx="${safe(tx.id)}" type="button">İptal</button></div>`}</td>
         </tr>`).join("")}</tbody>
       </table>`;
     }
@@ -5932,8 +6376,9 @@
       const target = byId("openOrderBrief");
       const counter = byId("openOrderBriefCount");
       if (!target || !counter) return;
+      const finalizedOrderIds = new Set(activeTransactions().filter(tx => tx.type === "SATIS").map(linkedOrderIdForSale).filter(Boolean));
       const rows = activeTransactions()
-        .filter(tx => tx.type === "SIPARIS" && !["Teslim", "İptal"].includes(tx.status || ""))
+        .filter(tx => tx.type === "SIPARIS" && !["Teslim", "İptal"].includes(tx.status || "") && !finalizedOrderIds.has(tx.id))
         .slice()
         .sort((a, b) => String(a.date || "").localeCompare(String(b.date || "")))
         .slice(0, 6);
@@ -5948,12 +6393,12 @@
           const remaining = Math.max(0, Number(tx.amount || 0) - Number(tx.paid || 0));
           const note = String(tx.note || "").replace(/^Teslim:\s*/i, "Teslim: ");
           return `<tr>
-            <td>${tx.date || ""}</td>
-            <td><strong>${tx.party || ""}</strong></td>
+            <td>${safe(tx.date || "")}</td>
+            <td><strong>${safe(tx.party || "")}</strong></td>
             <td>${safe(orderProductLabel(tx))}</td>
             <td class="money">${money(remaining)}</td>
-            <td class="order-note">${note || "-"}</td>
-            <td><button class="btn" data-print-order="${tx.id}" type="button">Fiş Yazdır</button></td>
+            <td class="order-note">${safe(note || "-")}</td>
+            <td><button class="btn" data-print-order="${safe(tx.id)}" type="button">Fiş Yazdır</button></td>
           </tr>`;
         }).join("")}</tbody>
       </table>`;
@@ -6149,20 +6594,21 @@
     function balanceTable(rows, type) {
       const q = byId("search").value.trim();
       const filtered = rows
-        .filter(row => type === "customer" ? row.receivable > 0 : row.payable > 0)
-        .filter(row => includesQuery([row.name, money(row.receivable), money(row.payable), money(row.sales), money(row.purchases), money(row.collections), money(row.payments)], q))
+        .filter(row => type === "customer" ? row.receivable > 0 || Number(row.advances || 0) > 0 : row.payable > 0)
+        .filter(row => includesQuery([row.name, money(row.receivable), money(row.payable), money(row.sales), money(row.purchases), money(row.collections), money(row.advances), money(row.payments)], q))
         .sort((a, b) => (type === "customer" ? b.receivable - a.receivable : b.payable - a.payable));
       if (!filtered.length) return `<div class="empty">${q ? "Aramaya uygun açık bakiye yok." : "Açık bakiye yok."}</div>`;
       return `<table>
-        <thead><tr><th>Cari</th><th class="money">${type === "customer" ? "Satış" : "Alış/Gider"}</th><th class="money">${type === "customer" ? "Tahsilat" : "Ödeme"}</th><th class="money">Net</th><th>Durum</th></tr></thead>
+        <thead><tr><th>Cari</th><th class="money">${type === "customer" ? "Satış" : "Alış/Gider"}</th><th class="money">${type === "customer" ? "Tahsilat" : "Ödeme"}</th>${type === "customer" ? '<th class="money">Açık Sipariş Kaporası</th>' : ""}<th class="money">Net</th><th>Durum</th></tr></thead>
         <tbody>${filtered.map(row => {
           const net = type === "customer" ? row.receivable : row.payable;
           return `<tr>
-            <td>${row.name}</td>
+            <td>${safe(row.name)}</td>
             <td class="money">${money(type === "customer" ? row.sales : row.purchases + row.expenses)}</td>
             <td class="money">${money(type === "customer" ? row.collections : row.payments)}</td>
+            ${type === "customer" ? `<td class="money">${money(row.advances || 0)}</td>` : ""}
             <td class="money"><strong>${money(net)}</strong></td>
-            <td><span class="status ${net > 0 ? "warn" : "ok"}">${net > 0 ? "Açık" : "Kapalı"}</span></td>
+            <td><span class="status ${net > 0 ? "warn" : "ok"}">${net > 0 ? "Açık" : Number(row.advances || 0) > 0 ? "Kapora" : "Kapalı"}</span></td>
           </tr>`;
         }).join("")}</tbody>
       </table>`;
@@ -6434,7 +6880,7 @@
         ...low.slice(0, 8).map(row => ({ kind: row.current < 0 ? "bad" : "warn", title: row.name, text: `Mevcut ${qty(row.current)} ${row.unit}, min ${qty(row.min)}` }))
       ];
       byId("productionImpact").innerHTML = combined.length
-        ? combined.map(item => `<div class="guide-item ${item.kind}"><strong>${item.title}</strong><span>${item.text}</span></div>`).join("")
+        ? combined.map(item => `<div class="guide-item ${item.kind === "bad" ? "bad" : "warn"}"><strong>${safe(item.title)}</strong><span>${safe(item.text)}</span></div>`).join("")
         : `<div class="empty">Üretim kaynaklı kritik uyarı yok.</div>`;
     }
 
@@ -6501,7 +6947,7 @@
       m.suppliers.filter(c => c.payable > 0).slice(0, 3).forEach(c => guide.push({ kind: "bad", title: "Ödeme takip", text: `${c.name}: ${money(c.payable)} açık borç.` }));
       m.debt.priorityRows.slice(0, 3).forEach(row => guide.push({ kind: row.scope === "Şahsi" ? "warn" : "bad", title: "Borç önceliği", text: `${row.type} / ${row.party}: ${money(row.remaining)} - ${row.dueIn == null ? "vade yok" : row.dueIn < 0 ? Math.abs(row.dueIn) + " gün gecikmiş" : row.dueIn === 0 ? "bugün" : row.dueIn + " gün"}.` }));
       if (!guide.length) guide.push({ kind: "", title: "Kritik uyarı yok", text: "Anlık kontrollerde kritik takip maddesi görünmüyor." });
-      byId("guideList").innerHTML = guide.map(item => `<div class="guide-item ${item.kind}"><strong>${item.title}</strong><span>${item.text}</span></div>`).join("");
+      byId("guideList").innerHTML = guide.map(item => `<div class="guide-item ${["bad", "warn"].includes(item.kind) ? item.kind : ""}"><strong>${safe(item.title)}</strong><span>${safe(item.text)}</span></div>`).join("");
     }
 
     function dailyFlowState() {
@@ -6661,7 +7107,7 @@
       `).join("");
 
       byId("riskList").innerHTML = control.issues.length
-        ? control.issues.map(issue => `<div class="guide-item ${issue.severity}"><strong>${issue.title}</strong><span>${issue.text}</span></div>`).join("")
+        ? control.issues.map(issue => `<div class="guide-item ${["bad", "warn"].includes(issue.severity) ? issue.severity : ""}"><strong>${safe(issue.title)}</strong><span>${safe(issue.text)}</span></div>`).join("")
         : `<div class="empty">Ciddi veri tutarsızlığı görünmüyor.</div>`;
 
       const columns = [
@@ -6809,7 +7255,7 @@
       const saleMarkers = new Set(
         activeTransactions()
           .filter(tx => tx.type === "SATIS")
-          .map(tx => String(tx.note || "").match(/Üretim işi:\s*([A-Z0-9-]+)/i)?.[1])
+          .map(linkedProductionJobId)
           .filter(Boolean)
       );
       return productionJobStats().delivered
@@ -6834,11 +7280,11 @@
         <table>
           <thead><tr><th>Teslim</th><th>Müşteri</th><th>Ürün</th><th class="money">Adet</th><th>Not</th><th>İşlem</th></tr></thead>
           <tbody>${rows.map(job => `<tr>
-            <td>${job.dueDate || today}</td>
-            <td>${job.customer || "-"}</td>
+            <td>${safe(job.dueDate || today)}</td>
+            <td>${safe(job.customer || "-")}</td>
             <td>${safe(jobProductLabel(job))}</td>
             <td class="money">${qty(job.qty)}</td>
-            <td>${job.note || ""}</td>
+            <td>${safe(job.note || "")}</td>
             <td>${deliveryJobActions(job)}</td>
           </tr>`).join("")}</tbody>
         </table>
@@ -6872,15 +7318,15 @@
         ? `<table>
           <thead><tr><th>ID</th><th>Müşteri</th><th>Ürün</th><th class="money">Adet</th><th>Görevli</th><th>Aşama</th><th>Vade</th><th>Öncelik</th><th>Not</th><th>İşlem</th></tr></thead>
           <tbody>${rows.map(job => `<tr>
-            <td>${job.id}</td>
-            <td>${job.customer}</td>
+            <td>${safe(job.id)}</td>
+            <td>${safe(job.customer)}</td>
             <td>${safe(jobProductLabel(job))}</td>
             <td class="money">${qty(job.qty)}</td>
-            <td>${job.assignee || "-"}</td>
-            <td><span class="status ${job.stage === "Üretim Aşamasında" || job.stage === "Teslimata Hazır" ? "warn" : "ok"}">${job.stage}</span></td>
+            <td>${safe(job.assignee || "-")}</td>
+            <td><span class="status ${job.stage === "Üretim Aşamasında" || job.stage === "Teslimata Hazır" ? "warn" : "ok"}">${safe(job.stage)}</span></td>
             <td>${job.dueIn == null ? "" : job.dueIn < 0 ? `<span class="status bad">${Math.abs(job.dueIn)} gün gecikti</span>` : job.dueIn === 0 ? `<span class="status bad">Bugün</span>` : `${job.dueIn} gün`}</td>
-            <td><span class="status ${job.priority === "Acil" ? "bad" : job.priority === "Yüksek" ? "warn" : "ok"}">${job.priority}</span></td>
-            <td>${job.note || ""}</td>
+            <td><span class="status ${job.priority === "Acil" ? "bad" : job.priority === "Yüksek" ? "warn" : "ok"}">${safe(job.priority)}</span></td>
+            <td>${safe(job.note || "")}</td>
             <td>${productionJobActions(job)}</td>
           </tr>`).join("")}</tbody>
         </table>`
@@ -6889,13 +7335,13 @@
 
     function populateFormLists() {
       const selectedOrderProduct = byId("orderProduct").value;
-      byId("account").innerHTML = state.accounts.map(acc => `<option>${acc.name}</option>`).join("");
-      byId("orderAccount").innerHTML = state.accounts.map(acc => `<option>${acc.name}</option>`).join("");
-      byId("fixedAccount").innerHTML = state.accounts.map(acc => `<option>${acc.name}</option>`).join("");
-      byId("debtAccount").innerHTML = state.accounts.map(acc => `<option>${acc.name}</option>`).join("");
-      byId("item").innerHTML = state.items.map(item => `<option value="${item.code}">${item.name} (${item.code})</option>`).join("");
+      byId("account").innerHTML = state.accounts.map(acc => `<option>${safe(acc.name)}</option>`).join("");
+      byId("orderAccount").innerHTML = state.accounts.map(acc => `<option>${safe(acc.name)}</option>`).join("");
+      byId("fixedAccount").innerHTML = state.accounts.map(acc => `<option>${safe(acc.name)}</option>`).join("");
+      byId("debtAccount").innerHTML = state.accounts.map(acc => `<option>${safe(acc.name)}</option>`).join("");
+      byId("item").innerHTML = state.items.map(item => `<option value="${safe(item.code)}">${safe(item.name)} (${safe(item.code)})</option>`).join("");
       const products = state.items.filter(item => item.kind === "Mamül");
-      const productOptions = (products.length ? products : state.items).map(item => `<option value="${item.code}">${item.name} (${item.code})</option>`).join("");
+      const productOptions = (products.length ? products : state.items).map(item => `<option value="${safe(item.code)}">${safe(item.name)} (${safe(item.code)})</option>`).join("");
       byId("orderProduct").innerHTML = productOptions;
       if ([...byId("orderProduct").options].some(option => option.value === selectedOrderProduct)) byId("orderProduct").value = selectedOrderProduct;
       byId("jobProduct").innerHTML = productOptions;
@@ -6936,6 +7382,9 @@
     }
 
     function clearForm() {
+      pendingTradeLink = null;
+      const paidLabel = document.querySelector('label[for="paid"]');
+      if (paidLabel) paidLabel.textContent = "Peşin Ödenen / Alınan";
       byId("txDate").value = today;
       byId("party").value = "";
       byId("qty").value = "";
@@ -7112,6 +7561,7 @@
       byId("jobWorker").value = "Mahmud";
       byId("jobNote").value = "";
       byId("saveWorkOrderButton").textContent = "İş Ekle";
+      ["jobCustomer", "jobProduct", "jobQty"].forEach(id => { byId(id).disabled = false; });
     }
 
     function addWorkOrder(event) {
@@ -7128,11 +7578,25 @@
         assignee: byId("jobWorker").value.trim() || "Mahmud",
         note: byId("jobNote").value.trim()
       };
+      state.productionJobs = state.productionJobs || [];
+      const existing = editId ? state.productionJobs.find(row => row.id === editId) : null;
+      const linkedOrder = existing?.sourceTx
+        ? activeTransactions().find(row => row.id === existing.sourceTx && row.type === "SIPARIS")
+        : null;
+      if (linkedOrder) {
+        Object.assign(job, {
+          customer: linkedOrder.party,
+          product: linkedOrder.item,
+          qty: Number(linkedOrder.qty || 0),
+          sizeVariant: linkedOrder.sizeVariant || "",
+          colorVariant: linkedOrder.colorVariant || "",
+          variantKey: linkedOrder.variantKey || "",
+          sourceTx: linkedOrder.id
+        });
+      }
       if (!job.customer) return alert("Müşteri / sipariş gerekli.");
       if (!job.qty) return alert("Adet gerekli.");
       backupState(editId ? "before-edit-production-job" : "before-add-production-job");
-      state.productionJobs = state.productionJobs || [];
-      const existing = editId ? state.productionJobs.find(row => row.id === editId) : null;
       if (existing) {
         Object.assign(existing, job, { updatedAt: new Date().toISOString() });
         state.logs.push({ at: new Date().toISOString(), event: "EDIT_PRODUCTION_JOB", id: existing.id, stage: existing.stage });
@@ -7202,6 +7666,7 @@
         sourceTx: tx.id,
         createdAt: tx.createdAt
       };
+      tx.productionJobId = job.id;
       backupState("before-add-order");
       state.transactions = state.transactions || [];
       state.productionJobs = state.productionJobs || [];
@@ -7293,6 +7758,7 @@
       byId("jobWorker").value = job.assignee || "Mahmud";
       byId("jobNote").value = job.note || "";
       byId("saveWorkOrderButton").textContent = "İşi Güncelle";
+      ["jobCustomer", "jobProduct", "jobQty"].forEach(fieldId => { byId(fieldId).disabled = Boolean(job.sourceTx); });
       byId("workOrderForm").scrollIntoView({ behavior: "smooth", block: "start" });
       setTimeout(() => byId("jobCustomer").focus(), 250);
     }
@@ -7301,17 +7767,31 @@
       if (blockWorkerAction("Satışa aktarma üretim personeli hesabında kapalı. Teslim edilen işi işletme sahibi satışa kaydeder.")) return;
       const job = (state.productionJobs || []).find(row => row.id === id);
       if (!job) return;
+      const existingSale = activeTransactions().find(tx => tx.type === "SATIS" && linkedProductionJobId(tx) === job.id);
+      if (existingSale) return alert(`${job.id} işi daha önce ${existingSale.id} satışıyla kaydedilmiş.`);
+      const order = job.sourceTx
+        ? activeTransactions().find(tx => tx.id === job.sourceTx && tx.type === "SIPARIS")
+        : null;
       openTradeEntry("SATIS");
-      byId("txDate").value = job.dueDate || today;
-      byId("party").value = job.customer || "";
-      byId("item").value = job.product || byId("item").value;
-      byId("qty").value = job.qty || 1;
-      byId("unitPrice").value = "";
+      pendingTradeLink = {
+        productionJobId: job.id,
+        sourceOrderId: order?.id || job.sourceTx || "",
+        sizeVariant: job.sizeVariant || order?.sizeVariant || "",
+        colorVariant: job.colorVariant || order?.colorVariant || "",
+        variantKey: job.variantKey || order?.variantKey || ""
+      };
+      const paidLabel = document.querySelector('label[for="paid"]');
+      if (paidLabel) paidLabel.textContent = "Teslimde Alınan (Kapora Hariç)";
+      byId("txDate").value = today;
+      byId("party").value = order?.party || job.customer || "";
+      byId("item").value = order?.item || job.product || byId("item").value;
+      byId("qty").value = order?.qty || job.qty || 1;
+      byId("unitPrice").value = order?.unitPrice || "";
       byId("paid").value = "";
       byId("status").value = "Vadeli";
-      byId("note").value = appendNote(job.note || "", `Üretim işi: ${job.id}`);
+      byId("note").value = appendNote(order?.note || job.note || "", `Üretim işi: ${job.id}`);
       showView("entry");
-      setTimeout(() => byId("unitPrice").focus(), 120);
+      setTimeout(() => (byId("unitPrice").value ? byId("paid") : byId("unitPrice")).focus(), 120);
     }
 
     function addFixedExpense(event) {
@@ -7445,8 +7925,8 @@
         alert("Mahmud hesabında sadece sipariş ve üretim hareketi kaydedilir.");
         return;
       }
-      backupState("before-add-transaction");
       const type = byId("txType").value;
+      const tradeLink = type === "SATIS" && pendingTradeLink ? { ...pendingTradeLink } : null;
       const qtyValue = Number(byId("qty").value || 0);
       const price = Number(byId("unitPrice").value || 0);
       const directAmount = Number(byId("amount").value || 0);
@@ -7463,16 +7943,70 @@
         paid: Number(byId("paid").value || 0),
         account: byId("account").value,
         status: byId("status").value,
-        note: byId("note").value.trim()
+        note: byId("note").value.trim(),
+        sizeVariant: tradeLink?.sizeVariant || "",
+        colorVariant: tradeLink?.colorVariant || "",
+        variantKey: tradeLink?.variantKey || "",
+        sourceOrderId: tradeLink?.sourceOrderId || "",
+        productionJobId: tradeLink?.productionJobId || "",
+        createdAt: new Date().toISOString()
       };
+      const linkedOrder = tradeLink?.sourceOrderId
+        ? activeTransactions().find(row => row.id === tradeLink.sourceOrderId && row.type === "SIPARIS")
+        : null;
+      const linkedJob = tradeLink?.productionJobId
+        ? activeProductionJobs().find(row => row.id === tradeLink.productionJobId)
+        : null;
+      if (linkedOrder) {
+        Object.assign(tx, {
+          party: linkedOrder.party,
+          item: linkedOrder.item,
+          qty: Number(linkedOrder.qty || 0),
+          unitPrice: Number(linkedOrder.unitPrice || 0),
+          amount: Number(linkedOrder.amount || 0),
+          sizeVariant: linkedOrder.sizeVariant || "",
+          colorVariant: linkedOrder.colorVariant || "",
+          variantKey: linkedOrder.variantKey || ""
+        });
+      }
       if (!tx.date) return alert("Tarih gerekli.");
       if (["SIPARIS", "SATIS", "ALIS", "URETIM"].includes(type) && !tx.qty) return alert("Miktar gerekli.");
       if (["SATIS", "ALIS"].includes(type) && !tx.amount) return alert("Birim fiyat/tutar gerekli.");
       if (type === "SIPARIS" && tx.paid && !tx.amount) return alert("Kapora varsa birim fiyat girilmeli.");
       if (["SIPARIS", "SATIS", "ALIS"].includes(type) && tx.paid > tx.amount) return alert("Peşin/kapora toplam tutardan büyük olamaz.");
       if (["TAHSILAT", "ODEME", "MASRAF", "PERSONEL_ODEME"].includes(type) && !tx.amount) return alert("Tutar gerekli.");
+      if (tradeLink?.sourceOrderId && !linkedOrder) return alert("Bağlı sipariş bulunamadı. Satış kaydı durduruldu.");
+      if (tradeLink?.productionJobId) {
+        const duplicate = activeTransactions().find(row => row.type === "SATIS" && linkedProductionJobId(row) === tradeLink.productionJobId);
+        if (duplicate) return alert(`${tradeLink.productionJobId} işi ${duplicate.id} satışıyla zaten kaydedilmiş.`);
+        if (!linkedJob) return alert("Bağlı üretim işi bulunamadı. Satış kaydı durduruldu.");
+        if (normalizeProductionStage(linkedJob.stage) !== "Teslim Edildi") return alert("Üretim işi teslim edilmeden satışa aktarılamaz.");
+        if (linkedOrder && String(linkedJob.sourceTx || "") !== String(linkedOrder.id)) return alert("Sipariş ile üretim işi aynı akışa bağlı değil. Satış kaydı durduruldu.");
+        if (linkedOrder?.productionJobId && String(linkedOrder.productionJobId) !== String(linkedJob.id)) return alert("Sipariş ile üretim kimliği uyuşmuyor. Satış kaydı durduruldu.");
+      }
+      const collectedWithAdvance = Number(linkedOrder?.paid || 0) + Number(tx.paid || 0);
+      if (linkedOrder && collectedWithAdvance > tx.amount) return alert("Kapora ile teslimde alınan toplam, satış tutarını aşamaz.");
+      if (linkedOrder) tx.status = collectedWithAdvance >= tx.amount ? "Ödendi" : collectedWithAdvance > 0 ? "Kısmi" : "Vadeli";
+      backupState(tradeLink ? "before-finalize-order-sale" : "before-add-transaction");
       state.transactions.push(tx);
-      state.logs.push({ at: new Date().toISOString(), event: "ADD_TX", id: tx.id, type: tx.type });
+      if (linkedOrder) {
+        linkedOrder.status = "Teslim";
+        linkedOrder.saleTx = tx.id;
+        linkedOrder.deliveredAt = tx.date;
+        linkedOrder.updatedAt = tx.createdAt;
+      }
+      if (linkedJob) {
+        linkedJob.saleTx = tx.id;
+        linkedJob.updatedAt = tx.createdAt;
+      }
+      state.logs.push({
+        at: new Date().toISOString(),
+        event: tradeLink ? "FINALIZE_ORDER_SALE" : "ADD_TX",
+        id: tx.id,
+        type: tx.type,
+        sourceOrderId: tx.sourceOrderId,
+        productionJobId: tx.productionJobId
+      });
       saveState();
       clearForm();
       renderAll();
@@ -7485,6 +8019,7 @@
       if (!confirm(`${last.id} / ${last.type} hareketi geri alınsın mı?`)) return;
       backupState("before-undo-last-transaction");
       const removed = state.transactions.pop();
+      unlinkFinalizedSale(removed);
       if (removed.type === "BORC_ODEME" && removed.debtPlanId) {
         const plan = (state.debtPlans || []).find(row => row.id === removed.debtPlanId);
         if (plan) {
@@ -7503,6 +8038,7 @@
       if (!tx || isCanceled(tx)) return;
       if (!confirm(`${tx.id} / ${tx.type} hareketi iptal edilsin mi? Kayıt silinmez, hesap etkisi kaldırılır.`)) return;
       backupState("before-cancel-transaction");
+      unlinkFinalizedSale(tx);
       tx.status = "İptal";
       tx.cancelledAt = new Date().toISOString();
       tx.note = appendNote(tx.note, "İptal edildi; hesap etkisi kaldırıldı.");
@@ -7606,6 +8142,7 @@
       try {
         const backup = stack[0] || JSON.parse(raw);
         state = mergeIncomingState(backup.state);
+        migrateOrderFlowLinks(state);
         state.logs = state.logs || [];
         state.logs.push({ at: new Date().toISOString(), event: "RESTORE_BACKUP", reason: backup.reason || "" });
         saveState();
@@ -7617,6 +8154,7 @@
 
     function renderTechStatus() {
       const bytes = new Blob([JSON.stringify(state)]).size;
+      const flowIssues = flowIntegrityIssues();
       let backupCount = 0;
       try {
         const stack = JSON.parse(localStorage.getItem(BACKUP_STACK_KEY) || "[]");
@@ -7632,7 +8170,9 @@
         `Rol: ${cloudMember?.role || "yok"}`,
         `Bulut belge sayısı: ${cloudDocumentCount}`,
         `Bekleyen yerel değişiklik: ${cloudDirty ? "var" : "yok"}`,
-        `Kayıt çakışması: ${cloudConflict?.length || 0}`,
+        `Bulut sürüm çakışması: ${cloudConflict?.length || 0}`,
+        `Akış kritik sorunu: ${flowIssues.filter(issue => issue.severity === "bad").length}`,
+        `Akış kontrol uyarısı: ${flowIssues.filter(issue => issue.severity !== "bad").length}`,
         `Yerel emniyet kopyası: localStorage / ${STORAGE_KEY}`,
         `Geri alma yedeği: ${localStorage.getItem(BACKUP_KEY) ? "var" : "yok"} / ${backupCount} nokta`,
         `Hareket sayısı: ${state.transactions.length}`,
@@ -7646,7 +8186,7 @@
         `Google Sheets otomatik senkron: kapalı`,
         `Yaklaşık veri boyutu: ${bytes} byte`,
         `Son güncelleme: ${state.meta.updatedAt}`
-      ].map(line => `<div>${line}</div>`).join("");
+      ].map(line => `<div>${safe(line)}</div>`).join("");
     }
 
     function renderAll() {
@@ -7714,6 +8254,7 @@
     }
 
     function openTradeEntry(type) {
+      pendingTradeLink = null;
       showView("entry");
       byId("txType").value = type;
       byId("txDate").value = today;
@@ -7812,6 +8353,7 @@
           if (!Array.isArray(next.transactions) || !Array.isArray(next.items)) throw new Error("Geçersiz yedek");
           backupState("before-import-json");
           state = mergeIncomingState(next);
+          migrateOrderFlowLinks(state);
           saveState();
           renderAll();
           alert("Yedek yüklendi.");
