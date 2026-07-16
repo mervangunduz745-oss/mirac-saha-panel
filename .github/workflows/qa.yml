@@ -42,5 +42,11 @@ jobs:
         shell: pwsh
         run: ./tests/run-tests.ps1 -CloudOnly -StrictWarnings
 
+      - name: Run order-flow integrity checks
+        run: |
+          node tests/order-flow-integrity.test.mjs
+          node tests/order-flow-accounting.test.mjs
+          node --check tools/audit_order_flow.mjs
+
       - name: Run migration unit tests
         run: python -m unittest tools.tests.test_mirac_migration -v
