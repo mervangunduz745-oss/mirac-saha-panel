@@ -1,0 +1,43 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/**'
+      - '.github/workflows/github-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu al
+        uses: actions/checkout@v4
+      - name: Yayın dosyalarını doğrula
+        run: |
+          test -f public/index.html
+          test -f public/siyah-saha-paneli.html
+          test -f public/siyah-saha-supabase.js
+          test -f public/supabase-config.js
+      - name: Pages yapılandır
+        uses: actions/configure-pages@v5
+      - name: Yayın paketini hazırla
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - name: GitHub Pages'e yayınla
+        id: deployment
+        uses: actions/deploy-pages@v4
