@@ -50,12 +50,12 @@
       <nav>
         <a class="active">Komuta</a><a>Para</a><a>Sipariş</a><a>Üretim</a><a>Stok</a><a>Cari</a><a>Karar</a><a>Rapor</a>
       </nav>
-      <div class="target"><small>Bugün hedef</small><strong>₺45.000</strong><small>Tahsilat</small></div>
+      <div class="target"><small>Bugün tahsilat</small><strong id="todayTarget">₺0</strong><small>Canlı kayıt</small></div>
     </aside>
     <main>
       <header>
         <div><h1>Ezber Bozan Siyah Saha Paneli</h1><p>Araç adı yok. Vitrinde sadece iş var: para, üretim, stok, teslim, risk, karar.</p></div>
-        <div class="badges"><span class="badge critical">Bugün kritik</span><span class="badge live">Canlı saha</span></div>
+        <div class="badges"><span class="badge critical">Bugün kritik</span><span class="badge live" id="liveStatus">Bağlanıyor…</span></div>
       </header>
       <section class="actions">
         <button class="g"><b>Tahsilat Gir</b><span>Para topla</span></button>
@@ -65,37 +65,33 @@
         <button class="a"><b>Stok Say</b><span>Kritik kalem</span></button>
       </section>
       <section class="metrics">
-        <div class="card metric"><small>Nakit Nefesi</small><strong>₺211.970</strong><p>Kasa + banka + POS</p></div>
-        <div class="card metric"><small>Bugün Aranacak</small><strong>₺68.600</strong><p>3 cari / 1 riskli</p></div>
-        <div class="card metric"><small>7 Gün Borç</small><strong>₺86.750</strong><p>Ödeme baskısı</p></div>
-        <div class="card metric"><small>Üretim Baskısı</small><strong>12 emir</strong><p>4 iş bugün bitecek</p></div>
+        <div class="card metric"><small>Nakit Nefesi</small><strong id="cashTotal">₺0</strong><p>Kasa + banka + POS</p></div>
+        <div class="card metric"><small>Açık Müşteri Alacağı</small><strong id="receivableTotal">₺0</strong><p>Canlı cari hesap</p></div>
+        <div class="card metric"><small>7 Gün Borç</small><strong id="sevenDayDebt">₺0</strong><p>Ödeme baskısı</p></div>
+        <div class="card metric"><small>Üretim Baskısı</small><strong id="productionCount">0 emir</strong><p id="productionHint">Canlı üretim</p></div>
       </section>
       <section class="grid">
         <div class="section" style="--accent:var(--amber)"><h2>Bugün Aranacaklar</h2><p>Para gelmeden vadeli satış açılmayacak.</p>
-          <div class="row"><div><b>Ayhan Mobilya</b><small>Bugün kısmi tahsilat sözü</small></div><div class="money">₺24.500</div></div>
-          <div class="row"><div><b>Demir Yatak Toptan</b><small>4 gün gecikti</small></div><div class="money red">₺38.900</div></div>
-          <div class="row"><div><b>Hasan Kıraç</b><small>18 gün gecikti</small></div><div class="money red">₺5.200</div></div>
+          <div id="receivableList"></div>
         </div>
         <div class="section" style="--accent:var(--blue)"><h2>Üretim Baskısı</h2><p>Bugün bitecek işler önce.</p>
-          <div class="row"><div><b>160x200 Baza</b><small>Kalan: Döşeme</small></div><div class="money blue">8 adet</div></div>
-          <div class="row"><div><b>180 Başlık</b><small>Kalan: Paketleme</small></div><div class="money blue">10 adet</div></div>
-          <div class="row"><div><b>160x200 Set</b><small>Riskli kontrol</small></div><div class="money red">3 set</div></div>
+          <div id="productionList"></div>
         </div>
         <div class="section" style="--accent:var(--red)"><h2>Kritik Stok</h2><p>Üretimi durduracak kalem.</p>
-          <div class="row"><div><b>Sünger 28 DNS</b><small>Silver Gold Set durabilir</small><div class="bar"><span style="width:81%"></span></div></div><div class="money red">65/80</div></div>
-          <div class="row"><div><b>Ayak 12 cm</b><small>Baza çıkışı yavaşlar</small><div class="bar"><span style="width:30%"></span></div></div><div class="money red">18/60</div></div>
+          <div id="stockList"></div>
         </div>
       </section>
       <section class="bottom">
         <div class="section" style="--accent:#fca5a5"><h2>Borç Sırası</h2><p>Ödeme duyguyla değil, sırayla yapılır.</p>
-          <div class="row"><b>SGK</b><span class="money">₺18.500 · 2g</span></div><div class="row"><b>Polat Sünger</b><span class="money">₺14.400 · 3g</span></div><div class="row"><b>MDF Market</b><span class="money">₺22.800 · 5g</span></div>
+          <div id="debtList"></div>
         </div>
         <div class="section" style="--accent:#c4b5fd"><h2>Teslim Riski</h2><p>Söz verilen tarih namustur; risk erkenden görünür.</p>
-          <div class="row"><b>120x200 Soft Set</b><span class="money red">Yüksek</span></div><div class="row"><b>160x200 Silver Gold</b><span class="money blue">Orta</span></div><div class="row"><b>Showroom 90x190</b><span class="money blue">Orta</span></div>
+          <div id="deliveryList"></div>
         </div>
       </section>
-      <section class="decision"><div><h2>Karar Satırı</h2><p>Bugün tahsilat araması yapılmadan yeni kumaş alımı açılmayacak. Üretim önceliği: 160x200 baza ve 180 başlık.</p></div><div class="chips"><span class="badge live">Sorumlu: Mervan Bey</span><span class="badge critical">Risk: Nakit baskısı</span></div></section>
+      <section class="decision"><div><h2>Karar Satırı</h2><p id="decisionText">Canlı veri hazırlanıyor…</p></div><div class="chips"><span class="badge live">Sorumlu: Mervan Bey</span><span class="badge critical" id="riskBadge">Risk: Hesaplanıyor</span></div></section>
     </main>
   </div>
+  <script type="module" src="./siyah-saha-canli.js"></script>
 </body>
 </html>
