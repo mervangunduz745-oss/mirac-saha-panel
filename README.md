@@ -4,6 +4,7 @@ Miraç için Firebase Hosting üzerinde çalışan saha operasyon paneli.
 
 - Canlı URL: https://tamam-d1caa.web.app
 - Mobil giriş: https://tamam-d1caa.web.app/mobil
+- Siyah saha komuta paneli: https://tamam-d1caa.web.app/siyah-saha-paneli.html
 - Firebase proje id: `tamam-d1caa`
 
 ## Odak
@@ -15,6 +16,20 @@ Bu panel resmi muhasebe veya e-belge sistemi değildir. Resmi kayıt ve fatura s
 - stok ve maliyet uyarısı
 - cari, tahsilat ve borç önceliği
 - mobil saha girişi
+
+## Siyah Saha Komuta Paneli
+
+Siyah saha komuta paneli ayrı sayfa olarak eklendi:
+
+```text
+public/siyah-saha-paneli.html
+```
+
+Ana kural: panel vitrini araç isimleriyle değil, iş diliyle çalışır.
+
+```text
+Para · Tahsilat · Borç · Sipariş · Üretim · Stok · Teslim · Risk · Karar
+```
 
 ## Yayın
 
