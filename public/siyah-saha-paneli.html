@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Miraç ERP - Siyah Saha Komuta Paneli</title>
+  <style>
+    :root{
+      --bg:#020617;--panel:#07111f;--card:#0b1220;--stroke:#243244;
+      --text:#f8fafc;--muted:#94a3b8;--green:#22c55e;--red:#ef4444;
+      --amber:#f59e0b;--blue:#3b82f6;--purple:#8b5cf6;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at top right,#12315a 0,#020617 38%,#020617 100%);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+    .wrap{display:grid;grid-template-columns:236px 1fr;gap:24px;min-height:100vh;padding:24px}
+    aside{background:#050b14;border:1px solid #1e293b;border-radius:28px;padding:28px}
+    .brand{display:flex;gap:14px;align-items:center;margin-bottom:40px}
+    .logo{width:44px;height:44px;border-radius:12px;background:#16a34a;display:grid;place-items:center;font-weight:900}
+    .brand b{display:block;font-size:22px}.brand span{font-size:13px;color:var(--muted)}
+    nav a{display:block;color:var(--muted);padding:14px 18px;border-radius:12px;text-decoration:none;margin-bottom:8px}
+    nav a.active{background:#172554;color:#fff;border:1px solid #2563eb}
+    .target{margin-top:80px;background:#0f172a;border:1px solid #334155;border-radius:18px;padding:16px}
+    .target small{color:var(--muted)}.target strong{display:block;color:var(--green);font-size:30px;margin-top:4px}
+    main{background:rgba(7,17,31,.92);border:1px solid #0f172a;border-radius:36px;padding:32px;overflow:hidden}
+    header{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:28px}
+    h1{font-size:42px;margin:0 0 8px}p{margin:0;color:var(--muted)}
+    .badges{display:flex;gap:10px;flex-wrap:wrap}.badge{border-radius:999px;padding:10px 15px;font-weight:800;font-size:13px}.critical{background:#7f1d1d;color:#fecaca}.live{background:#064e3b;color:#bbf7d0}
+    .actions{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:16px;margin-bottom:28px}
+    button{border:1px solid #334155;color:white;text-align:left;border-radius:22px;padding:20px 22px;min-height:86px;cursor:pointer;font:inherit;transition:.15s}
+    button:hover{transform:translateY(-2px);filter:brightness(1.1)}button b{display:block;font-size:20px}button span{color:#cbd5e1;font-size:13px}
+    .g{background:linear-gradient(135deg,#14532d,#052e16)}.r{background:linear-gradient(135deg,#7f1d1d,#450a0a)}.b{background:linear-gradient(135deg,#1e3a8a,#020617)}.i{background:linear-gradient(135deg,#312e81,#020617)}.a{background:linear-gradient(135deg,#92400e,#1c1917)}
+    .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+    .card,.section,.decision{background:rgba(11,18,32,.82);border:1px solid var(--stroke);border-radius:24px;padding:20px}
+    .metric small{color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.metric strong{display:block;font-size:34px;margin-top:8px}.metric p{font-size:13px;margin-top:5px}
+    .grid{display:grid;grid-template-columns:1.15fr .9fr .9fr;gap:16px;margin-bottom:16px}
+    .section{position:relative;overflow:hidden}.section:before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--accent)}
+    h2{font-size:20px;margin:8px 0 4px}.section>p{color:var(--accent);font-size:13px;font-weight:800;margin-bottom:18px}
+    .row{display:flex;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid #1e293b}.row:last-child{border-bottom:0}
+    .row b{display:block}.row small{display:block;color:var(--muted);margin-top:4px}.money{font-weight:900}.red{color:#fecaca}.blue{color:#dbeafe}
+    .bar{height:8px;background:#1e293b;border-radius:99px;overflow:hidden;margin-top:10px}.bar span{display:block;height:100%;background:var(--red);border-radius:99px}
+    .bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+    .decision{display:flex;justify-content:space-between;align-items:center;gap:24px}.decision h2{margin-top:0}.chips{display:flex;gap:10px;flex-wrap:wrap}
+    @media(max-width:1100px){.wrap{grid-template-columns:1fr}aside{display:none}.actions,.metrics,.grid,.bottom{grid-template-columns:1fr}header,.decision{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside>
+      <div class="brand"><div class="logo">M</div><div><b>Miraç ERP</b><span>Saha Komuta Paneli</span></div></div>
+      <nav>
+        <a class="active">Komuta</a><a>Para</a><a>Sipariş</a><a>Üretim</a><a>Stok</a><a>Cari</a><a>Karar</a><a>Rapor</a>
+      </nav>
+      <div class="target"><small>Bugün hedef</small><strong>₺45.000</strong><small>Tahsilat</small></div>
+    </aside>
+    <main>
+      <header>
+        <div><h1>Ezber Bozan Siyah Saha Paneli</h1><p>Araç adı yok. Vitrinde sadece iş var: para, üretim, stok, teslim, risk, karar.</p></div>
+        <div class="badges"><span class="badge critical">Bugün kritik</span><span class="badge live">Canlı saha</span></div>
+      </header>
+      <section class="actions">
+        <button class="g"><b>Tahsilat Gir</b><span>Para topla</span></button>
+        <button class="r"><b>Ödeme Yap</b><span>Sıraya göre</span></button>
+        <button class="b"><b>Sipariş Aç</b><span>Vade kontrol</span></button>
+        <button class="i"><b>Üretim Başlat</b><span>Stok yeter mi?</span></button>
+        <button class="a"><b>Stok Say</b><span>Kritik kalem</span></button>
+      </section>
+      <section class="metrics">
+        <div class="card metric"><small>Nakit Nefesi</small><strong>₺211.970</strong><p>Kasa + banka + POS</p></div>
+        <div class="card metric"><small>Bugün Aranacak</small><strong>₺68.600</strong><p>3 cari / 1 riskli</p></div>
+        <div class="card metric"><small>7 Gün Borç</small><strong>₺86.750</strong><p>Ödeme baskısı</p></div>
+        <div class="card metric"><small>Üretim Baskısı</small><strong>12 emir</strong><p>4 iş bugün bitecek</p></div>
+      </section>
+      <section class="grid">
+        <div class="section" style="--accent:var(--amber)"><h2>Bugün Aranacaklar</h2><p>Para gelmeden vadeli satış açılmayacak.</p>
+          <div class="row"><div><b>Ayhan Mobilya</b><small>Bugün kısmi tahsilat sözü</small></div><div class="money">₺24.500</div></div>
+          <div class="row"><div><b>Demir Yatak Toptan</b><small>4 gün gecikti</small></div><div class="money red">₺38.900</div></div>
+          <div class="row"><div><b>Hasan Kıraç</b><small>18 gün gecikti</small></div><div class="money red">₺5.200</div></div>
+        </div>
+        <div class="section" style="--accent:var(--blue)"><h2>Üretim Baskısı</h2><p>Bugün bitecek işler önce.</p>
+          <div class="row"><div><b>160x200 Baza</b><small>Kalan: Döşeme</small></div><div class="money blue">8 adet</div></div>
+          <div class="row"><div><b>180 Başlık</b><small>Kalan: Paketleme</small></div><div class="money blue">10 adet</div></div>
+          <div class="row"><div><b>160x200 Set</b><small>Riskli kontrol</small></div><div class="money red">3 set</div></div>
+        </div>
+        <div class="section" style="--accent:var(--red)"><h2>Kritik Stok</h2><p>Üretimi durduracak kalem.</p>
+          <div class="row"><div><b>Sünger 28 DNS</b><small>Silver Gold Set durabilir</small><div class="bar"><span style="width:81%"></span></div></div><div class="money red">65/80</div></div>
+          <div class="row"><div><b>Ayak 12 cm</b><small>Baza çıkışı yavaşlar</small><div class="bar"><span style="width:30%"></span></div></div><div class="money red">18/60</div></div>
+        </div>
+      </section>
+      <section class="bottom">
+        <div class="section" style="--accent:#fca5a5"><h2>Borç Sırası</h2><p>Ödeme duyguyla değil, sırayla yapılır.</p>
+          <div class="row"><b>SGK</b><span class="money">₺18.500 · 2g</span></div><div class="row"><b>Polat Sünger</b><span class="money">₺14.400 · 3g</span></div><div class="row"><b>MDF Market</b><span class="money">₺22.800 · 5g</span></div>
+        </div>
+        <div class="section" style="--accent:#c4b5fd"><h2>Teslim Riski</h2><p>Söz verilen tarih namustur; risk erkenden görünür.</p>
+          <div class="row"><b>120x200 Soft Set</b><span class="money red">Yüksek</span></div><div class="row"><b>160x200 Silver Gold</b><span class="money blue">Orta</span></div><div class="row"><b>Showroom 90x190</b><span class="money blue">Orta</span></div>
+        </div>
+      </section>
+      <section class="decision"><div><h2>Karar Satırı</h2><p>Bugün tahsilat araması yapılmadan yeni kumaş alımı açılmayacak. Üretim önceliği: 160x200 baza ve 180 başlık.</p></div><div class="chips"><span class="badge live">Sorumlu: Mervan Bey</span><span class="badge critical">Risk: Nakit baskısı</span></div></section>
+    </main>
+  </div>
+</body>
+</html>
