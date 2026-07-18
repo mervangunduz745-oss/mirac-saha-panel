@@ -2831,6 +2831,7 @@
       color: #f2f5f9;
       background: #0b0e14;
     }
+    body:not(.auth-locked).dashboard-dark::before { display: none; }
     body:not(.auth-locked).dashboard-dark .app {
       background: #0b0e14;
     }
@@ -2866,6 +2867,24 @@
       border-color: #2a3241;
       color: #c7cfdb;
       background: #171c26;
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark .nav button.active {
+      border-color: #303949;
+      color: #f2f5f9;
+      background: #202633;
+      box-shadow: none;
+      transform: none;
+    }
+    body:not(.auth-locked).dashboard-dark .nav button.active::before {
+      color: #31c887;
+      background: rgba(15, 138, 95, .18);
+      box-shadow: inset 0 0 0 1px rgba(49, 200, 135, .16);
+    }
+    body:not(.auth-locked).dashboard-dark .side-note {
+      border-color: #293140;
+      color: #8f9bad;
+      background: #151a23;
       box-shadow: none;
     }
     body:not(.auth-locked).dashboard-dark .content {
@@ -3222,7 +3241,7 @@
       <div class="brand">
         <div class="mark">M</div>
         <div>
-          <strong>Miraç Panel</strong>
+          <strong>Miraç ERP</strong>
           <span>Saha operasyon</span>
         </div>
       </div>
@@ -3315,8 +3334,8 @@
       <div class="brand">
         <div class="mark">M</div>
         <div>
-          <strong>Miraç Panel</strong>
-          <span>Saha kokpiti</span>
+          <strong>Miraç ERP</strong>
+          <span>Saha komuta</span>
         </div>
       </div>
       <div>
