@@ -1,4 +1,4 @@
-const CACHE_NAME = "mirac-erp-shell-v41-pages";
+const CACHE_NAME = "mirac-erp-shell-v42-pages";
 const BASE = "/mirac-saha-panel/";
 const APP_SHELL = [
   BASE,
