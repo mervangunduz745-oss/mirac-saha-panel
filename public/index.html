@@ -3576,7 +3576,7 @@
           <div class="panel secondary-entry-panel">
             <div class="panel-head">
               <h2>Tek Kapı İşlem Girişi</h2>
-              <span class="status ok">Satış / Alış / Tahsilat / Ödeme / Personel</span>
+              <span class="status ok">Satış / Alış / Tahsilat / Ödeme / Mahsup / Personel</span>
             </div>
             <form id="entryForm">
               <div class="entry-grid">
@@ -3587,6 +3587,7 @@
                     <option value="ALIS">Alış</option>
                     <option value="TAHSILAT">Tahsilat</option>
                     <option value="ODEME">Ödeme</option>
+                    <option value="MAHSUP">Mahsup</option>
                     <option value="MASRAF">Masraf</option>
                     <option value="PERSONEL_ODEME">Personel Ödeme</option>
                   </select>
@@ -3606,6 +3607,13 @@
                 <div class="field account-field">
                   <label for="account">Kasa / Banka</label>
                   <select id="account"></select>
+                </div>
+                <div class="field mahsup-direction-field hidden">
+                  <label for="mahsupDirection">Mahsup Yönü</label>
+                  <select id="mahsupDirection">
+                    <option value="CUSTOMER_DEBT_REDUCTION">Müşteri borcunu azalt</option>
+                    <option value="SUPPLIER_RECEIVABLE_REDUCTION">Tedarikçi alacağını azalt</option>
+                  </select>
                 </div>
                 <div class="field item-field">
                   <label for="item">Stok / Ürün</label>
@@ -3635,6 +3643,7 @@
                     <option>Kısmi</option>
                     <option>Ödendi</option>
                     <option>Planlandı</option>
+                    <option>Mahsup</option>
                   </select>
                 </div>
               </div>
@@ -4317,6 +4326,7 @@
               <div class="quick-action-grid cash-actions">
                 <button class="quick-action" type="button" data-kasa-entry="TAHSILAT"><strong>Tahsilat Kaydet</strong><span>Müşteri ödemesi, kapora veya POS tahsilatı.</span></button>
                 <button class="quick-action" type="button" data-kasa-entry="ODEME"><strong>Ödeme Kaydet</strong><span>Tedarikçi, resmi ödeme veya genel çıkış.</span></button>
+                <button class="quick-action" type="button" data-kasa-entry="MAHSUP"><strong>Mahsup Kaydet</strong><span>Cari bakiyeyi kasa hareketi oluşturmadan kapat.</span></button>
                 <button class="quick-action" type="button" data-jump-view="debt"><strong>Borç Planı Aç</strong><span>Vadeli banka, senet ve resmi ödeme takibi.</span></button>
                 <button class="quick-action" type="button" data-focus-fixed><strong>Sabit Gider Ekle</strong><span>Kira, maaş, muhasebe ve düzenli gider.</span></button>
               </div>
@@ -4647,6 +4657,7 @@
         ALIS: "Alış",
         TAHSILAT: "Tahsilat",
         ODEME: "Ödeme",
+        MAHSUP: "Mahsup",
         MASRAF: "Masraf",
         PERSONEL_ODEME: "Personel Ödeme",
         URETIM: "Üretim",
@@ -5684,6 +5695,11 @@
         if (tx.type === "ODEME") {
           ensureCari(tx.party).payments += amount;
           cashAdd(tx.account, -amount);
+        }
+        if (tx.type === "MAHSUP") {
+          const c = ensureCari(tx.party);
+          if (tx.mahsupDirection === "SUPPLIER_RECEIVABLE_REDUCTION") c.payments += amount;
+          else c.collections += amount;
         }
         if (tx.type === "MASRAF") {
           ensureCari(tx.party).expenses += amount;
@@ -7810,12 +7826,14 @@
       const needsQty = ["SIPARIS", "SATIS", "ALIS", "URETIM"].includes(type);
       const needsPrice = ["SIPARIS", "SATIS", "ALIS"].includes(type);
       const needsPaid = ["SIPARIS", "SATIS", "ALIS"].includes(type);
-      const amountDirect = ["TAHSILAT", "ODEME", "MASRAF", "PERSONEL_ODEME"].includes(type);
+      const amountDirect = ["TAHSILAT", "ODEME", "MAHSUP", "MASRAF", "PERSONEL_ODEME"].includes(type);
       document.querySelectorAll(".item-field").forEach(el => el.classList.toggle("hidden", !needsItem));
       document.querySelectorAll(".qty-field").forEach(el => el.classList.toggle("hidden", !needsQty));
       document.querySelectorAll(".price-field").forEach(el => el.classList.toggle("hidden", !needsPrice));
       document.querySelectorAll(".paid-field").forEach(el => el.classList.toggle("hidden", !needsPaid));
       document.querySelectorAll(".amount-field").forEach(el => el.classList.toggle("hidden", !amountDirect));
+      document.querySelectorAll(".mahsup-direction-field").forEach(el => el.classList.toggle("hidden", type !== "MAHSUP"));
+      document.querySelectorAll(".account-field").forEach(el => el.classList.toggle("hidden", type === "MAHSUP"));
       document.querySelectorAll(".party-field").forEach(el => el.classList.toggle("hidden", type === "URETIM"));
       if (type === "URETIM") {
         byId("party").value = "Üretim";
@@ -7823,8 +7841,8 @@
       if (type === "SIPARIS") {
         byId("status").value = "Sipariş";
       }
-      if (["TAHSILAT", "ODEME", "MASRAF", "PERSONEL_ODEME"].includes(type)) {
-        byId("status").value = "Ödendi";
+      if (["TAHSILAT", "ODEME", "MAHSUP", "MASRAF", "PERSONEL_ODEME"].includes(type)) {
+        byId("status").value = type === "MAHSUP" ? "Mahsup" : "Ödendi";
       }
     }
 
@@ -8389,6 +8407,7 @@
         amount,
         paid: Number(byId("paid").value || 0),
         account: byId("account").value,
+        mahsupDirection: type === "MAHSUP" ? byId("mahsupDirection").value : "",
         status: byId("status").value,
         note: byId("note").value.trim(),
         sizeVariant: tradeLink?.sizeVariant || "",
@@ -8421,7 +8440,7 @@
       if (["SATIS", "ALIS"].includes(type) && !tx.amount) return alert("Birim fiyat/tutar gerekli.");
       if (type === "SIPARIS" && tx.paid && !tx.amount) return alert("Kapora varsa birim fiyat girilmeli.");
       if (["SIPARIS", "SATIS", "ALIS"].includes(type) && tx.paid > tx.amount) return alert("Peşin/kapora toplam tutardan büyük olamaz.");
-      if (["TAHSILAT", "ODEME", "MASRAF", "PERSONEL_ODEME"].includes(type) && !tx.amount) return alert("Tutar gerekli.");
+      if (["TAHSILAT", "ODEME", "MAHSUP", "MASRAF", "PERSONEL_ODEME"].includes(type) && !tx.amount) return alert("Tutar gerekli.");
       if (tradeLink?.sourceOrderId && !linkedOrder) return alert("Bağlı sipariş bulunamadı. Satış kaydı durduruldu.");
       if (tradeLink?.productionJobId) {
         const duplicate = activeTransactions().find(row => row.type === "SATIS" && linkedProductionJobId(row) === tradeLink.productionJobId);
