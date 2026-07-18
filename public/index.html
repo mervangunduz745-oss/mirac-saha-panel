@@ -2263,6 +2263,26 @@
         transform: none !important;
       }
     }
+    /* Cihaz koruma modu: sürekli GPU efektlerini kapatır, işlev ve buton geri bildirimi korunur. */
+    body.performance-mode *,
+    body.performance-mode *::before,
+    body.performance-mode *::after {
+      animation: none !important;
+      scroll-behavior: auto !important;
+    }
+    body.performance-mode .auth-card,
+    body.performance-mode header,
+    body.performance-mode .payment-dialog::backdrop,
+    body.performance-mode .command-sheet-backdrop,
+    body.performance-mode .mobile-command-bar {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    body.performance-mode .content::after,
+    body.performance-mode #actionCompass::before { display: none !important; }
+    body.performance-mode :is(.card, .panel, .command-kpi, .quick-action-panel, .action-compass-lead, .action-compass-stack) {
+      box-shadow: 0 5px 14px rgba(18, 33, 61, .08) !important;
+    }
     @media (max-width: 1100px) {
       .app { grid-template-columns: 1fr; }
       aside { position: static; }
@@ -3275,7 +3295,7 @@
     }
   </style>
 </head>
-<body class="auth-locked dashboard-dark">
+<body class="auth-locked dashboard-dark performance-mode">
   <section class="auth-screen" aria-label="Panel girişi">
     <div class="auth-card">
       <div class="brand">
@@ -4578,6 +4598,9 @@
     let pendingInventoryImage = "";
     let pendingTradeLink = null;
     let pendingDebtPaymentId = "";
+    let renderCycleActive = false;
+    let renderMetricsCache = null;
+    let searchRenderTimer = null;
     const clientId = getClientId();
     const WORKER_ALLOWED_VIEWS = new Set(["entry", "production", "stock"]);
     const WORKER_ALLOWED_TX_TYPES = new Set(["SIPARIS", "URETIM"]);
@@ -5557,7 +5580,7 @@
       cloudRefreshTimer = setTimeout(async () => {
         await pullCloudState({ confirm: false });
         byId("saveBadge").textContent = "Bulut güncellemesi alındı";
-      }, 250);
+      }, 1200);
     }
 
     async function bootstrapCloudState() {
@@ -6189,6 +6212,7 @@
     }
 
     function metrics() {
+      if (renderCycleActive && renderMetricsCache) return renderMetricsCache;
       const d = derive();
       const txRows = activeTransactions();
       const debt = debtPlanStats();
@@ -6216,7 +6240,9 @@
         .reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
       const fixed = fixedExpenseStats();
       const jobs = productionJobStats();
-      return { ...d, fixed, jobs, debt, orders, openOrders, openOrderTotal, monthSales, todaySales, monthPersonnel, personnelPayments, receivable, payable, plannedPayable, cashTotal, lowCount, missingStockCostCount, productionCount };
+      const result = { ...d, fixed, jobs, debt, orders, openOrders, openOrderTotal, monthSales, todaySales, monthPersonnel, personnelPayments, receivable, payable, plannedPayable, cashTotal, lowCount, missingStockCostCount, productionCount };
+      if (renderCycleActive) renderMetricsCache = result;
+      return result;
     }
 
     function renderCards() {
@@ -8744,32 +8770,64 @@
     }
 
     function renderAll() {
-      populateFormLists();
-      renderSearchResults();
-      renderCards();
-      renderLiveRhythm();
-      renderActionCompass();
-      renderMoves();
-      renderTradeChannel("SATIS");
-      renderDeliverySalesQueue();
-      renderTradeChannel("ALIS");
-      renderOrderBrief();
-      renderCari();
-      renderDebtPlans();
-      renderStock();
-      renderRecipes();
-      renderCatalog();
-      renderProductionWork();
-      renderGuide();
-      renderDailyFlow();
-      renderAutomations();
-      renderReportCenter();
-      renderControl();
-      renderCashPos();
-      renderFixedExpenses();
-      renderTechStatus();
-      applyRoleAccess();
-      renderMobileCommandBar();
+      if (renderCycleActive) return;
+      renderCycleActive = true;
+      renderMetricsCache = null;
+      try {
+        populateFormLists();
+        renderSearchResults();
+        renderCards();
+        renderLiveRhythm();
+        renderActionCompass();
+        renderMoves();
+        renderTradeChannel("SATIS");
+        renderDeliverySalesQueue();
+        renderTradeChannel("ALIS");
+        renderOrderBrief();
+        renderCari();
+        renderDebtPlans();
+        renderStock();
+        renderRecipes();
+        renderCatalog();
+        renderProductionWork();
+        renderGuide();
+        renderDailyFlow();
+        renderAutomations();
+        renderReportCenter();
+        renderControl();
+        renderCashPos();
+        renderFixedExpenses();
+        renderTechStatus();
+        applyRoleAccess();
+        renderMobileCommandBar();
+      } finally {
+        renderMetricsCache = null;
+        renderCycleActive = false;
+      }
+    }
+
+    function renderSearchView() {
+      if (renderCycleActive) return;
+      renderCycleActive = true;
+      renderMetricsCache = null;
+      try {
+        renderSearchResults();
+        const activeView = document.querySelector(".tab-view.active")?.id || "dashboard";
+        if (activeView === "moves") renderMoves();
+        if (activeView === "sales") renderTradeChannel("SATIS");
+        if (activeView === "purchase") renderTradeChannel("ALIS");
+        if (activeView === "cari") renderCari();
+        if (activeView === "stock") renderStock();
+        if (activeView === "catalog") renderCatalog();
+      } finally {
+        renderMetricsCache = null;
+        renderCycleActive = false;
+      }
+    }
+
+    function queueSearchRender() {
+      clearTimeout(searchRenderTimer);
+      searchRenderTimer = setTimeout(renderSearchView, 220);
     }
 
     const viewSubtitles = {
@@ -9184,7 +9242,7 @@
     byId("debtPaymentForm").addEventListener("submit", submitDebtPayment);
     byId("cancelDebtPayment").addEventListener("click", closeDebtPaymentDialog);
     byId("txType").addEventListener("change", updateFormMode);
-    byId("search").addEventListener("input", renderAll);
+    byId("search").addEventListener("input", queueSearchRender);
     byId("exportJson").addEventListener("click", exportJsonFile);
     byId("settingsExportJson").addEventListener("click", exportJsonFile);
     byId("createCloudBackup").addEventListener("click", createCloudBackup);
