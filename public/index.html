@@ -4353,8 +4353,9 @@
                 <button class="btn" id="settingsUndoLast">Son Kaydı Geri Al</button>
                 <button class="btn" id="restoreBackup">Son İyi Yedeği Yükle</button>
                 <button class="btn danger" id="resetDemo">Pilot Veriyi Sıfırla</button>
+                <button class="btn danger" id="resetFinanceCloud" type="button">Finans ve Üretim Kayıtlarını Tamamen Sil</button>
               </div>
-              <p class="hint">JSON yedek bu pilotun tüm verisini taşır. CSV sadece hareket listesini muhasebe/Sheet tarafına aktarmak içindir.</p>
+              <p class="hint">Bu işlem önce bulut yedeği alır; finans hareketleri, cari, borç planı, sabit gider, üretim işleri ve işlem geçmişini hem cihazdan hem Firebase'den kaldırır. Ürün, stok, hesap ve reçeteler korunur.</p>
             </div>
             <div class="panel">
               <div class="panel-head"><h2>Merkezi Veri</h2><span class="status ok">Firebase</span></div>
@@ -8998,6 +8999,54 @@
       reader.readAsText(file, "utf-8");
     }
 
+    async function resetFinanceCloudData() {
+      if (blockWorkerAction("Finans ve üretim sıfırlama üretim personeli hesabında kapalı.")) return;
+      if (!cloudUser || !cloud?.configured || !cloudLoadReady) return alert("Silme işlemi için Firebase oturumu ve tamamlanmış bulut yüklemesi gerekli.");
+      if (cloudSyncBusy || cloudDirty || cloudConflict) return alert("Önce bekleyen bulut işlemini tamamlayın veya Buluttan Yenile yapın; ardından tekrar deneyin.");
+      const counts = {
+        transactions: (state.transactions || []).length,
+        cariCards: (state.cariCards || []).length,
+        debtPlans: (state.debtPlans || []).length,
+        fixedExpenses: (state.fixedExpenses || []).length,
+        productionJobs: (state.productionJobs || []).length,
+        logs: (state.logs || []).length
+      };
+      const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
+      const confirmation = prompt(`${total} finans ve üretim kaydı kalıcı olarak silinecek.\nÜrün, stok, hesap ve reçeteler korunacak.\n\nOnaylamak için KAYITLARI SİL yazın:`);
+      if (confirmation !== "KAYITLARI SİL") return alert("İşlem iptal edildi; hiçbir kayıt silinmedi.");
+      const button = byId("resetFinanceCloud");
+      button.disabled = true;
+      setCloudStatus("Silme öncesi yedek alınıyor", "Firebase geri dönüş noktası hazırlanıyor.", "warn");
+      try {
+        await cloud.saveBackup(clone(state), clientId, "finans-uretim-sifirlama-oncesi");
+        backupState("before-finance-production-cloud-reset");
+        state.transactions = [];
+        state.cariCards = [];
+        state.debtPlans = [];
+        state.fixedExpenses = [];
+        state.productionJobs = [];
+        state.logs = [];
+        saveState({ sync: false });
+        cloudDirty = true;
+        await pushCloudState();
+        if (cloudDirty || cloudConflict) throw new Error("Firebase silme işlemi doğrulanamadı; emniyet yedeği korundu.");
+        const remaining = (state.transactions || []).length
+          + (state.cariCards || []).length
+          + (state.debtPlans || []).length
+          + (state.fixedExpenses || []).length
+          + (state.productionJobs || []).length
+          + (state.logs || []).length;
+        if (remaining) throw new Error(`${remaining} kayıt buluttan geri döndü; silme doğrulanamadı.`);
+        renderAll();
+        alert(`${total} finans ve üretim kaydı cihazdan ve Firebase'den silindi. Stok ve ürün kayıtları korundu.`);
+      } catch (error) {
+        setCloudStatus("Silme tamamlanamadı", error?.message || "Kayıtlar silinemedi.", "bad");
+        alert(`Silme tamamlanamadı: ${error?.message || "Bilinmeyen hata"}`);
+      } finally {
+        button.disabled = false;
+      }
+    }
+
     byId("nav").addEventListener("click", event => {
       const btn = event.target.closest("button[data-view]");
       if (btn) showView(btn.dataset.view);
@@ -9275,6 +9324,7 @@
       clearForm();
       renderAll();
     });
+    byId("resetFinanceCloud").addEventListener("click", resetFinanceCloudData);
 
     clearForm();
     clearOrderForm();
