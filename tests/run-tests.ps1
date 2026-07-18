@@ -283,8 +283,11 @@ if ($adapterConflictList -and $uiConflictList) {
 
 $subscriptionSendsChanges = Test-Match $cloudAdapter 'collectionName\s*:\s*name[\s\S]*?docChanges\(\)'
 $uiReloadsOnSignal = Test-Match $cloudHtml 'function\s+handleRemoteSnapshot[\s\S]*?(?:cloud\.loadState\(|pullCloudState\()'
+$uiUsesManualSafeRefresh = (Test-Match $cloudHtml 'Sürekli Firebase dinlemesi kapalı') -and (Test-Match $cloudHtml 'id=["'']pullCloudState["'']') -and -not (Test-Match $cloudHtml 'cloud\.subscribeState\(handleRemoteSnapshot')
 if ($subscriptionSendsChanges -and $uiReloadsOnSignal) {
   Add-Result "PASS" "Sozlesme" "Canli dinleyici" "Koleksiyon degisiklik sinyali panelde yeniden yuklemeyi tetikliyor."
+} elseif ($subscriptionSendsChanges -and $uiUsesManualSafeRefresh) {
+  Add-Result "PASS" "Sozlesme" "Cihaz guvenli bulut yenileme" "Surekli dinleyici kapali; uzak veri kullanici istegiyle kontrollu yenileniyor."
 } elseif (-not $subscriptionSendsChanges) {
   Add-Result "WARN" "Sozlesme" "Canli dinleyici" "Adaptorun snapshot sozlesmesi statik olarak taninamadi."
 } else {
@@ -314,7 +317,15 @@ Add-PatternCheck $rules 'match\s+/orgs/\{orgId\}/transactions/\{docId\}[\s\S]*?a
 Add-PatternCheck $rules '1\s+MiB|1\s*MiB' "Mimari" "1 MiB tasarim notu" "Rules dosyasi tek belge limitini ve kucuk entity ilkesini belgeliyor." "1 MiB tek belge riski mimari dokumanda belirtilmemis." "WARN"
 
 Add-PatternCheck $cloudHtml 'navigator\.onLine|addEventListener\(["'']offline["'']|addEventListener\(["'']online["'']' "Offline" "Ag durumu" "Panel online/offline durumunu izliyor." "Panel ag durumunu acikca izlemiyor; kullanici senkron durumunu yanlis anlayabilir." "WARN"
-Add-PatternCheck $cloudHtml 'serviceWorker\.register' "Offline" "Service worker" "Service worker kaydi mevcut." "Offline yeniden acilis icin service worker kaydi yok." "WARN"
+$serviceWorkerRegistered = Test-Match $cloudHtml 'serviceWorker\.register'
+$serviceWorkerSafelyDisabled = (Test-Match $cloudHtml 'registration\.unregister\(\)') -and (Test-Match $cloudHtml 'caches\.delete\(key\)')
+if ($serviceWorkerRegistered) {
+  Add-Result "PASS" "Offline" "Service worker" "Service worker kaydi mevcut."
+} elseif ($serviceWorkerSafelyDisabled) {
+  Add-Result "PASS" "Performans" "Service worker guvenli kapatma" "Eski worker ve ERP cache kayitlari cihaz guvenli modunda temizleniyor."
+} else {
+  Add-Result "WARN" "Offline" "Service worker" "Ne offline worker ne de acik cihaz guvenli kapatma mekanizmasi bulundu."
+}
 Add-PatternCheck $cloudHtml '<link[^>]+rel=["'']manifest["'']' "Offline" "Web manifest" "PWA manifest baglantisi mevcut." "PWA manifest baglantisi yok." "WARN"
 Add-PatternCheck $cloudAdapter 'persistentLocalCache|enableMultiTabIndexedDbPersistence|enableIndexedDbPersistence' "Offline" "Firestore offline cache" "Firestore kalici offline cache yapilandirmasi mevcut." "Firestore kalici offline cache yapilandirmasi yok." "WARN"
 

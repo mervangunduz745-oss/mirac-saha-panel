@@ -2268,8 +2268,10 @@
     body.performance-mode *::before,
     body.performance-mode *::after {
       animation: none !important;
+      transition: none !important;
       scroll-behavior: auto !important;
     }
+    body.performance-mode * { filter: none !important; }
     body.performance-mode .auth-card,
     body.performance-mode header,
     body.performance-mode .payment-dialog::backdrop,
@@ -4340,7 +4342,7 @@
                   <button class="btn" id="downloadConflictBackup" type="button">Yerel JSON Yedek</button>
                 </div>
                 <div class="sync-status" id="cloudStatus"></div>
-                <p class="hint">Kayıtlar otomatik senkronlanır. Uzak sürüm değişmişse yazma durur; veri kullanıcı onayı olmadan ezilmez.</p>
+                <p class="hint">Bu cihazdaki kayıtlar buluta kaydedilir. Diğer cihazdaki değişiklikleri almak için Buluttan Yenile kullanılır; sürekli canlı dinleme cihaz güvenliği için kapalıdır.</p>
               </div>
             </div>
             <div class="panel">
@@ -5575,15 +5577,6 @@
       return false;
     }
 
-    function handleRemoteSnapshot() {
-      if (cloudDirty || cloudSyncBusy) return;
-      clearTimeout(cloudRefreshTimer);
-      cloudRefreshTimer = setTimeout(async () => {
-        await pullCloudState({ confirm: false });
-        byId("saveBadge").textContent = "Bulut güncellemesi alındı";
-      }, 1200);
-    }
-
     async function bootstrapCloudState() {
       stopCloudSubscription?.();
       stopCloudSubscription = null;
@@ -5592,12 +5585,7 @@
       setAuthView();
       try {
         cloudLoadReady = await pullCloudState({ confirm: false });
-        if (cloudLoadReady) {
-          stopCloudSubscription = cloud.subscribeState(handleRemoteSnapshot, error => {
-            setCloudStatus("Canlı senkron kesildi", error?.message || "Firestore dinlenemiyor.", "bad");
-          });
-          ensureDailyCloudBackup();
-        }
+        if (cloudLoadReady) setCloudStatus("Cihaz güvenli bulut modu", "Sürekli Firebase dinlemesi kapalı. Bu cihazdaki kayıtlar kaydedilir; diğer cihaz değişiklikleri Buluttan Yenile ile alınır.", "ok");
       } finally {
         cloudBootstrapping = false;
         setAuthView();
@@ -6843,7 +6831,7 @@
     function mobileGo(view) {
       closeCommandSheet();
       showView(view);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "auto" });
     }
 
     function norm(value) {
@@ -8320,7 +8308,7 @@
       byId("jobNote").value = job.note || "";
       byId("saveWorkOrderButton").textContent = "İşi Güncelle";
       ["jobCustomer", "jobProduct", "jobQty"].forEach(fieldId => { byId(fieldId).disabled = Boolean(job.sourceTx); });
-      byId("workOrderForm").scrollIntoView({ behavior: "smooth", block: "start" });
+      byId("workOrderForm").scrollIntoView({ behavior: "auto", block: "start" });
       setTimeout(() => byId("jobCustomer").focus(), 250);
     }
 
@@ -8783,12 +8771,8 @@
         const activeView = document.querySelector(".tab-view.active")?.id || "dashboard";
         if (activeView === "dashboard") {
           renderCards();
-          renderLiveRhythm();
-          renderActionCompass();
           renderMoves();
           renderGuide();
-          renderDailyFlow();
-          renderAutomations();
         }
         if (activeView === "entry") renderOrderBrief();
         if (activeView === "sales") {
@@ -8882,7 +8866,7 @@
       byId("txType").value = type;
       byId("txDate").value = today;
       updateFormMode();
-      byId("entryForm").scrollIntoView({ behavior: "smooth", block: "start" });
+      byId("entryForm").scrollIntoView({ behavior: "auto", block: "start" });
       setTimeout(() => byId("party").focus(), 250);
     }
 
@@ -8894,13 +8878,13 @@
 
     function openOrderEntry() {
       showView("entry");
-      byId("orderForm").scrollIntoView({ behavior: "smooth", block: "start" });
+      byId("orderForm").scrollIntoView({ behavior: "auto", block: "start" });
       setTimeout(() => byId("orderCustomer").focus(), 250);
     }
 
     function openProductionEntry() {
       showView("production");
-      byId("workOrderForm").scrollIntoView({ behavior: "smooth", block: "start" });
+      byId("workOrderForm").scrollIntoView({ behavior: "auto", block: "start" });
       setTimeout(() => byId("jobCustomer").focus(), 250);
     }
 
@@ -9142,7 +9126,7 @@
       if (jumpButton) return showView(jumpButton.dataset.jumpView);
       const fixedButton = event.target.closest("[data-focus-fixed]");
       if (fixedButton) {
-        byId("fixedName").scrollIntoView({ behavior: "smooth", block: "center" });
+        byId("fixedName").scrollIntoView({ behavior: "auto", block: "center" });
         setTimeout(() => byId("fixedName").focus(), 250);
       }
     });
@@ -9354,11 +9338,19 @@
     setAuthView();
     initializeFirebaseCloud();
 
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js").catch(() => {});
-      }, { once: true });
+    async function disableOfflineWorker() {
+      try {
+        if ("serviceWorker" in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map(registration => registration.unregister()));
+        }
+        if ("caches" in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.filter(key => key.startsWith("mirac-erp-shell-")).map(key => caches.delete(key)));
+        }
+      } catch {}
     }
+    window.addEventListener("load", disableOfflineWorker, { once: true });
     window.addEventListener("online", queueCloudSync);
   </script>
 </body>
