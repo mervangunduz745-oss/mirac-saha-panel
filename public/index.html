@@ -7007,8 +7007,11 @@
     function renderMoves() {
       const q = byId("search").value.trim();
       const rows = visibleTransactions().filter(tx => txMatches(tx, q)).slice().reverse();
-      byId("allMoveCount").textContent = `${rows.length} kayıt`;
-      byId("allMoves").innerHTML = moveTable(rows);
+      const movesOpen = document.querySelector(".tab-view.active")?.id === "moves";
+      if (movesOpen) {
+        byId("allMoveCount").textContent = `${rows.length} kayıt`;
+        byId("allMoves").innerHTML = moveTable(rows);
+      }
       const jobStats = metrics().jobs;
       const jobs = jobStats.open
         .slice()
@@ -8777,28 +8780,40 @@
       try {
         populateFormLists();
         renderSearchResults();
-        renderCards();
-        renderLiveRhythm();
-        renderActionCompass();
-        renderMoves();
-        renderTradeChannel("SATIS");
-        renderDeliverySalesQueue();
-        renderTradeChannel("ALIS");
-        renderOrderBrief();
-        renderCari();
-        renderDebtPlans();
-        renderStock();
-        renderRecipes();
-        renderCatalog();
-        renderProductionWork();
-        renderGuide();
-        renderDailyFlow();
-        renderAutomations();
-        renderReportCenter();
-        renderControl();
-        renderCashPos();
-        renderFixedExpenses();
-        renderTechStatus();
+        const activeView = document.querySelector(".tab-view.active")?.id || "dashboard";
+        if (activeView === "dashboard") {
+          renderCards();
+          renderLiveRhythm();
+          renderActionCompass();
+          renderMoves();
+          renderGuide();
+          renderDailyFlow();
+          renderAutomations();
+        }
+        if (activeView === "entry") renderOrderBrief();
+        if (activeView === "sales") {
+          renderTradeChannel("SATIS");
+          renderDeliverySalesQueue();
+        }
+        if (activeView === "purchase") renderTradeChannel("ALIS");
+        if (activeView === "cari") renderCari();
+        if (activeView === "debt") renderDebtPlans();
+        if (activeView === "stock") renderStock();
+        if (activeView === "catalog") renderCatalog();
+        if (activeView === "production") {
+          renderProductionWork();
+          renderRecipes();
+        }
+        if (activeView === "moves") renderMoves();
+        if (activeView === "settings") {
+          renderReportCenter();
+          renderTechStatus();
+        }
+        if (activeView === "control") renderControl();
+        if (activeView === "fixed") {
+          renderCashPos();
+          renderFixedExpenses();
+        }
         applyRoleAccess();
         renderMobileCommandBar();
       } finally {
@@ -8859,6 +8874,7 @@
         : viewSubtitles[id] || viewSubtitles.dashboard;
       applyRoleAccess();
       renderMobileCommandBar();
+      renderAll();
     }
 
     function openCashEntry(type) {
@@ -9334,7 +9350,6 @@
     clearDebtForm();
     clearFixedForm();
     clearWorkOrderForm();
-    renderAll();
     fillCloudConfigForm();
     setAuthView();
     initializeFirebaseCloud();
