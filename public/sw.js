@@ -1,11 +1,12 @@
-const CACHE_NAME = "mirac-saha-mobile-v1";
+const CACHE_NAME = "mirac-erp-shell-v41-pages";
 const BASE = "/mirac-saha-panel/";
 const APP_SHELL = [
   BASE,
   `${BASE}index.html`,
-  `${BASE}siyah-saha-paneli.html`,
-  `${BASE}siyah-saha-supabase.js`,
-  `${BASE}supabase-config.js`,
+  `${BASE}mobil.html`,
+  `${BASE}catalog-inventory.js`,
+  `${BASE}firebase-cloud.js`,
+  `${BASE}firebase-config.js`,
   `${BASE}manifest.webmanifest`,
   `${BASE}favicon.svg`
 ];
@@ -31,14 +32,16 @@ self.addEventListener("fetch", event => {
   if (url.origin !== self.location.origin) return;
 
   if (request.mode === "navigate") {
+    const mobilePath = url.pathname === `${BASE}mobil` || url.pathname === `${BASE}mobil.html`;
+    const cacheKey = mobilePath ? `${BASE}mobil.html` : `${BASE}index.html`;
     event.respondWith(
       fetch(request)
         .then(response => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+          caches.open(CACHE_NAME).then(cache => cache.put(cacheKey, copy));
           return response;
         })
-        .catch(() => caches.match(`${BASE}siyah-saha-paneli.html`))
+        .catch(() => caches.match(cacheKey))
     );
     return;
   }
