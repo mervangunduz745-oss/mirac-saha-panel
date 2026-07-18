@@ -1,13 +1,12 @@
 {
-  "name": "Miraç ERP Saha Paneli",
+  "name": "Miraç ERP",
   "short_name": "Miraç ERP",
-  "description": "Tahsilat, borç, üretim, stok ve karar saha paneli",
-  "start_url": "/mirac-saha-panel/siyah-saha-paneli.html",
+  "description": "Cari, stok, kasa, borç ve üretim yönetimi",
+  "start_url": "/mirac-saha-panel/",
   "scope": "/mirac-saha-panel/",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#020617",
-  "theme_color": "#020617",
+  "background_color": "#f4f7fb",
+  "theme_color": "#13213d",
   "lang": "tr",
   "icons": [
     {
