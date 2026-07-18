@@ -13,7 +13,7 @@ assert.ok(render.includes('if (activeView === "catalog") renderCatalog()'), "Cat
 assert.ok(render.includes('if (activeView === "moves") renderMoves()'), "Full movement table must render only when opened");
 assert.ok(html.includes("const movesOpen = document.querySelector"), "Dashboard must not build the hidden full movement table");
 assert.ok(html.includes("renderMobileCommandBar();\n      renderAll();"), "Opening a view must render its content on demand");
-assert.ok(!html.slice(html.lastIndexOf("clearWorkOrderForm();"), html.indexOf('if ("serviceWorker"')).includes("renderAll();"), "Startup must wait for validated cloud/local state before rendering business views");
+assert.ok(!html.slice(html.lastIndexOf("clearWorkOrderForm();"), html.indexOf("async function disableOfflineWorker")).includes("renderAll();"), "Startup must wait for validated cloud/local state before rendering business views");
 assert.ok(sw.includes('CACHE_NAME = "mirac-erp-shell-v42-pages"'), "Service Worker cache must be refreshed for the performance release");
 
 console.log("Lazy view rendering and cache refresh checks passed");
