@@ -2826,6 +2826,380 @@
       body:not(.auth-locked) .mobile-command-bar button { min-height: 50px; padding: 0 5px; font-size: 11px; }
       body:not(.auth-locked) .technical-panel details > summary { min-height: 56px; padding: 0 14px; }
     }
+    /* Miraç Business Core referansı: yalnızca ana komuta ekranında koyu, sakin ve veri odaklı görünüm. */
+    body:not(.auth-locked).dashboard-dark {
+      color: #f2f5f9;
+      background: #0b0e14;
+    }
+    body:not(.auth-locked).dashboard-dark::before { display: none; }
+    body:not(.auth-locked).dashboard-dark .app {
+      background: #0b0e14;
+    }
+    body:not(.auth-locked).dashboard-dark main {
+      background:
+        radial-gradient(circle at 78% -8%, rgba(35, 100, 170, .16), transparent 30%),
+        radial-gradient(circle at 18% 0%, rgba(15, 138, 95, .10), transparent 28%),
+        #0b0e14;
+    }
+    body:not(.auth-locked).dashboard-dark header {
+      border-bottom-color: #202735;
+      background: rgba(14, 18, 26, .92);
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark header #quickEntry,
+    body:not(.auth-locked).dashboard-dark header #undoLast,
+    body:not(.auth-locked).dashboard-dark header #exportJson,
+    body:not(.auth-locked).dashboard-dark header #exportCsv {
+      display: none;
+    }
+    body:not(.auth-locked).dashboard-dark header .search {
+      border-color: #252d3b;
+      color: #8f9bad;
+      background: #171c26;
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark header .search input {
+      color: #edf2f7;
+      background: transparent;
+    }
+    body:not(.auth-locked).dashboard-dark header .search input::placeholder { color: #788497; }
+    body:not(.auth-locked).dashboard-dark header #logoutPanel {
+      border-color: #2a3241;
+      color: #c7cfdb;
+      background: #171c26;
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark .nav button.active {
+      border-color: #303949;
+      color: #f2f5f9;
+      background: #202633;
+      box-shadow: none;
+      transform: none;
+    }
+    body:not(.auth-locked).dashboard-dark .nav button.active::before {
+      color: #31c887;
+      background: rgba(15, 138, 95, .18);
+      box-shadow: inset 0 0 0 1px rgba(49, 200, 135, .16);
+    }
+    body:not(.auth-locked).dashboard-dark .side-note {
+      border-color: #293140;
+      color: #8f9bad;
+      background: #151a23;
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark .content {
+      color: #f2f5f9;
+      background: transparent;
+    }
+    body:not(.auth-locked).dashboard-dark .title-row {
+      padding: 4px 0 0;
+      color: #f2f5f9;
+    }
+    body:not(.auth-locked).dashboard-dark .title-row h1 {
+      color: #f2f5f9;
+      font-size: clamp(26px, 3vw, 38px);
+      letter-spacing: -.04em;
+    }
+    body:not(.auth-locked).dashboard-dark .title-row .subtitle { color: #929daf; }
+    body:not(.auth-locked).dashboard-dark .cockpit-stamps { display: none; }
+    body:not(.auth-locked).dashboard-dark #saveBadge {
+      border-color: rgba(40, 190, 125, .38);
+      color: #35c98b;
+      background: rgba(15, 138, 95, .12);
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark #dashboard {
+      display: grid;
+      gap: 18px;
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass,
+    body:not(.auth-locked).dashboard-dark #liveRhythmStrip,
+    body:not(.auth-locked).dashboard-dark #dailyFlow,
+    body:not(.auth-locked).dashboard-dark #automationGrid,
+    body:not(.auth-locked).dashboard-dark #resetDailyFlow {
+      display: none !important;
+    }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions {
+      order: 1;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action-grid {
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 10px;
+    }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action {
+      min-height: 72px;
+      grid-template-columns: 42px 1fr;
+      align-items: center;
+      align-content: center;
+      gap: 12px;
+      padding: 13px 15px;
+      border: 1px solid #293140;
+      border-radius: 14px;
+      color: #f2f5f9;
+      background: #171c26;
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action::before {
+      width: 40px;
+      height: 40px;
+      grid-row: 1;
+      border-radius: 12px;
+      color: currentColor;
+      background: rgba(255, 255, 255, .045);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .05);
+    }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action strong {
+      grid-column: 2;
+      color: currentColor;
+      font-size: 15px;
+    }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action[data-tone="money"] {
+      border-color: rgba(38, 187, 122, .36);
+      color: #31c887;
+      background: rgba(15, 138, 95, .15);
+    }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action[data-tone="risk"] {
+      border-color: rgba(231, 74, 74, .38);
+      color: #ff565f;
+      background: rgba(196, 61, 61, .15);
+    }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action[data-tone="production"] {
+      border-color: rgba(49, 132, 227, .42);
+      color: #3b9cff;
+      background: rgba(35, 100, 170, .18);
+    }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action[data-tone="entry"] {
+      border-color: #303847;
+      color: #f2f5f9;
+      background: #181d27;
+    }
+    body:not(.auth-locked).dashboard-dark #kpiCards {
+      order: 2;
+      display: block;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-money-zone,
+    body:not(.auth-locked).dashboard-dark #dashboard .panel,
+    body:not(.auth-locked).dashboard-dark #secondaryCards .command-panel {
+      border: 1px solid #293140;
+      border-radius: 16px;
+      color: #f2f5f9;
+      background: linear-gradient(180deg, rgba(24, 30, 42, .96), rgba(17, 22, 31, .96));
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-money-zone { padding: 20px; }
+    body:not(.auth-locked).dashboard-dark .dashboard-zone-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 15px;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-zone-kicker {
+      color: #31c887;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .20em;
+      text-transform: uppercase;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-zone-head h2,
+    body:not(.auth-locked).dashboard-dark #dashboard .panel-head h2,
+    body:not(.auth-locked).dashboard-dark #secondaryCards h3 {
+      margin: 5px 0 0;
+      color: #f2f5f9;
+      font-size: 16px;
+      line-height: 1.35;
+      letter-spacing: -.015em;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-money-zone .command-kpis {
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 10px;
+    }
+    body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi {
+      min-height: 96px;
+      padding: 14px;
+      border: 1px solid #28303e;
+      border-top-width: 1px;
+      border-radius: 12px;
+      color: #f2f5f9;
+      background: rgba(10, 14, 20, .42);
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi.good {
+      border-color: rgba(38, 187, 122, .28);
+      background: linear-gradient(180deg, rgba(15, 138, 95, .22), rgba(15, 138, 95, .07));
+    }
+    body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi.warn {
+      border-color: rgba(219, 145, 32, .30);
+      background: linear-gradient(180deg, rgba(193, 122, 13, .20), rgba(193, 122, 13, .06));
+    }
+    body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi.bad {
+      border-color: rgba(231, 74, 74, .34);
+      background: linear-gradient(180deg, rgba(196, 61, 61, .20), rgba(196, 61, 61, .06));
+    }
+    body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi.info {
+      border-color: rgba(49, 132, 227, .34);
+      background: linear-gradient(180deg, rgba(35, 100, 170, .21), rgba(35, 100, 170, .06));
+    }
+    body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi .label {
+      color: #929daf;
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi strong {
+      color: #f2f5f9;
+      font-size: clamp(20px, 2.1vw, 28px);
+      text-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi span { color: #929daf; }
+    body:not(.auth-locked).dashboard-dark .dashboard-layout {
+      order: 3;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    body:not(.auth-locked).dashboard-dark #dashboard .panel { padding: 20px; }
+    body:not(.auth-locked).dashboard-dark #dashboard .panel-head { align-items: flex-start; }
+    body:not(.auth-locked).dashboard-dark #dashboard .panel-head .status {
+      border-color: #303a4b;
+      color: #aeb8c8;
+      background: #151a23;
+    }
+    body:not(.auth-locked).dashboard-dark #secondaryCards {
+      order: 4;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    body:not(.auth-locked).dashboard-dark #secondaryCards .command-panel {
+      padding: 20px;
+      border-top-width: 1px;
+    }
+    body:not(.auth-locked).dashboard-dark #secondaryCards .command-panel:nth-child(1) { border-color: rgba(231, 74, 74, .28); }
+    body:not(.auth-locked).dashboard-dark #secondaryCards .command-panel:nth-child(2) { border-color: rgba(219, 145, 32, .30); }
+    body:not(.auth-locked).dashboard-dark #secondaryCards .command-panel:nth-child(3) { border-color: rgba(49, 132, 227, .30); }
+    body:not(.auth-locked).dashboard-dark .dashboard-section-label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-section-label.risk { color: #ff565f; }
+    body:not(.auth-locked).dashboard-dark .dashboard-section-label.warn { color: #f2a928; }
+    body:not(.auth-locked).dashboard-dark .dashboard-section-label.production { color: #3b9cff; }
+    body:not(.auth-locked).dashboard-dark .guide-list,
+    body:not(.auth-locked).dashboard-dark .dashboard-priority-list {
+      display: grid;
+      gap: 9px;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-list-item,
+    body:not(.auth-locked).dashboard-dark .dashboard-risk-row {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid #242c39;
+      border-radius: 12px;
+      color: #edf2f7;
+      background: rgba(8, 12, 18, .42);
+      text-align: left;
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark button.dashboard-list-item { cursor: pointer; }
+    body:not(.auth-locked).dashboard-dark .dashboard-list-main { min-width: 0; }
+    body:not(.auth-locked).dashboard-dark .dashboard-list-main strong {
+      display: block;
+      overflow: hidden;
+      color: #f2f5f9;
+      font-size: 14px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-list-main span,
+    body:not(.auth-locked).dashboard-dark .dashboard-list-main small {
+      display: block;
+      margin-top: 4px;
+      overflow: hidden;
+      color: #8f9bad;
+      font-size: 11px;
+      line-height: 1.35;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-list-value {
+      flex: 0 0 auto;
+      color: #f2f5f9;
+      font-size: 14px;
+      font-weight: 900;
+      text-align: right;
+      white-space: nowrap;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-list-value small {
+      display: block;
+      margin-top: 4px;
+      color: #f2a928;
+      font-size: 10px;
+      font-weight: 750;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-zone-empty {
+      padding: 18px 12px;
+      border: 1px dashed #303949;
+      border-radius: 12px;
+      color: #8f9bad;
+      background: rgba(8, 12, 18, .24);
+      font-size: 12px;
+      text-align: center;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action:hover,
+      body:not(.auth-locked).dashboard-dark button.dashboard-list-item:hover {
+        border-color: #465267;
+        filter: brightness(1.10);
+        transform: translateY(-1px);
+        box-shadow: 0 14px 26px rgba(0, 0, 0, .18);
+      }
+    }
+    @media (max-width: 1100px) {
+      body:not(.auth-locked).dashboard-dark #secondaryCards { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      body:not(.auth-locked).dashboard-dark #dashboard { gap: 12px; }
+      body:not(.auth-locked).dashboard-dark .title-row { padding-top: 0; }
+      body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action-grid,
+      body:not(.auth-locked).dashboard-dark .dashboard-money-zone .command-kpis,
+      body:not(.auth-locked).dashboard-dark .dashboard-layout { grid-template-columns: 1fr 1fr; }
+      body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action {
+        min-height: 64px;
+        grid-template-columns: 34px 1fr;
+        gap: 9px;
+        padding: 10px;
+      }
+      body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action::before {
+        width: 34px;
+        height: 34px;
+      }
+      body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action strong { font-size: 13px; }
+      body:not(.auth-locked).dashboard-dark .dashboard-money-zone,
+      body:not(.auth-locked).dashboard-dark #dashboard .panel,
+      body:not(.auth-locked).dashboard-dark #secondaryCards .command-panel { padding: 14px; }
+      body:not(.auth-locked).dashboard-dark .dashboard-zone-head { display: block; }
+      body:not(.auth-locked).dashboard-dark .dashboard-money-zone .command-kpis { gap: 8px; }
+      body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi { min-height: 84px; padding: 11px; }
+      body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi strong { font-size: 18px; }
+      body:not(.auth-locked).dashboard-dark #kpiCards .command-kpi span { font-size: 10px; }
+      body:not(.auth-locked).dashboard-dark .dashboard-layout { grid-template-columns: 1fr; gap: 12px; }
+      body:not(.auth-locked).dashboard-dark .dashboard-list-item,
+      body:not(.auth-locked).dashboard-dark .dashboard-risk-row { padding: 10px; }
+    }
+
     @media print {
       body { background: #fff; }
       body:not(.auth-locked) .content::before,
@@ -2861,13 +3235,13 @@
     }
   </style>
 </head>
-<body class="auth-locked">
+<body class="auth-locked dashboard-dark">
   <section class="auth-screen" aria-label="Panel girişi">
     <div class="auth-card">
       <div class="brand">
         <div class="mark">M</div>
         <div>
-          <strong>Miraç Panel</strong>
+          <strong>Miraç ERP</strong>
           <span>Saha operasyon</span>
         </div>
       </div>
@@ -2960,8 +3334,8 @@
       <div class="brand">
         <div class="mark">M</div>
         <div>
-          <strong>Miraç Panel</strong>
-          <span>Saha kokpiti</span>
+          <strong>Miraç ERP</strong>
+          <span>Saha komuta</span>
         </div>
       </div>
       <div>
@@ -3006,7 +3380,7 @@
       <section class="content">
         <div class="title-row">
           <div>
-            <h1 id="pageTitle">Karargâh</h1>
+            <h1 id="pageTitle">Saha Komuta Paneli</h1>
             <div class="subtitle" id="pageSubtitle">Saha karar ekranı: para, teslim, borç, stok ve üretim önceliği.</div>
             <div class="cockpit-stamps" aria-label="Karargâh odakları">
               <span>Canlı saha</span>
@@ -3021,27 +3395,33 @@
         <div class="search-results hidden" id="searchResults"></div>
 
         <section class="tab-view active" id="dashboard">
-          <div class="action-compass" id="actionCompass"></div>
-          <div class="command-board command-board-quiet" id="kpiCards"></div>
-          <div class="live-rhythm-strip" id="liveRhythmStrip"></div>
           <div class="quick-action-panel" id="dashboardQuickActions"></div>
+          <div class="command-board command-board-quiet" id="kpiCards"></div>
           <div class="dashboard-layout dashboard-layout-quiet">
             <div class="panel">
               <div class="panel-head">
-                <h2>Bugünün Net Sırası</h2>
-                <span class="status warn">Karar</span>
+                <div>
+                  <span class="dashboard-section-label risk">Tahsilat Önceliği</span>
+                  <h2>Bugün Aranacaklar</h2>
+                </div>
+                <span class="status warn" id="collectionCount">0 cari</span>
               </div>
               <div class="guide-list" id="guideList"></div>
             </div>
             <div class="panel">
               <div class="panel-head">
-                <h2>Son Hareketler</h2>
-                <span class="status ok" id="moveCount">0 kayıt</span>
+                <div>
+                  <span class="dashboard-section-label production">Atölye</span>
+                  <h2>Üretim Baskısı</h2>
+                </div>
+                <span class="status ok" id="moveCount">0 aktif</span>
               </div>
               <div id="recentMoves"></div>
             </div>
           </div>
           <div class="command-panels-grid" id="secondaryCards"></div>
+          <div class="action-compass" id="actionCompass"></div>
+          <div class="live-rhythm-strip" id="liveRhythmStrip"></div>
           <div class="daily-flow" id="dailyFlow"></div>
           <div class="automation-grid" id="automationGrid"></div>
           <button class="btn compact-action daily-flow-reset" id="resetDailyFlow" type="button">Bugünü Sıfırla</button>
@@ -5761,94 +6141,124 @@
 
     function renderCards() {
       const m = metrics();
-      const control = validateState();
       const sevenDayLoad = m.debt.dueSoonTotal + m.fixed.weeklyTotal;
       const realCashBreath = m.cashTotal - sevenDayLoad;
-      const collectionScenario = m.cashTotal + m.receivable - sevenDayLoad;
-      const pressure = Math.max(0, -realCashBreath);
-      const netPosition = m.cashTotal + m.receivable - m.plannedPayable - m.debt.personalTotal;
       const openCustomerCount = m.customers.filter(c => c.receivable > 0).length;
-      const openSupplierCount = m.suppliers.filter(c => c.payable > 0).length;
 
       const kpis = [
-        ["Gerçek Nakit Nefesi", money(realCashBreath), "Kasa - 7 gün yük", realCashBreath >= 0 ? "good" : "bad"],
-        ["Tahsilatlı Senaryo", money(collectionScenario), `${openCustomerCount} açık müşteri tahsil edilirse`, collectionScenario >= 0 ? "good" : "bad"],
-        ["Ticari Borç", money(m.plannedPayable), `${openSupplierCount} cari + ${m.debt.commercialOpen.length} plan`, m.plannedPayable > 0 ? "bad" : "good"],
-        ["Net Pozisyon", money(netPosition), "Nakit + alacak - borç", netPosition >= 0 ? "good" : "bad"]
+        ["Kasa / Banka / POS", money(m.cashTotal), `${Object.keys(m.cash).length} aktif hesap`, "good"],
+        ["Müşteri Alacağı", money(m.receivable), `${openCustomerCount} açık cari`, m.receivable > 0 ? "info" : "good"],
+        ["7 Günlük Çıkış", money(sevenDayLoad), `${m.debt.dueSoon.length} borç + ${m.fixed.dueSoon.length} sabit gider`, sevenDayLoad > m.cashTotal ? "bad" : "warn"],
+        ["Net Nakit Nefesi", money(realCashBreath), "Mevcut nakit - 7 günlük yük", realCashBreath >= 0 ? "good" : "bad"]
       ];
-      const priorityRows = [];
-      if (control.badCount) priorityRows.push(["Önce denetim", `${control.badCount} ciddi kontrol uyarısı var. Kontrol / Denetim ekranına bak.`]);
-      if (pressure > 0) priorityRows.push(["Gerçek nakit nefesini aç", `${money(pressure)} kasa açığı var; tahsilatlı senaryo ${money(collectionScenario)}.`]);
-      if (m.debt.dueSoonTotal > 0) priorityRows.push(["Yakın ödeme takibi", `${money(m.debt.dueSoonTotal)} yakın vade yükü ödeme planında izlenmeli.`]);
-      if (m.receivable > 0) priorityRows.push(["Tahsilat listesi", `${openCustomerCount} müşteri için ${money(m.receivable)} açık alacak görünüyor.`]);
-      if (m.openOrders.length) priorityRows.push(["Teslim disiplini", `${m.openOrders.length} açık sipariş üretim ve teslim takibinde tutulmalı.`]);
-      if (m.lowCount) priorityRows.push(["Stok kritik", `${m.lowCount} kalem stok kritik seviyede. Alış veya üretim kararı gerekebilir.`]);
-      if (m.missingStockCostCount) priorityRows.push(["Maliyet disiplini", `${m.missingStockCostCount} malzeme/yarı mamül kartında ortalama maliyet eksik.`]);
-      if (!priorityRows.length) priorityRows.push(
-        ["Saha akışını koru", "Bugün para, teslim ve stok kayıtlarını aynı disiplinle işle."],
-        ["Yeni işi yazıya al", "Sipariş, kapora ve teslim tarihi aynı kayıtta dursun."],
-        ["Gün sonu kontrolü", "Kasa, banka ve POS hareketlerini kapatmadan çıkma."]
-      );
       byId("kpiCards").innerHTML = `
-        <section class="command-kpis">
-          ${kpis.map(([label, value, hint, kind]) => `
-            <article class="command-kpi ${kind}">
-              <div class="label">${label}</div>
-              <strong>${value}</strong>
-              <span>${hint}</span>
-            </article>
-          `).join("")}
+        <section class="dashboard-money-zone">
+          <div class="dashboard-zone-head">
+            <div>
+              <div class="dashboard-zone-kicker">Nakit Nefesi</div>
+              <h2>Bugün elde ${money(m.cashTotal)} var — 7 gün içinde ${money(sevenDayLoad)} çıkacak.</h2>
+            </div>
+            <span class="status ${realCashBreath >= 0 ? "ok" : "bad"}">${realCashBreath >= 0 ? "Nakit yeterli" : "Nakit açığı"}</span>
+          </div>
+          <div class="command-kpis">
+            ${kpis.map(([label, value, hint, kind]) => `
+              <article class="command-kpi ${kind}">
+                <div class="label">${label}</div>
+                <strong>${value}</strong>
+                <span>${hint}</span>
+              </article>
+            `).join("")}
+          </div>
         </section>
       `;
 
-      const panel = (title, rows) => `
+      const dueLabel = days => days == null
+        ? "Vade yok"
+        : days < 0
+          ? `${Math.abs(days)} gün gecikti`
+          : days === 0
+            ? "Bugün"
+            : `${days} gün`;
+      const riskRow = (title, detail, value, meta = "") => `
+        <div class="dashboard-risk-row">
+          <div class="dashboard-list-main"><strong>${safe(title)}</strong><span>${safe(detail)}</span></div>
+          <div class="dashboard-list-value">${safe(value)}${meta ? `<small>${safe(meta)}</small>` : ""}</div>
+        </div>
+      `;
+      const lowRows = m.stockRows
+        .filter(row => row.low)
+        .sort((a, b) => (Number(a.current || 0) / Math.max(Number(a.min || 0), 1)) - (Number(b.current || 0) / Math.max(Number(b.min || 0), 1)))
+        .slice(0, 4)
+        .map(row => riskRow(row.name, `${row.group || row.itemClass || "Stok"} · minimum ${qty(row.min)} ${row.unit}`, `${qty(row.current)} ${row.unit}`, "Kritik"));
+      const paymentRows = [
+        ...m.debt.priorityRows.map(row => ({
+          title: row.party || row.type,
+          detail: `${row.type} · ${row.scope}`,
+          value: money(row.remaining),
+          meta: dueLabel(row.dueIn),
+          dueIn: row.dueIn == null ? 9999 : row.dueIn
+        })),
+        ...m.fixed.dueSoon.map(row => ({
+          title: row.name,
+          detail: `Sabit gider · ${row.account || "hesap seçilmedi"}`,
+          value: money(row.amount),
+          meta: dueLabel(row.daysUntilDue),
+          dueIn: row.daysUntilDue == null ? 9999 : row.daysUntilDue
+        })),
+        ...m.suppliers.filter(row => row.payable > 0).map(row => ({
+          title: row.name,
+          detail: "Tedarikçi cari borcu",
+          value: money(row.payable),
+          meta: "Vade girilmemiş",
+          dueIn: 9999
+        }))
+      ]
+        .sort((a, b) => a.dueIn - b.dueIn)
+        .slice(0, 4)
+        .map(row => riskRow(row.title, row.detail, row.value, row.meta));
+      const deliveryRows = m.jobs.open
+        .slice()
+        .sort((a, b) => (a.dueIn == null ? 9999 : a.dueIn) - (b.dueIn == null ? 9999 : b.dueIn) || (a.priority === "Acil" ? -1 : 1))
+        .slice(0, 4)
+        .map(job => riskRow(
+          job.customer || "Müşteri",
+          `${itemName(job.product)} × ${qty(job.qty)} · ${job.stage}`,
+          dueLabel(job.dueIn),
+          job.priority || "Normal"
+        ));
+      const panel = (label, tone, title, headline, rows, emptyText) => `
         <section class="command-panel">
+          <span class="dashboard-section-label ${tone}">${label}</span>
           <h3>${title}</h3>
-          ${rows.map(([label, value]) => `<div class="command-line"><span>${label}</span><strong>${value}</strong></div>`).join("")}
+          <div class="hint">${headline}</div>
+          <div class="dashboard-priority-list" style="margin-top:14px">
+            ${rows.length ? rows.join("") : `<div class="dashboard-zone-empty">${emptyText}</div>`}
+          </div>
         </section>
       `;
       byId("secondaryCards").innerHTML = [
-        panel("Saha Akışı", [
-          ["Bugünkü satış", money(m.todaySales)],
-          ["Aylık ciro", money(m.monthSales)],
-          ["Açık sipariş", `${m.openOrders.length} / ${money(m.openOrderTotal)}`],
-          ["Son hareket", `${activeTransactions().length} aktif kayıt`]
-        ]),
-        panel("Operasyon Riski", [
-          ["Düşük stok", `${m.lowCount} kalem`],
-          ["Maliyet eksik", `${m.missingStockCostCount} kalem`],
-          ["Açık üretim", `${m.jobs.open.length} iş`],
-          ["Acil/geciken", `${m.jobs.urgent.length} iş`]
-        ]),
-        panel("Yük ve Ödeme", [
-          ["Sabit gider", `${money(m.fixed.monthlyTotal)} / ay`],
-          ["7 gün yük", money(sevenDayLoad)],
-          ["Personel ödeme", money(m.monthPersonnel)],
-          ["Banka/senet", money(m.debt.bankAndNoteTotal)],
-          ["Şahsi ayrı", money(m.debt.personalTotal)]
-        ])
+        panel("Kritik Stok", "risk", "Üretimi durdurabilecek kalemler", `${m.lowCount} kalem minimum seviyede veya altında.`, lowRows, "Kritik stok görünmüyor."),
+        panel("Borç Sırası", "warn", "Yaklaşan ödeme baskısı", `7 günlük yük ${money(sevenDayLoad)}; vadesi yakın kayıtlar önce.`, paymentRows, "Yakın ödeme kaydı görünmüyor."),
+        panel("Teslim Riski", "production", "Sözü kaçırmadan yetiştir", `${m.jobs.open.length} aktif iş; ${m.jobs.urgent.length} acil veya geciken.`, deliveryRows, "Açık üretim işi görünmüyor.")
       ].join("");
       const quickActions = [
-        { view: "entry", icon: "+", title: "Sipariş Aç", text: "Ürün, ölçü, kapora ve teslim tarihi.", tone: "entry", worker: true },
-        { view: "cari", icon: "T", title: "Tahsilat Listesi", text: "Açık alacağı gör, arama sırasını kur.", tone: "money" },
-        { view: "production", icon: "U", title: "Üretim Sırası", text: "Acil işleri ve teslim kilidini çöz.", tone: "production", worker: true },
-        { view: "stock", icon: "#", title: "Stok Alarmı", text: "Kritik malzeme ve maliyet körlüğünü gör.", tone: "stock", worker: true },
-        { view: "sales", icon: "$", title: "Satışa Bağla", text: "Teslim edilen işi ciro ve cariye bağla.", tone: "money" },
-        { view: "purchase", icon: "A", title: "Alış Gir", text: "Tedarik, stok ve borcu tek kayıtta tut.", tone: "stock" },
-        { view: "fixed", icon: "P", title: "Kasa / POS", text: "Nakit, banka, POS ve sabit gider yükü.", tone: "money" },
-        { view: "debt", icon: "!", title: "Borç Planı", text: "Banka, senet ve yakın ödeme sırası.", tone: "debt" },
-        { view: "control", icon: "D", title: "Sistem Sağlığı", text: "Kayıt tutarlılığı ve kritik uyarılar.", tone: "control" }
+        { view: "entry", icon: "T", title: "Tahsilat Gir", tone: "money", txType: "TAHSILAT" },
+        { view: "entry", icon: "Ö", title: "Ödeme Yap", tone: "risk", txType: "ODEME" },
+        { view: "entry", icon: "S", title: "Sipariş Aç", tone: "entry", action: "order", worker: true },
+        { view: "production", icon: "Ü", title: "Üretim Başlat", tone: "production", action: "production", worker: true }
       ].filter(action => canOpenView(action.view) && (!isWorkerMode() || action.worker));
       byId("dashboardQuickActions").innerHTML = `
-        <div class="panel-head">
-          <div>
-            <h2>Saha Komutları</h2>
-            <div class="hint">Para, üretim, stok ve cari aksiyonları tek dokunuşta.</div>
-          </div>
-          <span class="status ok">Saha modu</span>
-        </div>
         <div class="quick-action-grid">
-          ${quickActions.map(action => `<button class="quick-action" type="button" data-icon="${safe(action.icon)}" data-tone="${safe(action.tone)}" data-jump-view="${safe(action.view)}"><strong>${safe(action.title)}</strong><span>${safe(action.text)}</span></button>`).join("")}
+          ${quickActions.map(action => {
+            const target = action.txType
+              ? `data-open-cash="${safe(action.txType)}"`
+              : action.action === "order"
+                ? "data-open-order"
+                : action.action === "production"
+                  ? "data-open-production"
+                  : `data-jump-view="${safe(action.view)}"`;
+            return `<button class="quick-action" type="button" data-icon="${safe(action.icon)}" data-tone="${safe(action.tone)}" ${target}><strong>${safe(action.title)}</strong></button>`;
+          }).join("")}
         </div>
       `;
     }
@@ -6490,10 +6900,34 @@
     function renderMoves() {
       const q = byId("search").value.trim();
       const rows = visibleTransactions().filter(tx => txMatches(tx, q)).slice().reverse();
-      byId("moveCount").textContent = `${rows.length} kayıt`;
       byId("allMoveCount").textContent = `${rows.length} kayıt`;
-      byId("recentMoves").innerHTML = moveTable(rows.slice(0, 4));
       byId("allMoves").innerHTML = moveTable(rows);
+      const jobStats = metrics().jobs;
+      const jobs = jobStats.open
+        .slice()
+        .sort((a, b) => (a.dueIn == null ? 9999 : a.dueIn) - (b.dueIn == null ? 9999 : b.dueIn) || (a.priority === "Acil" ? -1 : 1))
+        .slice(0, 4);
+      const urgentCount = jobStats.urgent.length;
+      byId("moveCount").textContent = `${jobStats.open.length} aktif${urgentCount ? ` · ${urgentCount} acil` : ""}`;
+      byId("recentMoves").innerHTML = jobs.length
+        ? `<div class="dashboard-priority-list">${jobs.map(job => {
+            const due = job.dueIn == null
+              ? "Vade yok"
+              : job.dueIn < 0
+                ? `${Math.abs(job.dueIn)} gün gecikti`
+                : job.dueIn === 0
+                  ? "Bugün"
+                  : `${job.dueIn} gün`;
+            return `<button class="dashboard-list-item" type="button" data-jump-view="production">
+              <div class="dashboard-list-main">
+                <strong>${safe(job.customer || "Müşteri")}</strong>
+                <span>${safe(itemName(job.product))} × ${safe(qty(job.qty))} · ${safe(job.stage)}</span>
+                <small>${safe(job.assignee || "Sorumlu yok")}</small>
+              </div>
+              <div class="dashboard-list-value">${safe(due)}<small>${safe(job.priority || "Normal")}</small></div>
+            </button>`;
+          }).join("")}</div>`
+        : `<div class="dashboard-zone-empty">Açık üretim işi görünmüyor.</div>`;
     }
 
     function searchResultButton(view, title, text) {
@@ -6936,18 +7370,31 @@
 
     function renderGuide() {
       const m = metrics();
-      const control = validateState();
-      const guide = [];
-      if (control.badCount) guide.push({ kind: "bad", title: "Önce denetim", text: `${control.badCount} ciddi kontrol uyarısı var. Kontrol / Denetim ekranına bak.` });
-      const low = m.stockRows.filter(row => row.low).slice(0, 4);
-      low.forEach(row => guide.push({ kind: "bad", title: "Stok kritik", text: `${row.name}: mevcut ${qty(row.current)} ${row.unit}, min ${qty(row.min)}.` }));
-      m.fixed.dueSoon.slice(0, 3).forEach(row => guide.push({ kind: "warn", title: "Yaklaşan sabit gider", text: `${row.name}: ${money(row.amount)} / ${row.daysUntilDue === 0 ? "bugün" : row.daysUntilDue + " gün sonra"}.` }));
-      m.jobs.urgent.slice(0, 3).forEach(job => guide.push({ kind: "bad", title: "Üretim öncelik", text: `${job.customer}: ${itemName(job.product)} / ${job.stage} / ${job.dueIn == null ? "vade yok" : job.dueIn < 0 ? Math.abs(job.dueIn) + " gün gecikmiş" : job.dueIn + " gün kaldı"}.` }));
-      m.customers.filter(c => c.receivable > 0).slice(0, 3).forEach(c => guide.push({ kind: "warn", title: "Tahsilat takip", text: `${c.name}: ${money(c.receivable)} açık alacak.` }));
-      m.suppliers.filter(c => c.payable > 0).slice(0, 3).forEach(c => guide.push({ kind: "bad", title: "Ödeme takip", text: `${c.name}: ${money(c.payable)} açık borç.` }));
-      m.debt.priorityRows.slice(0, 3).forEach(row => guide.push({ kind: row.scope === "Şahsi" ? "warn" : "bad", title: "Borç önceliği", text: `${row.type} / ${row.party}: ${money(row.remaining)} - ${row.dueIn == null ? "vade yok" : row.dueIn < 0 ? Math.abs(row.dueIn) + " gün gecikmiş" : row.dueIn === 0 ? "bugün" : row.dueIn + " gün"}.` }));
-      if (!guide.length) guide.push({ kind: "", title: "Kritik uyarı yok", text: "Anlık kontrollerde kritik takip maddesi görünmüyor." });
-      byId("guideList").innerHTML = guide.map(item => `<div class="guide-item ${["bad", "warn"].includes(item.kind) ? item.kind : ""}"><strong>${safe(item.title)}</strong><span>${safe(item.text)}</span></div>`).join("");
+      const cardByName = new Map((state.cariCards || []).map(card => [String(card.name || "").toLocaleLowerCase("tr-TR"), card]));
+      const customers = m.customers
+        .filter(row => row.receivable > 0)
+        .slice()
+        .sort((a, b) => b.receivable - a.receivable)
+        .slice(0, 4);
+      const items = customers.map(row => {
+            const card = cardByName.get(String(row.name || "").toLocaleLowerCase("tr-TR")) || {};
+            return {
+              name: row.name,
+              text: [card.phone, card.note].filter(Boolean).join(" · ") || "İletişim notu girilmemiş",
+              receivable: row.receivable
+            };
+          });
+      byId("collectionCount").textContent = `${items.length} cari`;
+      byId("guideList").innerHTML = items.length
+        ? items.map(item => `<button class="dashboard-list-item" type="button" data-open-collection="${safe(item.name)}">
+              <div class="dashboard-list-main">
+                <strong>${safe(item.name)}</strong>
+                <span>${safe(item.text)}</span>
+                <small>Tahsilat formunu aç</small>
+              </div>
+              <div class="dashboard-list-value">${money(item.receivable)}<small>Açık alacak</small></div>
+            </button>`).join("")
+        : `<div class="dashboard-zone-empty">Açık müşteri alacağı görünmüyor.</div>`;
     }
 
     function dailyFlowState() {
@@ -8236,11 +8683,14 @@
 
     function showView(id) {
       if (!canOpenView(id)) id = "production";
+      document.body.classList.toggle("dashboard-dark", id === "dashboard");
       document.querySelectorAll(".tab-view").forEach(view => view.classList.toggle("active", view.id === id));
       document.querySelectorAll("#nav button").forEach(btn => btn.classList.toggle("active", btn.dataset.view === id));
       const active = document.querySelector(`#nav button[data-view="${id}"]`);
-      byId("pageTitle").textContent = active ? active.textContent : "Karargâh";
-      byId("pageSubtitle").textContent = viewSubtitles[id] || viewSubtitles.dashboard;
+      byId("pageTitle").textContent = id === "dashboard" ? "Saha Komuta Paneli" : active ? active.textContent : "Karargâh";
+      byId("pageSubtitle").textContent = id === "dashboard"
+        ? `${todayLabel} · Para, teslim, stok ve üretim önceliği.`
+        : viewSubtitles[id] || viewSubtitles.dashboard;
       applyRoleAccess();
       renderMobileCommandBar();
     }
@@ -8250,7 +8700,26 @@
       byId("txType").value = type;
       byId("txDate").value = today;
       updateFormMode();
-      setTimeout(() => byId("party").focus(), 0);
+      byId("entryForm").scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => byId("party").focus(), 250);
+    }
+
+    function openCollectionEntry(name) {
+      openCashEntry("TAHSILAT");
+      byId("party").value = name || "";
+      setTimeout(() => byId("amount").focus(), 280);
+    }
+
+    function openOrderEntry() {
+      showView("entry");
+      byId("orderForm").scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => byId("orderCustomer").focus(), 250);
+    }
+
+    function openProductionEntry() {
+      showView("production");
+      byId("workOrderForm").scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => byId("jobCustomer").focus(), 250);
     }
 
     function openTradeEntry(type) {
@@ -8369,8 +8838,22 @@
       if (btn) showView(btn.dataset.view);
     });
     byId("dashboardQuickActions").addEventListener("click", event => {
+      const cashButton = event.target.closest("[data-open-cash]");
+      if (cashButton) return openCashEntry(cashButton.dataset.openCash);
+      if (event.target.closest("[data-open-order]")) return openOrderEntry();
+      if (event.target.closest("[data-open-production]")) return openProductionEntry();
       const btn = event.target.closest("[data-jump-view]");
       if (btn) showView(btn.dataset.jumpView);
+    });
+    byId("guideList").addEventListener("click", event => {
+      const collectionButton = event.target.closest("[data-open-collection]");
+      if (collectionButton) return openCollectionEntry(collectionButton.dataset.openCollection);
+      const jumpButton = event.target.closest("[data-jump-view]");
+      if (jumpButton) showView(jumpButton.dataset.jumpView);
+    });
+    byId("secondaryCards").addEventListener("click", event => {
+      const jumpButton = event.target.closest("[data-jump-view]");
+      if (jumpButton) showView(jumpButton.dataset.jumpView);
     });
     byId("actionCompass").addEventListener("click", event => {
       const copyButton = event.target.closest("[data-copy-compass]");
@@ -8564,6 +9047,8 @@
       if (saleButton) return saleFromProductionJob(saleButton.dataset.saleJob);
     });
     byId("recentMoves").addEventListener("click", event => {
+      const jumpButton = event.target.closest("[data-jump-view]");
+      if (jumpButton) return showView(jumpButton.dataset.jumpView);
       const printButton = event.target.closest("button[data-print-order]");
       if (printButton) return printOrderSlip(printButton.dataset.printOrder);
       const button = event.target.closest("button[data-cancel-tx]");
