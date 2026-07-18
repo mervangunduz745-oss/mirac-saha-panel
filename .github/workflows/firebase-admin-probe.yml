@@ -1,0 +1,50 @@
+name: Firebase Admin Access Probe
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/firebase-admin-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Kodu al
+        uses: actions/checkout@v4
+
+      - name: Yönetici kimliği ayarlarını doğrula
+        shell: bash
+        env:
+          WIF_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+        run: |
+          set -euo pipefail
+          test -n "$WIF_PROVIDER"
+          test -n "$SERVICE_ACCOUNT"
+          test -n "$PROJECT_ID"
+
+      - name: Google Cloud kimliği
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: gcloud kur
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Firestore erişimini yalnızca oku
+        shell: bash
+        run: |
+          set -euo pipefail
+          gcloud config set project "${{ secrets.GCP_PROJECT_ID }}"
+          test "${{ secrets.GCP_PROJECT_ID }}" = "tamam-d1caa"
+          gcloud firestore databases describe --database='(default)' --format='value(name,locationId,type)'
+          gcloud firestore operations list --limit=1 --format='value(name)' >/dev/null
+          echo "PROBE_OK: Firestore yönetici bağlantısı kullanılabilir; hiçbir veri değiştirilmedi."
