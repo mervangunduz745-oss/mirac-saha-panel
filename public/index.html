@@ -7254,25 +7254,25 @@
       `).join("");
 
       byId("debtPriorityList").innerHTML = stats.priorityRows.length
-        ? stats.priorityRows.slice(0, 8).map(row => `<div class="guide-item ${row.scope === "Şahsi" ? "warn" : row.dueIn != null && row.dueIn <= 0 ? "bad" : "warn"}"><strong>${row.type} / ${row.party}</strong><span>${money(row.remaining)} - ${row.priority || "Normal"} - ${row.dueIn == null ? "vade yok" : row.dueIn < 0 ? Math.abs(row.dueIn) + " gün gecikmiş" : row.dueIn === 0 ? "bugün" : row.dueIn + " gün"} - ${row.scope}</span></div>`).join("")
+        ? stats.priorityRows.slice(0, 8).map(row => `<div class="guide-item ${row.scope === "Şahsi" ? "warn" : row.dueIn != null && row.dueIn <= 0 ? "bad" : "warn"}"><strong>${safe(row.type)} / ${safe(row.party)}</strong><span>${money(row.remaining)} - ${safe(row.priority || "Normal")} - ${row.dueIn == null ? "vade yok" : row.dueIn < 0 ? Math.abs(row.dueIn) + " gün gecikmiş" : row.dueIn === 0 ? "bugün" : row.dueIn + " gün"} - ${safe(row.scope)}</span></div>`).join("")
         : `<div class="empty">Açık borç planı yok.</div>`;
 
       byId("debtTable").innerHTML = stats.rows.length
         ? `<table>
           <thead><tr><th>ID</th><th>Tür</th><th>Kapsam</th><th>Kurum/Kişi</th><th class="money">Toplam</th><th class="money">Ödenen</th><th class="money">Kalan</th><th>Vade</th><th>Öncelik</th><th>Durum</th><th>Hesap</th><th>İşlem</th></tr></thead>
           <tbody>${stats.rows.map(row => `<tr>
-            <td>${row.id}</td>
-            <td>${row.type}</td>
-            <td><span class="status ${row.scope === "Şahsi" ? "warn" : "ok"}">${row.scope}</span></td>
-            <td>${row.party}</td>
+            <td>${safe(row.id)}</td>
+            <td>${safe(row.type)}</td>
+            <td><span class="status ${row.scope === "Şahsi" ? "warn" : "ok"}">${safe(row.scope)}</span></td>
+            <td>${safe(row.party)}</td>
             <td class="money">${money(row.amount)}</td>
             <td class="money">${money(row.paid)}</td>
             <td class="money"><strong>${money(row.remaining)}</strong></td>
-            <td>${row.dueIn == null ? row.dueDate || "" : row.dueIn < 0 ? `<span class="status bad">${Math.abs(row.dueIn)} gün gecikti</span>` : row.dueIn === 0 ? `<span class="status bad">Bugün</span>` : `${row.dueIn} gün`}</td>
-            <td><span class="status ${row.priority === "Acil" ? "bad" : row.priority === "Yüksek" ? "warn" : "ok"}">${row.priority || "Normal"}</span></td>
-            <td><span class="status ${row.effectiveStatus === "İptal" ? "bad" : row.effectiveStatus === "Ödendi" ? "ok" : row.effectiveStatus === "Gecikti" ? "bad" : "warn"}">${row.effectiveStatus}</span></td>
-            <td>${row.account || ""}</td>
-            <td>${row.closed ? "Kapalı" : `<div class="row-actions"><button class="btn compact-action" data-pay-debt="${row.id}" type="button">Ödeme Gir</button><button class="btn danger compact-action" data-cancel-debt="${row.id}" type="button">İptal</button></div>`}</td>
+            <td>${row.dueIn == null ? safe(row.dueDate || "") : row.dueIn < 0 ? `<span class="status bad">${Math.abs(row.dueIn)} gün gecikti</span>` : row.dueIn === 0 ? `<span class="status bad">Bugün</span>` : `${row.dueIn} gün`}</td>
+            <td><span class="status ${row.priority === "Acil" ? "bad" : row.priority === "Yüksek" ? "warn" : "ok"}">${safe(row.priority || "Normal")}</span></td>
+            <td><span class="status ${row.effectiveStatus === "İptal" ? "bad" : row.effectiveStatus === "Ödendi" ? "ok" : row.effectiveStatus === "Gecikti" ? "bad" : "warn"}">${safe(row.effectiveStatus)}</span></td>
+            <td>${safe(row.account || "")}</td>
+            <td>${row.closed ? "Kapalı" : `<div class="row-actions"><button class="btn compact-action" data-pay-debt="${safe(row.id)}" type="button">Ödeme Gir</button><button class="btn danger compact-action" data-cancel-debt="${safe(row.id)}" type="button">İptal</button></div>`}</td>
           </tr>`).join("")}</tbody>
         </table>`
         : `<div class="empty">Borç planı kaydı yok. Banka taksidi, senet, resmi ödeme ve şahsi borçları buradan tek plan halinde gir.</div>`;
@@ -8070,6 +8070,7 @@
         priceRows: byId("inventoryPriceRows").value.trim(),
         createdAt: new Date().toISOString()
       };
+      if ([item.opening, item.min, item.cost, item.salePrice].some(value => value < 0)) return alert("Stok, minimum, maliyet ve satış fiyatı negatif olamaz.");
       backupState("before-add-inventory-item");
       state.logs = state.logs || [];
       state.items.push(item);
@@ -8124,7 +8125,7 @@
         });
       }
       if (!job.customer) return alert("Müşteri / sipariş gerekli.");
-      if (!job.qty) return alert("Adet gerekli.");
+      if (job.qty <= 0) return alert("Adet 0'dan büyük olmalı.");
       backupState(editId ? "before-edit-production-job" : "before-add-production-job");
       if (existing) {
         Object.assign(existing, job, { updatedAt: new Date().toISOString() });
@@ -8158,8 +8159,9 @@
       if (!product) return alert("Ürün gerekli. Önce stok/envanter kartı açılmalı.");
       if (itemSizeVariants(productItem).length && !selectedSize) return alert("Ölçü varyantı seçilmeli.");
       if (selectedSize === "Özel Ölçü" && !customSize) return alert("Özel ölçü girilmeli.");
-      if (!qtyValue) return alert("Adet gerekli.");
-      if (paid && !amount) return alert("Kapora varsa birim fiyat girilmeli.");
+      if (qtyValue <= 0) return alert("Adet 0'dan büyük olmalı.");
+      if (unitPrice <= 0) return alert("Birim fiyat 0'dan büyük olmalı.");
+      if (paid < 0) return alert("Kapora negatif olamaz.");
       if (paid > amount) return alert("Kapora toplam sipariş tutarından büyük olamaz.");
       const tx = {
         id: nextId(),
@@ -8337,7 +8339,7 @@
         active: byId("fixedActive").value === "true"
       };
       if (!row.name) return alert("Gider adı gerekli.");
-      if (!row.amount) return alert("Tutar gerekli.");
+      if (row.amount <= 0) return alert("Tutar 0'dan büyük olmalı.");
       if (row.period === "weekly" && (row.dueDay < 1 || row.dueDay > 7)) return alert("Haftalık vade günü 1-7 arası olmalı.");
       if (row.period === "monthly" && (row.dueDay < 1 || row.dueDay > 31)) return alert("Aylık vade günü 1-31 arası olmalı.");
       backupState("before-add-fixed-expense");
@@ -8391,7 +8393,7 @@
       const party = byId("cariOpeningParty").value.trim();
       const amount = Number(byId("cariOpeningAmount").value || 0);
       if (!party) return alert("Cari adı gerekli.");
-      if (!amount) return alert("Açılış tutarı gerekli.");
+      if (amount <= 0) return alert("Açılış tutarı 0'dan büyük olmalı.");
       const tx = {
         id: nextId(),
         date: byId("cariOpeningDate").value || today,
@@ -8435,7 +8437,8 @@
         createdAt: new Date().toISOString()
       };
       if (!row.party) return alert("Kurum / kişi gerekli.");
-      if (!row.amount) return alert("Toplam tutar gerekli.");
+      if (row.amount <= 0) return alert("Toplam tutar 0'dan büyük olmalı.");
+      if (row.paid < 0) return alert("Ödenen tutar negatif olamaz.");
       if (row.paid > row.amount) return alert("Ödenen tutar toplamdan büyük olamaz.");
       if (row.paid === row.amount) row.status = "Ödendi";
       backupState("before-add-debt-plan");
@@ -8464,7 +8467,7 @@
         id: nextId(),
         date: byId("txDate").value || today,
         type,
-        party: type === "URETIM" ? "Üretim" : (byId("party").value || "Tanımsız"),
+        party: type === "URETIM" ? "Üretim" : byId("party").value.trim(),
         item: ["SIPARIS", "SATIS", "ALIS", "URETIM"].includes(type) ? byId("item").value : "",
         qty: ["SIPARIS", "SATIS", "ALIS", "URETIM"].includes(type) ? qtyValue : 0,
         unitPrice: price,
@@ -8500,11 +8503,13 @@
         });
       }
       if (!tx.date) return alert("Tarih gerekli.");
-      if (["SIPARIS", "SATIS", "ALIS", "URETIM"].includes(type) && !tx.qty) return alert("Miktar gerekli.");
-      if (["SATIS", "ALIS"].includes(type) && !tx.amount) return alert("Birim fiyat/tutar gerekli.");
+      if (type !== "URETIM" && !tx.party) return alert("Cari / kişi gerekli.");
+      if (["SIPARIS", "SATIS", "ALIS", "URETIM"].includes(type) && tx.qty <= 0) return alert("Miktar 0'dan büyük olmalı.");
+      if (["SATIS", "ALIS"].includes(type) && tx.amount <= 0) return alert("Birim fiyat/tutar 0'dan büyük olmalı.");
+      if (tx.paid < 0) return alert("Peşin/kapora negatif olamaz.");
       if (type === "SIPARIS" && tx.paid && !tx.amount) return alert("Kapora varsa birim fiyat girilmeli.");
       if (["SIPARIS", "SATIS", "ALIS"].includes(type) && tx.paid > tx.amount) return alert("Peşin/kapora toplam tutardan büyük olamaz.");
-      if (["TAHSILAT", "ODEME", "MAHSUP", "MASRAF", "PERSONEL_ODEME"].includes(type) && !tx.amount) return alert("Tutar gerekli.");
+      if (["TAHSILAT", "ODEME", "MAHSUP", "MASRAF", "PERSONEL_ODEME"].includes(type) && tx.amount <= 0) return alert("Tutar 0'dan büyük olmalı.");
       if (tradeLink?.sourceOrderId && !linkedOrder) return alert("Bağlı sipariş bulunamadı. Satış kaydı durduruldu.");
       if (tradeLink?.productionJobId) {
         const duplicate = activeTransactions().find(row => row.type === "SATIS" && linkedProductionJobId(row) === tradeLink.productionJobId);
@@ -8550,7 +8555,7 @@
       backupState("before-undo-last-transaction");
       const removed = state.transactions.pop();
       unlinkFinalizedSale(removed);
-      if (removed.type === "BORC_ODEME" && removed.debtPlanId) {
+      if (!isCanceled(removed) && removed.type === "BORC_ODEME" && removed.debtPlanId) {
         const plan = (state.debtPlans || []).find(row => row.id === removed.debtPlanId);
         if (plan) {
           plan.paid = Math.max(0, Number(plan.paid || 0) - Number(removed.amount || 0));
