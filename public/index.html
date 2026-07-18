@@ -339,14 +339,26 @@
       cursor: pointer;
       font-weight: 650;
       box-shadow: 0 8px 18px rgba(18, 33, 61, .05);
-      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease;
+      position: relative;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease, filter .12s ease;
       touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover { border-color: #9dafc7; filter: brightness(1.025); box-shadow: 0 11px 23px rgba(18, 33, 61, .11); transform: translateY(-1px); }
+    .btn:active { filter: brightness(.96); box-shadow: inset 0 3px 7px rgba(16, 24, 39, .20); transform: translateY(2px) scale(.975); }
+    .btn:focus-visible,
+    .quick-action:focus-visible,
+    .nav button:focus-visible {
+      outline: 3px solid rgba(35, 100, 170, .34);
+      outline-offset: 2px;
     }
     .btn.primary {
       background: var(--nav);
       color: #fff;
       border-color: var(--nav);
     }
+    .btn.primary:hover { background: #1c3157; border-color: #1c3157; }
+    .btn.primary:active { background: #0c172b; }
     .btn.danger {
       color: var(--red);
       background: #fff7f7;
@@ -895,7 +907,20 @@
       padding: 12px;
       text-align: left;
       box-shadow: 0 8px 18px rgba(18, 33, 61, .05);
-      transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease, background .16s ease;
+      transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease, background .12s ease, filter .12s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .quick-action:hover {
+      border-color: #8fa6c5;
+      background: #f8fbff;
+      box-shadow: 0 14px 28px rgba(18, 33, 61, .14);
+      transform: translateY(-2px);
+    }
+    .quick-action:active {
+      filter: brightness(.94);
+      box-shadow: inset 0 4px 9px rgba(16, 24, 39, .22);
+      transform: translateY(2px) scale(.97);
     }
     .quick-action strong {
       font-size: 14px;
@@ -1446,6 +1471,21 @@
       background: #fafcff;
     }
     .hidden { display: none !important; }
+    .payment-dialog {
+      width: min(460px, calc(100vw - 28px));
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--text);
+      background: var(--panel);
+      box-shadow: 0 28px 80px rgba(16, 24, 39, .34);
+    }
+    .payment-dialog::backdrop { background: rgba(8, 13, 23, .68); backdrop-filter: blur(3px); }
+    .payment-dialog form { display: grid; gap: 16px; padding: 22px; }
+    .payment-dialog-head { display: grid; gap: 5px; }
+    .payment-dialog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .payment-dialog .form-actions { margin-top: 0; }
+    @media (max-width: 520px) { .payment-dialog-grid { grid-template-columns: 1fr; } }
     .role-hidden { display: none !important; }
     .mobile-command-bar,
     .command-sheet-backdrop,
@@ -4436,6 +4476,29 @@
     </div>
   </section>
 
+  <dialog class="payment-dialog" id="debtPaymentDialog">
+    <form id="debtPaymentForm">
+      <div class="payment-dialog-head">
+        <h2>Borç Ödemesi Gir</h2>
+        <div class="hint" id="debtPaymentSummary"></div>
+      </div>
+      <div class="payment-dialog-grid">
+        <div class="field">
+          <label for="debtPaymentDate">Ödeme Tarihi</label>
+          <input id="debtPaymentDate" type="date" required>
+        </div>
+        <div class="field">
+          <label for="debtPaymentAmount">Ödenen Tutar</label>
+          <input id="debtPaymentAmount" type="number" min="0.01" step="0.01" required>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" id="cancelDebtPayment" type="button">Vazgeç</button>
+        <button class="btn primary" type="submit">Ödemeyi Kaydet</button>
+      </div>
+    </form>
+  </dialog>
+
   <script type="module">
     import { createFirebaseCloud, CloudConflictError } from "./firebase-cloud.js";
     import { PDF_CATALOG_INVENTORY_ITEMS } from "./catalog-inventory.js";
@@ -4514,6 +4577,7 @@
     let stopCloudSubscription = null;
     let pendingInventoryImage = "";
     let pendingTradeLink = null;
+    let pendingDebtPaymentId = "";
     const clientId = getClientId();
     const WORKER_ALLOWED_VIEWS = new Set(["entry", "production", "stock"]);
     const WORKER_ALLOWED_TX_TYPES = new Set(["SIPARIS", "URETIM"]);
@@ -8561,19 +8625,32 @@
       if (!row || isDebtClosed(row)) return;
       const remaining = debtRemaining(row);
       if (!remaining) return;
-      const rawAmount = prompt(`${row.id} / ${row.party}\nToplam: ${money(row.amount)}\nÖdenen: ${money(row.paid)}\nKalan: ${money(remaining)}\n\nBu sefer ödenen tutarı gir:`, String(remaining));
-      if (rawAmount == null) return;
-      const payAmount = Number(String(rawAmount).replace(/\./g, "").replace(",", "."));
+      pendingDebtPaymentId = row.id;
+      byId("debtPaymentSummary").textContent = `${row.id} / ${row.party} · Kalan ${money(remaining)} · ${row.account || "Banka"}`;
+      byId("debtPaymentDate").value = today;
+      byId("debtPaymentAmount").value = remaining;
+      byId("debtPaymentAmount").max = remaining;
+      byId("debtPaymentDialog").showModal();
+      setTimeout(() => byId("debtPaymentDate").focus(), 0);
+    }
+
+    function submitDebtPayment(event) {
+      event.preventDefault();
+      const row = (state.debtPlans || []).find(item => item.id === pendingDebtPaymentId);
+      if (!row || isDebtClosed(row)) return closeDebtPaymentDialog();
+      const remaining = debtRemaining(row);
+      const paymentDate = byId("debtPaymentDate").value;
+      const payAmount = Number(byId("debtPaymentAmount").value || 0);
+      if (!paymentDate) return alert("Ödeme tarihi gerekli.");
       if (!payAmount || payAmount <= 0) return alert("Ödeme tutarı 0'dan büyük olmalı.");
       if (payAmount > remaining) return alert(`Ödeme kalan borçtan büyük olamaz. Kalan: ${money(remaining)}`);
-      if (!confirm(`${row.id} / ${row.party} için ${money(payAmount)} ödeme işlensin mi? Kasa/banka hareketi de oluşacak.`)) return;
       backupState("before-pay-debt-plan");
       row.paid = Number(row.paid || 0) + payAmount;
       row.status = debtRemaining(row) <= 0 ? "Ödendi" : "Kısmi";
-      row.paidAt = new Date().toISOString();
+      row.paidAt = `${paymentDate}T12:00:00`;
       const tx = {
         id: nextId(),
-        date: today,
+        date: paymentDate,
         type: "BORC_ODEME",
         party: row.party,
         item: "",
@@ -8588,9 +8665,15 @@
         createdAt: new Date().toISOString()
       };
       state.transactions.push(tx);
-      state.logs.push({ at: new Date().toISOString(), event: "PAY_DEBT_PLAN", id: row.id, txId: tx.id, amount: payAmount, remaining: debtRemaining(row) });
+      state.logs.push({ at: new Date().toISOString(), event: "PAY_DEBT_PLAN", id: row.id, txId: tx.id, date: paymentDate, amount: payAmount, remaining: debtRemaining(row) });
       saveState();
+      closeDebtPaymentDialog();
       renderAll();
+    }
+
+    function closeDebtPaymentDialog() {
+      pendingDebtPaymentId = "";
+      byId("debtPaymentDialog").close();
     }
 
     function restoreLastGoodBackup() {
@@ -9093,6 +9176,8 @@
       const cancelButton = event.target.closest("button[data-cancel-debt]");
       if (cancelButton) cancelDebtPlan(cancelButton.dataset.cancelDebt);
     });
+    byId("debtPaymentForm").addEventListener("submit", submitDebtPayment);
+    byId("cancelDebtPayment").addEventListener("click", closeDebtPaymentDialog);
     byId("txType").addEventListener("change", updateFormMode);
     byId("search").addEventListener("input", renderAll);
     byId("exportJson").addEventListener("click", exportJsonFile);
