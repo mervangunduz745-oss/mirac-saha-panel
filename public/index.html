@@ -3863,6 +3863,222 @@
     }
     body:not(.auth-locked).dashboard-dark #automationGrid .automation-card span { color: var(--pro-muted); }
     body:not(.auth-locked) .mobile-command-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    /* Miraç Saha V3 — industrial desktop workspace; intentionally replaces prior card-dashboard styling */
+    body:not(.auth-locked) {
+      --pro-bg: #f5f6f4;
+      --pro-surface: #ffffff;
+      --pro-surface-2: #eef1f2;
+      --pro-border: #d8dcde;
+      --pro-text: #17242b;
+      --pro-muted: #68757c;
+      --pro-accent: #176b68;
+      background: #f5f6f4;
+    }
+    body:not(.auth-locked) .app {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 100vh;
+      background: #f5f6f4;
+    }
+    body:not(.auth-locked) aside {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      align-items: center;
+      width: 100%;
+      min-height: 68px;
+      padding: 10px 28px;
+      border: 0;
+      border-bottom: 1px solid #d8dcde;
+      background: #ffffff;
+    }
+    body:not(.auth-locked) aside .brand {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    body:not(.auth-locked) aside .brand .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 4px;
+      color: #fff;
+      background: #176b68;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) aside .brand strong { font-size: 15px; letter-spacing: -.015em; }
+    body:not(.auth-locked) aside .brand span { font-size: 10px; }
+    body:not(.auth-locked) aside > div:nth-child(2) { min-width: 0; }
+    body:not(.auth-locked) #nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    body:not(.auth-locked) #nav .nav-label,
+    body:not(.auth-locked) aside .side-note { display: none !important; }
+    body:not(.auth-locked) #nav button {
+      width: auto;
+      min-height: 38px;
+      margin: 0;
+      padding: 9px 16px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: #526168;
+      background: transparent;
+      font-size: 12px;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) #nav button::before { display: none; }
+    body:not(.auth-locked) #nav button.active {
+      color: #174b49;
+      border-color: #bdd1cf;
+      background: #edf5f4;
+    }
+    body:not(.auth-locked) main {
+      display: block;
+      min-width: 0;
+      background: #f5f6f4;
+    }
+    body:not(.auth-locked) header,
+    body:not(.auth-locked).dashboard-dark header {
+      position: static;
+      min-height: 62px;
+      padding: 10px max(28px, calc((100vw - 1420px) / 2));
+      border-bottom: 1px solid #e1e4e5;
+      background: #f5f6f4;
+      backdrop-filter: none;
+    }
+    body:not(.auth-locked) header .search,
+    body:not(.auth-locked).dashboard-dark header .search {
+      min-height: 40px;
+      border: 1px solid #cfd5d7;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) header #logoutPanel,
+    body:not(.auth-locked).dashboard-dark header #logoutPanel,
+    body:not(.auth-locked) header .btn {
+      min-height: 40px;
+      border-radius: 4px;
+    }
+    body:not(.auth-locked) .content,
+    body:not(.auth-locked).dashboard-dark .content {
+      width: min(1420px, calc(100% - 56px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+      background: transparent;
+    }
+    body:not(.auth-locked) .title-row { align-items: flex-end; margin-bottom: 24px; }
+    body:not(.auth-locked) .title-row h1,
+    body:not(.auth-locked).dashboard-dark .title-row h1 {
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 760;
+      letter-spacing: -.045em;
+    }
+    body:not(.auth-locked) .title-row .subtitle {
+      max-width: 680px;
+      margin-top: 5px;
+      font-size: 13px;
+    }
+    body:not(.auth-locked) #dashboard,
+    body:not(.auth-locked).dashboard-dark #dashboard { gap: 16px; }
+    body:not(.auth-locked).dashboard-dark .command-center-section,
+    body:not(.auth-locked) .panel {
+      padding: 20px;
+      border: 1px solid #d8dcde;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) .command-center-head {
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e3e6e7;
+    }
+    body:not(.auth-locked) .dashboard-section-label {
+      color: #176b68 !important;
+      font-size: 9px;
+      letter-spacing: .14em;
+    }
+    body:not(.auth-locked) .command-center-head h2 { margin-top: 4px; font-size: 19px; }
+    body:not(.auth-locked).dashboard-dark #actionCompass {
+      display: block;
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-lead {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) auto minmax(320px, .8fr);
+      align-items: center;
+      gap: 20px;
+      padding: 18px 0;
+      border: 0;
+      border-bottom: 1px solid #e3e6e7;
+      border-radius: 0;
+      background: transparent;
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-stack {
+      padding: 18px 0 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-stats {
+      grid-template-columns: repeat(3, minmax(90px, 1fr));
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-stat,
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-card {
+      border: 1px solid #dbe0e1;
+      border-radius: 4px;
+      background: #f6f8f8;
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-actions {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    body:not(.auth-locked).dashboard-dark #dailyFlow,
+    body:not(.auth-locked).dashboard-dark #automationGrid {
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap: 8px;
+    }
+    body:not(.auth-locked) .daily-flow-item,
+    body:not(.auth-locked) .automation-card {
+      min-height: 96px;
+      padding: 14px;
+      border-radius: 4px;
+      background: #f7f8f8;
+    }
+    body:not(.auth-locked) .module-shell { gap: 16px; }
+    body:not(.auth-locked) #entry .module-main {
+      max-width: none;
+      padding: 24px;
+    }
+    body:not(.auth-locked) .entry-grid {
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    body:not(.auth-locked) .field label {
+      color: #5f6c73;
+      font-size: 10px;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+    }
+    body:not(.auth-locked) input,
+    body:not(.auth-locked) select,
+    body:not(.auth-locked) textarea {
+      border-radius: 4px;
+      background: #fff;
+    }
+    body:not(.auth-locked) .flow-rail {
+      border-radius: 4px;
+      background: #f1f4f4;
+    }
+    body:not(.auth-locked) .btn { border-radius: 4px; }
+    body:not(.auth-locked) .btn.primary { background: #176b68; border-color: #176b68; }
+    body:not(.auth-locked) .status { border-radius: 999px; }
+    body:not(.auth-locked) table { font-size: 12px; }
+    body:not(.auth-locked) thead th { background: #f0f3f3; }
     @media (max-width: 1100px) {
       body:not(.auth-locked) .entry-grid {
         grid-template-columns: repeat(2, minmax(160px, 1fr));
