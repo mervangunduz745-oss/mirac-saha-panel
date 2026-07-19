@@ -3880,6 +3880,9 @@
       --module-stock: #8E24AA;
       --module-reports: #0288D1;
       --module-settings: #455A64;
+      --type-title: #17242B;
+      --type-muted: #5E6A71;
+      --type-muted-dark: #C8D1D5;
       background: #f5f6f4;
     }
     body:not(.auth-locked) .app {
@@ -4473,6 +4476,81 @@
       body:not(.auth-locked) .full-viz-wide{grid-column:auto}
       body:not(.auth-locked) .full-recent-row{grid-template-columns:76px 1fr 90px}.full-recent-row span:nth-child(2){display:none}
     }
+    /* Type hierarchy: section=H3, card=H4, monetary value=H2 visual weight. */
+    body:not(.auth-locked) :is(
+      .live-surface-head h2,
+      .full-viz-head h3,
+      .live-progress h3,
+      .panel-head h2,
+      .panel-head h3
+    ) {
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    body:not(.auth-locked) :is(
+      .live-work-row strong,
+      .live-alert-row b,
+      .live-task-row strong,
+      .full-recent-row span:nth-child(3),
+      .full-stat span,
+      .full-mini-stat span
+    ) {
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 750;
+    }
+    body:not(.auth-locked) :is(
+      .full-stat strong,
+      .money-strip strong,
+      .full-donut-label strong
+    ) {
+      font-size: 28px;
+      line-height: 1.1;
+      font-weight: 850;
+      letter-spacing: -.035em;
+    }
+    body:not(.auth-locked) :is(
+      .live-status-copy strong,
+      .full-mini-stat strong,
+      .full-dashboard-health strong
+    ) {
+      font-size: 20px;
+      line-height: 1.15;
+      font-weight: 850;
+    }
+    body:not(.auth-locked) :is(
+      .live-priority-focus p,
+      .live-work-row small,
+      .live-alert-row span,
+      .live-progress p,
+      .live-task-row span,
+      .full-stat small,
+      .full-dashboard-hero p
+    ) {
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    body:not(.auth-locked) :is(
+      .live-priority-focus p,
+      .live-work-row small,
+      .live-alert-row span,
+      .live-progress p,
+      .live-task-row span
+    ) { color: var(--type-muted); }
+    body:not(.auth-locked).dashboard-dark :is(
+      .live-priority-focus p,
+      .live-work-row small,
+      .live-alert-row span,
+      .live-progress p
+    ) { color: var(--type-muted-dark); }
+    body:not(.auth-locked) .full-stat small,
+    body:not(.auth-locked) .full-dashboard-hero p,
+    body:not(.auth-locked) .full-viz-head span,
+    body:not(.auth-locked) .full-mini-stat span { color: #F1ECF8; opacity: 1; }
+    body:not(.auth-locked) .full-stat:nth-child(8n+4),
+    body:not(.auth-locked) .full-stat:nth-child(8n+4) :is(span,strong,small) { color:#2A2112; }
     body:not(.auth-locked).dashboard-dark #saveBadge {
       color: #1e625c;
       border-color: #c6d8d4;
