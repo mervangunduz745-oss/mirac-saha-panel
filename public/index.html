@@ -3295,6 +3295,298 @@
         page-break-inside: avoid;
       }
     }
+
+    /* Professional ERP layer — calm hierarchy, dense data without visual noise. */
+    body:not(.auth-locked) {
+      --pro-bg: #0b1017;
+      --pro-sidebar: #0e151f;
+      --pro-surface: #121a25;
+      --pro-surface-raised: #17212d;
+      --pro-border: #273342;
+      --pro-border-soft: #202b39;
+      --pro-text: #edf2f7;
+      --pro-muted: #91a0b3;
+      --pro-accent: #31b990;
+      --pro-danger: #ef646b;
+      --pro-warning: #e2a845;
+      color: var(--pro-text);
+      background: var(--pro-bg);
+    }
+    body:not(.auth-locked)::before { display: none; }
+    body:not(.auth-locked) .app,
+    body:not(.auth-locked) main {
+      background: var(--pro-bg);
+    }
+    body:not(.auth-locked) aside {
+      border-right: 1px solid var(--pro-border);
+      background: var(--pro-sidebar);
+      box-shadow: none;
+    }
+    body:not(.auth-locked) header {
+      min-height: 64px;
+      border-bottom: 1px solid var(--pro-border);
+      background: rgba(11, 16, 23, .96);
+      box-shadow: none;
+      backdrop-filter: blur(14px);
+    }
+    body:not(.auth-locked) .content {
+      max-width: 1680px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 28px 52px;
+      background: transparent;
+    }
+    body:not(.auth-locked) .title-row {
+      margin-bottom: 20px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) .title-row h1 {
+      color: var(--pro-text);
+      font-size: clamp(24px, 2.5vw, 34px);
+      font-weight: 720;
+      letter-spacing: -.035em;
+    }
+    body:not(.auth-locked) .title-row .subtitle,
+    body:not(.auth-locked) .hint {
+      color: var(--pro-muted);
+    }
+    body:not(.auth-locked) .cockpit-stamps,
+    body:not(.auth-locked) .flow-rail {
+      display: none !important;
+    }
+    body:not(.auth-locked) .nav {
+      gap: 3px;
+    }
+    body:not(.auth-locked) .nav button {
+      min-height: 42px;
+      padding: 9px 11px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      color: #aab6c5;
+      background: transparent;
+      box-shadow: none;
+      transform: none;
+    }
+    body:not(.auth-locked) .nav button::before {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      color: #8190a4;
+      background: transparent;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) .nav button:hover {
+      color: var(--pro-text);
+      background: #151e29;
+    }
+    body:not(.auth-locked) .nav button.active {
+      border-color: #2d3b4c;
+      color: #fff;
+      background: #1a2532;
+      box-shadow: inset 3px 0 0 var(--pro-accent);
+    }
+    body:not(.auth-locked) .nav button.active::before {
+      color: var(--pro-accent);
+      background: transparent;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) :is(.panel, .card, .command-panel, .quick-action-panel, .module-shell) {
+      border: 1px solid var(--pro-border);
+      border-radius: 10px;
+      color: var(--pro-text);
+      background: var(--pro-surface);
+      box-shadow: none;
+    }
+    body:not(.auth-locked) .panel,
+    body:not(.auth-locked) .command-panel {
+      padding: 18px;
+    }
+    body:not(.auth-locked) .panel-head {
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--pro-border-soft);
+    }
+    body:not(.auth-locked) .panel-head h2,
+    body:not(.auth-locked) .command-panel h3 {
+      color: var(--pro-text);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+    body:not(.auth-locked) .panel-head .status.ok {
+      color: var(--pro-muted);
+      border-color: var(--pro-border);
+      background: transparent;
+    }
+    body:not(.auth-locked) .status {
+      min-height: 24px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      box-shadow: none;
+      font-size: 10px;
+      letter-spacing: .02em;
+    }
+    body:not(.auth-locked) .status.bad {
+      color: #ff858b;
+      border-color: rgba(239, 100, 107, .36);
+      background: rgba(239, 100, 107, .09);
+    }
+    body:not(.auth-locked) .status.warn {
+      color: #efbd63;
+      border-color: rgba(226, 168, 69, .34);
+      background: rgba(226, 168, 69, .08);
+    }
+    body:not(.auth-locked) .cards,
+    body:not(.auth-locked) .command-kpis {
+      gap: 10px;
+    }
+    body:not(.auth-locked) .card,
+    body:not(.auth-locked) .command-kpi {
+      min-height: 88px;
+      padding: 14px;
+      border-top-width: 1px;
+      border-radius: 9px;
+      background: var(--pro-surface);
+    }
+    body:not(.auth-locked) .card strong,
+    body:not(.auth-locked) .command-kpi strong {
+      color: var(--pro-text);
+      text-shadow: none;
+    }
+    body:not(.auth-locked) #dashboardQuickActions .quick-action-grid {
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 8px;
+    }
+    body:not(.auth-locked) #dashboardQuickActions .quick-action {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--pro-border);
+      border-radius: 8px;
+      color: #cbd4df;
+      background: var(--pro-surface);
+      box-shadow: none;
+    }
+    body:not(.auth-locked) #dashboardQuickActions .quick-action::before {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      border-radius: 5px;
+      color: var(--pro-accent);
+      background: transparent;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) #dashboardQuickActions .quick-action strong {
+      color: inherit;
+      font-size: 13px;
+      font-weight: 650;
+    }
+    body:not(.auth-locked) #dashboardQuickActions .quick-action[data-tone] {
+      color: #cbd4df;
+      border-color: var(--pro-border);
+      background: var(--pro-surface);
+    }
+    body:not(.auth-locked) .entry-grid {
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 14px 16px;
+    }
+    body:not(.auth-locked) :is(input, select, textarea) {
+      min-height: 40px;
+      border: 1px solid #344255;
+      border-radius: 7px;
+      color: var(--pro-text);
+      background: #0d141e;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) :is(input, select, textarea):focus {
+      border-color: var(--pro-accent);
+      box-shadow: 0 0 0 3px rgba(49, 185, 144, .12);
+    }
+    body:not(.auth-locked) label {
+      color: #a7b3c2;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+    body:not(.auth-locked) .btn {
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 7px;
+      box-shadow: none;
+      transform: none;
+    }
+    body:not(.auth-locked) .btn.primary {
+      color: #06130f;
+      border-color: var(--pro-accent);
+      background: var(--pro-accent);
+    }
+    body:not(.auth-locked) .table-wrap {
+      border: 1px solid var(--pro-border);
+      border-radius: 8px;
+      background: #0e151e;
+    }
+    body:not(.auth-locked) table {
+      color: #dce3eb;
+      font-size: 12px;
+    }
+    body:not(.auth-locked) thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      color: #9cabbc;
+      background: #151e29;
+      border-bottom: 1px solid #344255;
+      font-size: 10px;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+    }
+    body:not(.auth-locked) tbody td {
+      border-bottom: 1px solid #202b38;
+    }
+    body:not(.auth-locked) tbody tr:hover {
+      background: rgba(49, 185, 144, .045);
+    }
+    body:not(.auth-locked) .split,
+    body:not(.auth-locked) .dashboard-layout {
+      gap: 14px;
+    }
+    body:not(.auth-locked) .tab-view {
+      gap: 16px;
+    }
+    body:not(.auth-locked) .stock-mode,
+    body:not(.auth-locked) .preset-chip {
+      border-color: var(--pro-border);
+      border-radius: 7px;
+      background: #111923;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) .stock-mode.active {
+      border-color: rgba(49, 185, 144, .5);
+      background: rgba(49, 185, 144, .08);
+      box-shadow: inset 3px 0 0 var(--pro-accent);
+    }
+    @media (max-width: 1100px) {
+      body:not(.auth-locked) .entry-grid {
+        grid-template-columns: repeat(2, minmax(160px, 1fr));
+      }
+      body:not(.auth-locked) #dashboardQuickActions .quick-action-grid {
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
+      }
+    }
+    @media (max-width: 760px) {
+      body:not(.auth-locked) .content { padding: 14px 10px 94px; }
+      body:not(.auth-locked) .entry-grid { grid-template-columns: 1fr; }
+      body:not(.auth-locked) #dashboardQuickActions .quick-action-grid { grid-template-columns: 1fr 1fr; }
+      body:not(.auth-locked) :is(.panel, .command-panel) { padding: 14px; }
+      body:not(.auth-locked) .status { white-space: normal; text-align: right; }
+    }
   </style>
 </head>
 <body class="auth-locked dashboard-dark performance-mode">
