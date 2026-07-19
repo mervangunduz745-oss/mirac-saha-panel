@@ -4082,6 +4082,21 @@
     body:not(.auth-locked) table { font-size: 12px; }
     body:not(.auth-locked) thead th { background: #f0f3f3; }
     body:not(.auth-locked) .legacy-dashboard-blocks { display: none !important; }
+    body:not(.auth-locked).dashboard-dark,
+    body:not(.auth-locked).dashboard-dark .app,
+    body:not(.auth-locked).dashboard-dark main {
+      color: #142027;
+      background: #f3f5f4;
+      background-image: none;
+    }
+    body:not(.auth-locked).dashboard-dark .title-row,
+    body:not(.auth-locked).dashboard-dark .title-row h1 { color: #142027; }
+    body:not(.auth-locked).dashboard-dark .title-row .subtitle { color: #66737b; }
+    body:not(.auth-locked).dashboard-dark #saveBadge {
+      color: #1e625c;
+      border-color: #c6d8d4;
+      background: #e8f0ee;
+    }
     body:not(.auth-locked) .live-ops-layout {
       display: grid;
       grid-template-columns: minmax(0, 1.45fr) minmax(330px, .55fr);
@@ -4154,7 +4169,20 @@
     body:not(.auth-locked) .live-pill.red { color: #a24d45; background: #f6e9e7; }
     body:not(.auth-locked) .live-pill.amber { color: #9a6a28; background: #f5eedf; }
     body:not(.auth-locked) .live-pill.green { color: #1e625c; background: #e8f0ee; }
-    body:not(.auth-locked) .live-side-stack { display: grid; gap: 18px; }
+    body:not(.auth-locked) aside.live-side-stack {
+      position: static;
+      z-index: auto;
+      display: grid;
+      grid-template-columns: minmax(0,1fr);
+      align-items: stretch;
+      gap: 18px;
+      width: auto;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
     body:not(.auth-locked) .live-progress { padding: 21px; }
     body:not(.auth-locked) .live-progress h3 { margin: 0 0 4px; font-size: 14px; }
     body:not(.auth-locked) .live-progress p { margin: 0 0 18px; color: #66737b; font-size: 11px; }
