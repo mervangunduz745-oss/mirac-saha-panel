@@ -4217,14 +4217,17 @@
     body:not(.auth-locked) .panel {
       background: #fff !important;
     }
-    /* Karargâh vitrini: canlı arka sahne + parlak antrasit işlem tezgâhı. */
+    /* Karargâh vitrini: tam parlak siyah arka sahne + antrasit işlem tezgâhı. */
     body:not(.auth-locked).dashboard-dark,
     body:not(.auth-locked).dashboard-dark .app,
     body:not(.auth-locked).dashboard-dark main {
       color: #f5f7f8;
-      background-color: #123c48 !important;
+      background-color: #000 !important;
       background-image:
-        linear-gradient(125deg, #0c3943 0%, #17645f 42%, #24415f 72%, #332f52 100%) !important;
+        radial-gradient(ellipse at 50% -18%, rgba(255,255,255,.20) 0%, rgba(255,255,255,.07) 22%, transparent 48%),
+        radial-gradient(ellipse at 8% 58%, rgba(255,255,255,.07) 0%, transparent 35%),
+        radial-gradient(ellipse at 92% 78%, rgba(255,255,255,.055) 0%, transparent 34%),
+        linear-gradient(132deg, #111 0%, #000 40%, #090909 68%, #000 100%) !important;
       background-attachment: fixed !important;
     }
     body:not(.auth-locked).dashboard-dark .content,

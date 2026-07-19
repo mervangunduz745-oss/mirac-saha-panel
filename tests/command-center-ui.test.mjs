@@ -70,5 +70,14 @@ for (const [module, color] of [
   assert.ok(html.includes(`data-module="${module}"`), `Navigation must expose ${module} module semantics`);
   assert.ok(html.includes(color), `${module} must use ${color}`);
 }
+assert.ok(
+  html.includes("Karargâh vitrini: tam parlak siyah arka sahne"),
+  "Command center must use the glossy-black backdrop"
+);
+assert.ok(html.includes("background-color: #000 !important"), "Command center backdrop must be true black");
+assert.ok(
+  html.includes("radial-gradient(ellipse at 50% -18%, rgba(255,255,255,.20)"),
+  "Command center backdrop must retain a visible gloss highlight"
+);
 
 console.log("Command center task and tools navigation checks passed");
