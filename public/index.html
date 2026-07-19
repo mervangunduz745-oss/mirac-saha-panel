@@ -3862,6 +3862,7 @@
       background: #f3f5f5;
     }
     body:not(.auth-locked).dashboard-dark #automationGrid .automation-card span { color: var(--pro-muted); }
+    body:not(.auth-locked) .mobile-command-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     @media (max-width: 1100px) {
       body:not(.auth-locked) .entry-grid {
         grid-template-columns: repeat(2, minmax(160px, 1fr));
@@ -5082,10 +5083,8 @@
 
   <nav class="mobile-command-bar" id="mobileCommandBar" aria-label="Mobil saha komutları">
     <button type="button" data-icon="K" data-mobile-view="dashboard">Karargâh</button>
-    <button type="button" data-icon="+" data-mobile-view="entry">Sipariş</button>
-    <button type="button" data-icon="U" data-mobile-view="production">Üretim</button>
-    <button type="button" data-icon="$" data-mobile-view="sales">Satış</button>
-    <button class="pulse" type="button" data-icon="!" data-open-command-sheet>Pusula</button>
+    <button type="button" data-icon="S" data-mobile-view="entry">Satış</button>
+    <button class="pulse" type="button" data-icon="K" data-open-command-sheet>Komut</button>
   </nav>
   <div class="command-sheet-backdrop hidden" id="commandSheetBackdrop"></div>
   <section class="command-sheet hidden" id="commandSheet" aria-modal="true" aria-label="Karargâh Pusulası">
