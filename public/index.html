@@ -4131,6 +4131,56 @@
     body:not(.auth-locked).dashboard-dark .title-row .subtitle {
       color: #66737b !important;
     }
+    /* Performance clarity pass: no glow, blur or decorative rendering cost in the live workspace. */
+    body:not(.auth-locked) {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    body:not(.auth-locked) :is(h1,h2,h3,h4,p,span,strong,small,label,button,input,select,textarea,th,td),
+    body:not(.auth-locked) :is(.mark,.nav button,.status,.live-number,.live-pill) {
+      text-shadow: none !important;
+      filter: none !important;
+    }
+    body:not(.auth-locked) :is(
+      aside,
+      header,
+      .panel,
+      .surface-live,
+      .live-priority,
+      .live-progress,
+      .tools-menu,
+      .btn,
+      input,
+      select,
+      textarea,
+      .status,
+      .live-pill,
+      .live-number,
+      .mobile-command-bar,
+      .command-palette,
+      .live-tasks-dialog
+    ) {
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    body:not(.auth-locked) *,
+    body:not(.auth-locked) *::before,
+    body:not(.auth-locked) *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+    body:not(.auth-locked) header,
+    body:not(.auth-locked).dashboard-dark header {
+      background: #f5f6f4 !important;
+    }
+    body:not(.auth-locked) #nav .tools-menu,
+    body:not(.auth-locked) .surface-live,
+    body:not(.auth-locked) .panel {
+      background: #fff !important;
+    }
     body:not(.auth-locked).dashboard-dark #saveBadge {
       color: #1e625c;
       border-color: #c6d8d4;
