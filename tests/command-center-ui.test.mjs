@@ -43,5 +43,13 @@ assert.ok(
   html.includes("renderLiveOperations();"),
   "Task completion must refresh live progress"
 );
+assert.ok(html.includes("<h2>Alarm Merkezi</h2>"), "Command center must expose a single Alarm Merkezi");
+for (const priority of ['key: "critical"', 'key: "warning"', 'key: "info"']) {
+  assert.ok(html.includes(priority), `Alarm center must include ${priority}`);
+}
+assert.ok(
+  html.includes('alertRows.filter(row => row.severity === group.key)'),
+  "Alarm center must group records by priority"
+);
 
 console.log("Command center task and tools navigation checks passed");

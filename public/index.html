@@ -4237,6 +4237,8 @@
     body:not(.auth-locked).dashboard-dark .live-progress-foot,
     body:not(.auth-locked).dashboard-dark .live-surface-head span,
     body:not(.auth-locked).dashboard-dark .live-alert-row span { color: #aebbc1; }
+    body:not(.auth-locked).dashboard-dark .live-alert-group + .live-alert-group { border-color: #3b454c; }
+    body:not(.auth-locked).dashboard-dark .live-alert-group-head span { color: #84939a; }
     body:not(.auth-locked).dashboard-dark .live-number {
       color: #102329;
       background: #65dfbd;
@@ -4556,6 +4558,24 @@
     body:not(.auth-locked) .live-alert-row:last-child { border: 0; }
     body:not(.auth-locked) .live-alert-row b { display: block; margin-bottom: 4px; font-size: 12px; }
     body:not(.auth-locked) .live-alert-row span { color: #66737b; font-size: 11px; }
+    body:not(.auth-locked) .live-alert-group { padding: 12px 0 4px; }
+    body:not(.auth-locked) .live-alert-group + .live-alert-group { border-top: 1px solid #edf0f1; }
+    body:not(.auth-locked) .live-alert-group-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 3px;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+    body:not(.auth-locked) .live-alert-group-head b { padding: 5px 8px; border-radius: 999px; }
+    body:not(.auth-locked) .live-alert-group.critical .live-alert-group-head b { color: #9e3939; background: #f8dddd; }
+    body:not(.auth-locked) .live-alert-group.warning .live-alert-group-head b { color: #8a5b16; background: #f7ead0; }
+    body:not(.auth-locked) .live-alert-group.info .live-alert-group-head b { color: #1e625c; background: #dcece8; }
+    body:not(.auth-locked) .live-alert-group-head span { color: #859096; }
     .live-tasks-dialog {
       width: min(680px, calc(100vw - 28px));
       padding: 0;
@@ -4809,7 +4829,7 @@
             <aside class="live-side-stack">
               <section class="surface-live live-progress" id="liveProgress"></section>
               <section class="surface-live">
-                <div class="live-surface-head"><h2>Alarmlar</h2><span id="liveAlarmCount">0 kayıt</span></div>
+                <div class="live-surface-head"><h2>Alarm Merkezi</h2><span id="liveAlarmCount">0 alarm</span></div>
                 <div class="live-alerts" id="liveAlarms"></div>
               </section>
             </aside>
@@ -9074,12 +9094,36 @@
       const overdueJobs = m.jobs.open.filter(row => row.dueIn != null && row.dueIn < 0);
       const overdueDebt = m.debt.open.filter(row => row.dueIn != null && row.dueIn < 0);
       const alertRows = [
-        { title: "Teslim gecikmesi", text: overdueJobs.length ? `${overdueJobs.length} sipariş hedef tarihi geçti` : "Geciken teslim görünmüyor" },
-        { title: "Ödeme planı", text: overdueDebt.length ? `${overdueDebt.length} geciken ödeme kontrol edilmeli` : "Geciken ödeme görünmüyor" },
-        { title: m.lowCount ? "Kritik stok" : "Stok temiz", text: m.lowCount ? `${m.lowCount} kalem minimum seviyede` : "Kritik seviyede ürün yok" }
+        {
+          severity: overdueJobs.length ? "critical" : "info",
+          title: overdueJobs.length ? "Teslim gecikmesi" : "Teslimler zamanında",
+          text: overdueJobs.length ? `${overdueJobs.length} sipariş hedef tarihi geçti` : "Geciken teslim görünmüyor"
+        },
+        {
+          severity: overdueDebt.length ? "warning" : "info",
+          title: overdueDebt.length ? "Ödeme planı" : "Ödeme takvimi temiz",
+          text: overdueDebt.length ? `${overdueDebt.length} geciken ödeme kontrol edilmeli` : "Geciken ödeme görünmüyor"
+        },
+        {
+          severity: m.lowCount ? "warning" : "info",
+          title: m.lowCount ? "Kritik stok" : "Stok temiz",
+          text: m.lowCount ? `${m.lowCount} kalem minimum seviyede` : "Kritik seviyede ürün yok"
+        }
       ];
-      alarmCount.textContent = `${alertRows.length} kayıt`;
-      alarms.innerHTML = alertRows.map(row => `<div class="live-alert-row"><b>${safe(row.title)}</b><span>${safe(row.text)}</span></div>`).join("");
+      const groups = [
+        { key: "critical", label: "Kritik" },
+        { key: "warning", label: "Uyarı" },
+        { key: "info", label: "Bilgi" }
+      ];
+      alarmCount.textContent = `${alertRows.length} alarm`;
+      alarms.innerHTML = groups.map(group => {
+        const rows = alertRows.filter(row => row.severity === group.key);
+        if (!rows.length) return "";
+        return `<section class="live-alert-group ${group.key}">
+          <div class="live-alert-group-head"><b>${group.label}</b><span>${rows.length}</span></div>
+          ${rows.map(row => `<div class="live-alert-row"><b>${safe(row.title)}</b><span>${safe(row.text)}</span></div>`).join("")}
+        </section>`;
+      }).join("");
     }
 
     function renderLiveTasksDialog() {
