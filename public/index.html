@@ -3646,6 +3646,132 @@
       gap: 9px;
       margin-top: 18px;
     }
+
+    /* Miraç Saha — warm light operations theme, derived from the approved Figma direction */
+    body:not(.auth-locked) {
+      --pro-bg: #f4f1e9;
+      --pro-surface: #fffdf8;
+      --pro-surface-2: #edf1f2;
+      --pro-border: #d2d7d7;
+      --pro-text: #1f2930;
+      --pro-muted: #626e75;
+      --pro-accent: #2f6b61;
+      color: var(--pro-text);
+      background: var(--pro-bg);
+    }
+    body:not(.auth-locked) .app { background: var(--pro-bg); }
+    body:not(.auth-locked) aside {
+      color: var(--pro-text);
+      background: #e7e1d5;
+      border-right-color: #d0cabf;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) aside .brand strong,
+    body:not(.auth-locked) .nav button { color: var(--pro-text); }
+    body:not(.auth-locked) aside .brand span,
+    body:not(.auth-locked) .nav-label,
+    body:not(.auth-locked) .side-note { color: var(--pro-muted); }
+    body:not(.auth-locked) .nav button.active {
+      color: #173e37;
+      border-color: #cfd7d5;
+      background: #f1f4f3;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) .nav button.active::before {
+      color: #2f6b61;
+      background: #dcebe6;
+    }
+    body:not(.auth-locked) .side-note {
+      border-color: #d2ccc1;
+      background: rgba(255,253,248,.72);
+      box-shadow: 0 8px 24px rgba(45,54,57,.05);
+    }
+    body:not(.auth-locked) main,
+    body:not(.auth-locked) .content,
+    body:not(.auth-locked).dashboard-dark .content { color: var(--pro-text); background: var(--pro-bg); }
+    body:not(.auth-locked) header {
+      border-bottom-color: #d7d8d3;
+      background: rgba(244,241,233,.94);
+      box-shadow: none;
+    }
+    body:not(.auth-locked) header .search,
+    body:not(.auth-locked).dashboard-dark header .search {
+      border-color: #d4d8d7;
+      background: #fffdf8;
+      box-shadow: 0 4px 16px rgba(45,54,57,.04);
+    }
+    body:not(.auth-locked) header .search input,
+    body:not(.auth-locked).dashboard-dark header .search input { color: var(--pro-text); background: transparent; }
+    body:not(.auth-locked) header .search input::placeholder,
+    body:not(.auth-locked).dashboard-dark header .search input::placeholder { color: #8a9398; }
+    body:not(.auth-locked) .title-row,
+    body:not(.auth-locked) .title-row h1,
+    body:not(.auth-locked).dashboard-dark .title-row,
+    body:not(.auth-locked).dashboard-dark .title-row h1 { color: var(--pro-text); }
+    body:not(.auth-locked) .title-row .subtitle,
+    body:not(.auth-locked).dashboard-dark .title-row .subtitle { color: var(--pro-muted); }
+    body:not(.auth-locked) .panel,
+    body:not(.auth-locked) .quick-action,
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action,
+    body:not(.auth-locked).dashboard-dark .command-center-section {
+      color: var(--pro-text);
+      border-color: var(--pro-border);
+      background: var(--pro-surface);
+      box-shadow: 0 8px 28px rgba(45,54,57,.06);
+    }
+    body:not(.auth-locked) .panel h2,
+    body:not(.auth-locked) .panel h3,
+    body:not(.auth-locked).dashboard-dark .command-center-head h2,
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action { color: var(--pro-text); }
+    body:not(.auth-locked) .hint,
+    body:not(.auth-locked) .empty,
+    body:not(.auth-locked) .panel p { color: var(--pro-muted); }
+    body:not(.auth-locked) input,
+    body:not(.auth-locked) select,
+    body:not(.auth-locked) textarea {
+      color: var(--pro-text);
+      border-color: #cdd3d4;
+      background: #f4f6f6;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) input:focus,
+    body:not(.auth-locked) select:focus,
+    body:not(.auth-locked) textarea:focus {
+      border-color: #71968e;
+      box-shadow: 0 0 0 3px rgba(47,107,97,.11);
+    }
+    body:not(.auth-locked) .btn { color: #27343a; border-color: #cbd1d2; background: #f1f3f3; box-shadow: none; }
+    body:not(.auth-locked) .btn.primary { color: #fff; border-color: #2f6b61; background: #2f6b61; }
+    body:not(.auth-locked) .status.ok { color: #285d54; border-color: #b9d4cb; background: #deece7; }
+    body:not(.auth-locked) .status.warn { color: #855e28; border-color: #dbc89f; background: #f4ead2; }
+    body:not(.auth-locked) .status.bad { color: #8f4349; border-color: #dfb9bc; background: #f3dfe0; }
+    body:not(.auth-locked) .table-wrap { border-color: var(--pro-border); background: #fffdf8; }
+    body:not(.auth-locked) table { color: var(--pro-text); }
+    body:not(.auth-locked) thead th { color: #65727a; border-bottom-color: #d2d8da; background: #edf1f2; }
+    body:not(.auth-locked) tbody td { border-bottom-color: #e1e4e3; }
+    body:not(.auth-locked) tbody tr:hover { background: rgba(47,107,97,.045); }
+    body:not(.auth-locked) .standard-row,
+    body:not(.auth-locked) .daily-flow-item,
+    body:not(.auth-locked) .automation-card,
+    body:not(.auth-locked) .dashboard-zone-item {
+      color: var(--pro-text);
+      border-color: #d6dbdc;
+      background: #f3f5f5;
+      box-shadow: none;
+    }
+    body:not(.auth-locked) .standard-row span:not(.status),
+    body:not(.auth-locked) .daily-flow-item span { color: var(--pro-muted); }
+    body:not(.auth-locked) .kbd-button,
+    body:not(.auth-locked) .command-palette {
+      color: var(--pro-text);
+      border-color: #ccd2d3;
+      background: #fffdf8;
+    }
+    body:not(.auth-locked) #saveBadge {
+      color: #2f6b61;
+      border-color: #b8d0c9;
+      background: #deece7;
+    }
     @media (max-width: 1100px) {
       body:not(.auth-locked) .entry-grid {
         grid-template-columns: repeat(2, minmax(160px, 1fr));
