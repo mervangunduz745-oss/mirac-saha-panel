@@ -3572,6 +3572,37 @@
       background: rgba(49, 185, 144, .08);
       box-shadow: inset 3px 0 0 var(--pro-accent);
     }
+    .typed-confirm-dialog {
+      width: min(520px, calc(100vw - 28px));
+      padding: 0;
+      border: 1px solid #3a485a;
+      border-radius: 12px;
+      color: #edf2f7;
+      background: #111923;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .55);
+    }
+    .typed-confirm-dialog::backdrop {
+      background: rgba(3, 7, 12, .78);
+      backdrop-filter: blur(4px);
+    }
+    .typed-confirm-dialog form { padding: 22px; }
+    .typed-confirm-dialog h2 { margin: 0 0 8px; font-size: 20px; }
+    .typed-confirm-dialog p { margin: 0 0 14px; color: #a8b5c4; line-height: 1.55; }
+    .typed-confirm-dialog .preserved-data {
+      margin: 14px 0;
+      padding: 12px;
+      border: 1px solid rgba(49, 185, 144, .35);
+      border-radius: 8px;
+      color: #b9e9d8;
+      background: rgba(49, 185, 144, .08);
+    }
+    .typed-confirm-dialog input { width: 100%; margin-top: 7px; }
+    .typed-confirm-dialog .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+      margin-top: 18px;
+    }
     @media (max-width: 1100px) {
       body:not(.auth-locked) .entry-grid {
         grid-template-columns: repeat(2, minmax(160px, 1fr));
@@ -9291,6 +9322,43 @@
       reader.readAsText(file, "utf-8");
     }
 
+    function requestTypedDeletionConfirmation(total, counts) {
+      return new Promise(resolve => {
+        const dialog = document.createElement("dialog");
+        dialog.className = "typed-confirm-dialog";
+        dialog.innerHTML = `
+          <form method="dialog">
+            <h2>Hareket kayıtlarını temizle</h2>
+            <p><strong>${total}</strong> kayıt önce Firebase yedeği alındıktan sonra cihazdan ve buluttan silinecek.</p>
+            <p>Finans ${counts.transactions}, cari ${counts.cariCards}, borç ${counts.debtPlans}, sabit gider ${counts.fixedExpenses}, üretim ${counts.productionJobs}, geçmiş ${counts.logs}.</p>
+            <div class="preserved-data"><strong>Korunacak:</strong> stok kartları, ürün isimleri, hesap tanımları ve reçeteler.</div>
+            <label for="typedDeleteConfirmation">Onaylamak için <strong>KAYITLARI SİL</strong> yazın</label>
+            <input id="typedDeleteConfirmation" autocomplete="off" spellcheck="false">
+            <div class="dialog-actions">
+              <button class="btn" value="cancel" type="submit">Vazgeç</button>
+              <button class="btn danger" id="confirmTypedDeletion" value="confirm" type="submit" disabled>Yedekle ve Sil</button>
+            </div>
+          </form>`;
+        document.body.appendChild(dialog);
+        const input = dialog.querySelector("#typedDeleteConfirmation");
+        const confirmButton = dialog.querySelector("#confirmTypedDeletion");
+        input.addEventListener("input", () => {
+          confirmButton.disabled = input.value.trim() !== "KAYITLARI SİL";
+        });
+        dialog.addEventListener("close", () => {
+          const approved = dialog.returnValue === "confirm" && input.value.trim() === "KAYITLARI SİL";
+          dialog.remove();
+          resolve(approved);
+        }, { once: true });
+        dialog.addEventListener("cancel", event => {
+          event.preventDefault();
+          dialog.close("cancel");
+        });
+        dialog.showModal();
+        input.focus();
+      });
+    }
+
     async function resetFinanceCloudData() {
       if (blockWorkerAction("Finans ve üretim sıfırlama üretim personeli hesabında kapalı.")) return;
       if (!cloudUser || !cloud?.configured || !cloudLoadReady) return alert("Silme işlemi için Firebase oturumu ve tamamlanmış bulut yüklemesi gerekli.");
@@ -9304,8 +9372,8 @@
         logs: (state.logs || []).length
       };
       const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
-      const confirmation = prompt(`${total} finans ve üretim kaydı kalıcı olarak silinecek.\nÜrün, stok, hesap ve reçeteler korunacak.\n\nOnaylamak için KAYITLARI SİL yazın:`);
-      if (confirmation !== "KAYITLARI SİL") return alert("İşlem iptal edildi; hiçbir kayıt silinmedi.");
+      const confirmed = await requestTypedDeletionConfirmation(total, counts);
+      if (!confirmed) return;
       const button = byId("resetFinanceCloud");
       button.disabled = true;
       setCloudStatus("Silme öncesi yedek alınıyor", "Firebase geri dönüş noktası hazırlanıyor.", "warn");
