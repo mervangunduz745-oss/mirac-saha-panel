@@ -79,5 +79,13 @@ assert.ok(
   html.includes("radial-gradient(ellipse at 50% -18%, rgba(255,255,255,.20)"),
   "Command center backdrop must retain a visible gloss highlight"
 );
+assert.ok(
+  html.includes("radial-gradient(ellipse at 50% -22%, rgba(255,255,255,.28)"),
+  "Anthracite work surface must retain a strong gloss highlight"
+);
+assert.ok(
+  html.includes("inset 0 2px 0 rgba(255,255,255,.30)"),
+  "Anthracite work surface must retain a polished upper edge"
+);
 
 console.log("Command center task and tools navigation checks passed");
