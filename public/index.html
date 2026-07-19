@@ -3937,6 +3937,31 @@
       border-color: #bdd1cf;
       background: #edf5f4;
     }
+    body:not(.auth-locked) .tools-menu-wrap { position: relative; }
+    body:not(.auth-locked) #nav .tools-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      z-index: 120;
+      display: grid;
+      width: 210px;
+      gap: 3px;
+      padding: 8px;
+      border: 1px solid #d8dcde;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 18px 48px rgba(20,32,39,.14);
+    }
+    body:not(.auth-locked) #nav .tools-menu.hidden { display: none !important; }
+    body:not(.auth-locked) #nav .tools-menu button {
+      display: block;
+      width: 100%;
+      min-height: 36px;
+      padding: 9px 11px;
+      color: #3e4c53;
+      text-align: left;
+    }
+    body:not(.auth-locked) #nav .tools-menu button:hover { color: #174b49; background: #edf5f4; }
     body:not(.auth-locked) main {
       display: block;
       min-width: 0;
@@ -4203,6 +4228,17 @@
     body:not(.auth-locked) .live-meter { height: 7px; overflow: hidden; border-radius: 99px; background: #edf0ef; }
     body:not(.auth-locked) .live-meter i { display: block; height: 100%; background: #1e625c; }
     body:not(.auth-locked) .live-progress-foot { display: flex; justify-content: space-between; margin-top: 9px; color: #66737b; font-size: 10px; }
+    body:not(.auth-locked) .live-progress-action {
+      width: 100%;
+      margin-top: 16px;
+      border: 1px solid #c8d5d2;
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #1e625c;
+      background: #e8f0ee;
+      font-size: 11px;
+      font-weight: 800;
+    }
     body:not(.auth-locked) .live-surface-head {
       display: flex;
       align-items: center;
@@ -4218,6 +4254,51 @@
     body:not(.auth-locked) .live-alert-row:last-child { border: 0; }
     body:not(.auth-locked) .live-alert-row b { display: block; margin-bottom: 4px; font-size: 12px; }
     body:not(.auth-locked) .live-alert-row span { color: #66737b; font-size: 11px; }
+    .live-tasks-dialog {
+      width: min(680px, calc(100vw - 28px));
+      padding: 0;
+      border: 1px solid #d8dcde;
+      border-radius: 14px;
+      color: #142027;
+      background: #fff;
+      box-shadow: 0 26px 90px rgba(20,32,39,.22);
+    }
+    .live-tasks-dialog::backdrop { background: rgba(20,32,39,.38); backdrop-filter: blur(2px); }
+    .live-tasks-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px;
+      border-bottom: 1px solid #e1e5e6;
+    }
+    .live-tasks-head h2 { margin: 0; font-size: 20px; }
+    .live-tasks-list { display: grid; gap: 0; padding: 4px 22px; }
+    .live-task-row {
+      display: grid;
+      grid-template-columns: 24px minmax(0,1fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 66px;
+      border-bottom: 1px solid #edf0f1;
+      cursor: pointer;
+    }
+    .live-task-row:last-child { border-bottom: 0; }
+    .live-task-row input { width: 18px; height: 18px; accent-color: #1e625c; }
+    .live-task-row strong { display: block; font-size: 13px; }
+    .live-task-row span { display: block; margin-top: 3px; color: #66737b; font-size: 10px; }
+    .live-task-row.done strong { color: #7d888d; text-decoration: line-through; }
+    .live-tasks-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 22px;
+      border-top: 1px solid #e1e5e6;
+      color: #66737b;
+      background: #f7f8f8;
+      font-size: 11px;
+    }
     @media (max-width: 900px) {
       body:not(.auth-locked) .live-ops-layout { grid-template-columns: 1fr; }
     }
@@ -4352,6 +4433,19 @@
           <div class="nav-label">Ana Menü</div>
           <button class="active" data-icon="K" data-view="dashboard">Karargâh</button>
           <button data-icon="S" data-view="entry">Satış</button>
+          <div class="tools-menu-wrap">
+            <button id="toolsMenuButton" type="button" aria-expanded="false">Araçlar</button>
+            <div class="tools-menu hidden" id="toolsMenu">
+              <button type="button" data-tools-view="production">Üretim</button>
+              <button type="button" data-tools-view="stock">Stok</button>
+              <button type="button" data-tools-view="cari">Cari</button>
+              <button type="button" data-tools-view="fixed">Kasa &amp; POS</button>
+              <button type="button" data-tools-view="debt">Borç Planı</button>
+              <button type="button" data-tools-view="moves">Hareketler</button>
+              <button type="button" data-tools-view="settings">Rapor ve Yedek</button>
+              <button type="button" data-tools-view="control">Sistem Sağlığı</button>
+            </div>
+          </div>
           <button data-icon="$" data-view="sales">Satış</button>
           <button data-icon="A" data-view="purchase">Alış</button>
           <button data-icon="U" data-view="production">Üretim</button>
@@ -5488,6 +5582,18 @@
       <button class="btn" id="closeCommandPalette" type="button">Esc</button>
     </div>
     <div class="command-palette-list" id="commandPaletteList"></div>
+  </dialog>
+
+  <dialog class="live-tasks-dialog" id="liveTasksDialog">
+    <div class="live-tasks-head">
+      <div><div class="live-eyebrow">Günlük görev ekranı</div><h2>Bugünün görevleri</h2></div>
+      <button class="btn" id="closeLiveTasks" type="button">Kapat</button>
+    </div>
+    <div class="live-tasks-list" id="liveTasksList"></div>
+    <div class="live-tasks-foot">
+      <button class="btn" id="resetLiveTasks" type="button">Bugünü sıfırla</button>
+      <span id="liveTasksSummary">0 / 0 tamamlandı</span>
+    </div>
   </dialog>
 
   <dialog class="payment-dialog" id="debtPaymentDialog">
@@ -8618,7 +8724,8 @@
       const percent = dailyItems.length ? Math.round(completed / dailyItems.length * 100) : 0;
       progress.innerHTML = `<h3>Günün ilerlemesi</h3><p>${completed} / ${dailyItems.length} görev tamamlandı</p>
         <div class="live-meter"><i style="width:${percent}%"></i></div>
-        <div class="live-progress-foot"><span>Başlangıç</span><span>%${percent}</span></div>`;
+        <div class="live-progress-foot"><span>Başlangıç</span><span>%${percent}</span></div>
+        <button class="live-progress-action" id="openLiveTasks" type="button">Görevleri aç ve tamamla</button>`;
 
       const m = metrics();
       const overdueJobs = m.jobs.open.filter(row => row.dueIn != null && row.dueIn < 0);
@@ -8630,6 +8737,28 @@
       ];
       alarmCount.textContent = `${alertRows.length} kayıt`;
       alarms.innerHTML = alertRows.map(row => `<div class="live-alert-row"><b>${safe(row.title)}</b><span>${safe(row.text)}</span></div>`).join("");
+    }
+
+    function renderLiveTasksDialog() {
+      const target = byId("liveTasksList");
+      const summary = byId("liveTasksSummary");
+      if (!target || !summary) return;
+      const items = dailyFlowItems();
+      const done = dailyFlowState();
+      const completed = items.filter(item => done[item.id]).length;
+      summary.textContent = `${completed} / ${items.length} tamamlandı`;
+      target.innerHTML = items.map(item => `
+        <label class="live-task-row ${done[item.id] ? "done" : ""}">
+          <input type="checkbox" data-live-task="${item.id}" ${done[item.id] ? "checked" : ""}>
+          <div><strong>${safe(item.title)}</strong><span>${safe(item.text)}</span></div>
+          <span class="live-pill ${done[item.id] ? "green" : "amber"}">${done[item.id] ? "Tamam" : safe(item.tag)}</span>
+        </label>
+      `).join("");
+    }
+
+    function openLiveTasksDialog() {
+      renderLiveTasksDialog();
+      byId("liveTasksDialog").showModal();
     }
 
     function renderAutomations() {
@@ -10227,6 +10356,25 @@
       const btn = event.target.closest("button[data-view]");
       if (btn) showView(btn.dataset.view);
     });
+    byId("toolsMenuButton").addEventListener("click", event => {
+      event.stopPropagation();
+      const menu = byId("toolsMenu");
+      const opening = menu.classList.contains("hidden");
+      menu.classList.toggle("hidden", !opening);
+      byId("toolsMenuButton").setAttribute("aria-expanded", String(opening));
+    });
+    byId("toolsMenu").addEventListener("click", event => {
+      const button = event.target.closest("[data-tools-view]");
+      if (!button) return;
+      byId("toolsMenu").classList.add("hidden");
+      byId("toolsMenuButton").setAttribute("aria-expanded", "false");
+      showView(button.dataset.toolsView);
+    });
+    document.addEventListener("click", event => {
+      if (event.target.closest(".tools-menu-wrap")) return;
+      byId("toolsMenu")?.classList.add("hidden");
+      byId("toolsMenuButton")?.setAttribute("aria-expanded", "false");
+    });
     byId("openCommandPalette").addEventListener("click", openCommandPalette);
     byId("closeCommandPalette").addEventListener("click", () => byId("commandPalette").close());
     byId("commandPaletteSearch").addEventListener("input", event => renderCommandPalette(event.target.value));
@@ -10254,6 +10402,26 @@
       if (event.target.closest("[data-copy-compass]")) return copyCompassPlan();
       const jumpButton = event.target.closest("[data-jump-view]");
       if (jumpButton) showView(jumpButton.dataset.jumpView);
+    });
+    byId("liveProgress").addEventListener("click", event => {
+      if (event.target.closest("#openLiveTasks")) openLiveTasksDialog();
+    });
+    byId("closeLiveTasks").addEventListener("click", () => byId("liveTasksDialog").close());
+    byId("liveTasksList").addEventListener("change", event => {
+      const input = event.target.closest("input[data-live-task]");
+      if (!input) return;
+      const done = dailyFlowState();
+      done[input.dataset.liveTask] = input.checked;
+      localStorage.setItem(DAILY_FLOW_KEY, JSON.stringify(done));
+      renderLiveTasksDialog();
+      renderLiveOperations();
+      renderDailyFlow();
+    });
+    byId("resetLiveTasks").addEventListener("click", () => {
+      localStorage.removeItem(DAILY_FLOW_KEY);
+      renderLiveTasksDialog();
+      renderLiveOperations();
+      renderDailyFlow();
     });
     byId("guideList").addEventListener("click", event => {
       const collectionButton = event.target.closest("[data-open-collection]");
