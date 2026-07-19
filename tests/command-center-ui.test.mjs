@@ -6,6 +6,7 @@ const html = fs.readFileSync(new URL("../public/index.html", import.meta.url), "
 for (const id of [
   "toolsMenuButton",
   "toolsMenu",
+  "liveStatusStrip",
   "liveProgress",
   "liveTasksDialog",
   "liveTasksList",
@@ -51,5 +52,11 @@ assert.ok(
   html.includes('alertRows.filter(row => row.severity === group.key)'),
   "Alarm center must group records by priority"
 );
+for (const label of ["Açık iş emri", "Günün tahsilat hedefi", "Kritik alarmlar"]) {
+  assert.ok(html.includes(label), `Fast decision strip must expose ${label}`);
+}
+assert.ok(html.includes('data-open-daily-collection'), "Collection status card must expose a quick action");
+assert.ok(html.includes('data-jump-view="production"'), "Work-order status card must open Production");
+assert.ok(html.includes('data-jump-view="control"'), "Critical status card must open Control");
 
 console.log("Command center task and tools navigation checks passed");

@@ -4270,6 +4270,11 @@
       color: #9df0d6;
       background: #25463f;
     }
+    body:not(.auth-locked).dashboard-dark .live-status-strip { border-color:#3b454c }
+    body:not(.auth-locked).dashboard-dark .live-status-card.green{color:#9df0d6;background:#25463f;border-color:#426b63}
+    body:not(.auth-locked).dashboard-dark .live-status-card.amber{color:#ffd58b;background:#514126;border-color:#75603b}
+    body:not(.auth-locked).dashboard-dark .live-status-card.red{color:#ffb1aa;background:#532f31;border-color:#774548}
+    body:not(.auth-locked).dashboard-dark .live-status-card button{background:rgba(0,0,0,.12)}
     body:not(.auth-locked).dashboard-dark .title-row {
       position: relative;
       padding: 12px 0 24px;
@@ -4458,8 +4463,8 @@
       grid-template-columns: 42px minmax(0,1fr) auto;
       align-items: center;
       gap: 16px;
-      min-height: 96px;
-      padding-bottom: 22px;
+      min-height: 74px;
+      padding-bottom: 14px;
       border-bottom: 1px solid #dfe3e5;
     }
     body:not(.auth-locked) .live-number {
@@ -4484,11 +4489,54 @@
     body:not(.auth-locked) .live-priority-focus h2 {
       margin: 0 0 5px;
       color: #142027;
-      font-size: 24px;
+      font-size: 21px;
       letter-spacing: -.035em;
     }
     body:not(.auth-locked) .live-priority-focus p { margin: 0; color: #66737b; font-size: 12px; }
     body:not(.auth-locked) .live-work-list { margin-top: 10px; }
+    body:not(.auth-locked) .live-status-strip {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 8px;
+      padding: 12px 0;
+      border-bottom: 1px solid #edf0f1;
+    }
+    body:not(.auth-locked) .live-status-card {
+      display: grid;
+      grid-template-columns: 32px minmax(0,1fr) auto;
+      align-items: center;
+      gap: 9px;
+      min-height: 54px;
+      padding: 9px 10px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+    }
+    body:not(.auth-locked) .live-status-card.green { color:#155b4d;background:#e1f2ec;border-color:#b9ded2 }
+    body:not(.auth-locked) .live-status-card.amber { color:#815919;background:#f8edcf;border-color:#ead49b }
+    body:not(.auth-locked) .live-status-card.red { color:#963d42;background:#f7dfe0;border-color:#e9b9bc }
+    body:not(.auth-locked) .live-status-icon {
+      display:grid;
+      place-items:center;
+      width:32px;
+      height:32px;
+      border-radius:8px;
+      background:currentColor;
+      font-size:12px;
+      font-weight:900;
+    }
+    body:not(.auth-locked) .live-status-icon span { color:#fff; }
+    body:not(.auth-locked) .live-status-copy span { display:block;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.055em;opacity:.78 }
+    body:not(.auth-locked) .live-status-copy strong { display:block;margin-top:2px;font-size:15px;color:inherit }
+    body:not(.auth-locked) .live-status-card button {
+      border:1px solid currentColor;
+      border-radius:7px;
+      padding:7px 8px;
+      color:inherit;
+      background:rgba(255,255,255,.52);
+      font-size:9px;
+      font-weight:850;
+      white-space:nowrap;
+    }
     body:not(.auth-locked) .live-work-row {
       display: grid;
       grid-template-columns: 26px minmax(0,1fr) 120px 92px;
@@ -4629,6 +4677,7 @@
       body:not(.auth-locked) .live-priority-focus .btn { grid-column: 1 / -1; }
       body:not(.auth-locked) .live-work-row { grid-template-columns: 24px minmax(0,1fr) auto; }
       body:not(.auth-locked) .live-work-row time { display: none; }
+      body:not(.auth-locked) .live-status-strip { grid-template-columns: 1fr; }
     }
     @media (max-width: 1100px) {
       body:not(.auth-locked) .entry-grid {
@@ -4824,6 +4873,7 @@
           <div class="live-ops-layout">
             <section class="live-priority surface-live">
               <div class="live-priority-focus" id="livePriorityFocus"></div>
+              <div class="live-status-strip" id="liveStatusStrip"></div>
               <div class="live-work-list" id="liveWorkList"></div>
             </section>
             <aside class="live-side-stack">
@@ -9059,9 +9109,17 @@
       const focus = byId("livePriorityFocus");
       const list = byId("liveWorkList");
       const progress = byId("liveProgress");
+      const statusStrip = byId("liveStatusStrip");
       const alarms = byId("liveAlarms");
       const alarmCount = byId("liveAlarmCount");
-      if (!focus || !list || !progress || !alarms || !alarmCount) return;
+      if (!focus || !list || !progress || !statusStrip || !alarms || !alarmCount) return;
+      const m = metrics();
+      const control = validateState();
+      const overdueJobs = m.jobs.open.filter(row => row.dueIn != null && row.dueIn < 0);
+      const overdueDebt = m.debt.open.filter(row => row.dueIn != null && row.dueIn < 0);
+      const sevenDayLoad = m.debt.dueSoonTotal + m.fixed.weeklyTotal;
+      const collectionTarget = Math.min(m.receivable, Math.max(0, sevenDayLoad - m.cashTotal));
+      const criticalCount = Number(control.badCount || 0) + overdueJobs.length;
       const plan = actionCompassPlan();
       const actions = plan.actions || [];
       const first = actions[0] || { title: "Günlük kontrolü başlat", text: "Bugünün görevlerini sırayla tamamla.", action: "Görevleri Gör", view: "dashboard", kind: "good" };
@@ -9070,6 +9128,23 @@
         <div class="live-number">01</div>
         <div><div class="live-eyebrow">Şimdi yapılacak iş</div><h2>${safe(first.title)}</h2><p>${safe(first.text || plan.text || "")}</p></div>
         <button class="btn primary" type="button" ${firstAttr}>${safe(first.action || "Aç")}</button>
+      `;
+      statusStrip.innerHTML = `
+        <article class="live-status-card green">
+          <div class="live-status-icon"><span>Ü</span></div>
+          <div class="live-status-copy"><span>Açık iş emri</span><strong>${m.jobs.open.length}</strong></div>
+          <button type="button" data-jump-view="production">Üretime Git</button>
+        </article>
+        <article class="live-status-card amber">
+          <div class="live-status-icon"><span>₺</span></div>
+          <div class="live-status-copy"><span>Günün tahsilat hedefi</span><strong>${safe(money(collectionTarget))}</strong></div>
+          <button type="button" data-open-daily-collection>Tahsilat Gir</button>
+        </article>
+        <article class="live-status-card red">
+          <div class="live-status-icon"><span>!</span></div>
+          <div class="live-status-copy"><span>Kritik alarmlar</span><strong>${criticalCount}</strong></div>
+          <button type="button" data-jump-view="control">Denetime Git</button>
+        </article>
       `;
       const rows = actions.slice(1, 4);
       list.innerHTML = rows.length ? rows.map((item, index) => `
@@ -9090,9 +9165,6 @@
         <div class="live-progress-foot"><span>Başlangıç</span><span>%${percent}</span></div>
         <button class="live-progress-action" id="openLiveTasks" type="button">Görevleri aç ve tamamla</button>`;
 
-      const m = metrics();
-      const overdueJobs = m.jobs.open.filter(row => row.dueIn != null && row.dueIn < 0);
-      const overdueDebt = m.debt.open.filter(row => row.dueIn != null && row.dueIn < 0);
       const alertRows = [
         {
           severity: overdueJobs.length ? "critical" : "info",
@@ -10844,6 +10916,11 @@
     });
     byId("livePriorityFocus").addEventListener("click", event => {
       if (event.target.closest("[data-copy-compass]")) return copyCompassPlan();
+      const jumpButton = event.target.closest("[data-jump-view]");
+      if (jumpButton) showView(jumpButton.dataset.jumpView);
+    });
+    byId("liveStatusStrip").addEventListener("click", event => {
+      if (event.target.closest("[data-open-daily-collection]")) return openCashEntry("TAHSILAT");
       const jumpButton = event.target.closest("[data-jump-view]");
       if (jumpButton) showView(jumpButton.dataset.jumpView);
     });
