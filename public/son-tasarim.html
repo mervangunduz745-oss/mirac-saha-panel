@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Miraç Saha — Son Tasarım</title>
+  <style>
+    :root {
+      --ink:#142027;
+      --muted:#66737b;
+      --line:#dfe3e5;
+      --paper:#ffffff;
+      --wash:#f3f5f4;
+      --accent:#1e625c;
+      --accent-soft:#e8f0ee;
+      --alert:#a24d45;
+      --warning:#9a6a28;
+      --shadow:0 18px 55px rgba(25,37,42,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--wash)}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    .shell{min-height:100vh;display:grid;grid-template-rows:64px 1fr}
+    .topbar{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:260px 1fr auto;align-items:center;gap:26px;padding:0 34px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.96);backdrop-filter:blur(14px)}
+    .brand{display:flex;align-items:center;gap:11px}
+    .mark{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;color:#fff;background:var(--accent);font-weight:800}
+    .brand strong{display:block;font-size:14px;letter-spacing:-.01em}
+    .brand span{display:block;margin-top:1px;color:var(--muted);font-size:10px}
+    .nav{display:flex;align-items:center;gap:4px}
+    .nav button{border:0;border-radius:7px;padding:9px 14px;color:var(--muted);background:transparent;font-size:12px;font-weight:700}
+    .nav button.active{color:var(--accent);background:var(--accent-soft)}
+    .top-actions{display:flex;align-items:center;gap:8px}
+    .search{width:230px;border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:var(--ink);background:#fafbfa}
+    .shortcut{border:1px solid var(--line);border-radius:7px;padding:8px 10px;color:var(--muted);background:#fff;font-size:11px;font-weight:700}
+    main{width:min(1480px,calc(100% - 52px));margin:0 auto;padding:34px 0 60px}
+    .view{display:none}.view.active{display:block}
+    .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
+    .eyebrow{margin-bottom:7px;color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}
+    h1{margin-bottom:5px;font-size:38px;line-height:1.05;letter-spacing:-.045em}
+    .page-head p{margin:0;color:var(--muted);font-size:13px}
+    .date{padding:10px 12px;border:1px solid var(--line);border-radius:8px;color:var(--muted);background:#fff;font-size:12px}
+    .command-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,.55fr);gap:18px}
+    .surface{border:1px solid var(--line);border-radius:12px;background:var(--paper);box-shadow:0 1px 0 rgba(20,32,39,.02)}
+    .surface-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:20px 22px;border-bottom:1px solid var(--line)}
+    .surface-head h2{margin:0;font-size:17px;letter-spacing:-.02em}
+    .surface-head span{color:var(--muted);font-size:11px}
+    .priority{padding:23px}
+    .priority-focus{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:16px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+    .number{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;color:#fff;background:var(--ink);font-size:12px;font-weight:800}
+    .priority-focus h2{margin:0 0 5px;font-size:24px;letter-spacing:-.035em}
+    .priority-focus p{margin:0;color:var(--muted);font-size:12px}
+    .primary{border:0;border-radius:8px;padding:11px 15px;color:#fff;background:var(--accent);font-size:12px;font-weight:800}
+    .work-list{margin-top:10px}
+    .work-row{display:grid;grid-template-columns:26px minmax(0,1fr) 120px 92px;align-items:center;gap:12px;padding:15px 2px;border-bottom:1px solid #edf0f1}
+    .work-row:last-child{border:0}
+    .rank{color:#9aa3a8;font-size:11px;font-weight:800}
+    .work-row strong{display:block;font-size:13px}
+    .work-row small{display:block;margin-top:3px;color:var(--muted);font-size:11px}
+    .work-row time{color:var(--muted);font-size:11px}
+    .pill{justify-self:end;border-radius:999px;padding:6px 9px;font-size:10px;font-weight:800}
+    .pill.red{color:var(--alert);background:#f6e9e7}.pill.amber{color:var(--warning);background:#f5eedf}.pill.green{color:var(--accent);background:var(--accent-soft)}
+    .side-stack{display:grid;gap:18px}
+    .progress{padding:21px}
+    .progress h3{margin-bottom:4px;font-size:14px}.progress p{margin-bottom:18px;color:var(--muted);font-size:11px}
+    .meter{height:7px;overflow:hidden;border-radius:99px;background:#edf0ef}.meter i{display:block;width:34%;height:100%;background:var(--accent)}
+    .progress-foot{display:flex;justify-content:space-between;margin-top:9px;color:var(--muted);font-size:10px}
+    .alerts{padding:8px 20px 14px}
+    .alert-row{padding:14px 0;border-bottom:1px solid #edf0f1}.alert-row:last-child{border:0}
+    .alert-row b{display:block;margin-bottom:4px;font-size:12px}.alert-row span{color:var(--muted);font-size:11px}
+    .sales-shell{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:18px;align-items:start}
+    .order{padding:24px}
+    .order-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:19px;border-bottom:1px solid var(--line)}
+    .order-top h2{margin-bottom:4px;font-size:20px}.order-top p{margin:0;color:var(--muted);font-size:11px}
+    .timer{color:var(--accent);font-size:12px;font-weight:800}
+    .form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+    label{display:block;color:#65727a;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    label input,label select,label textarea{display:block;width:100%;margin-top:7px;border:1px solid var(--line);border-radius:8px;padding:11px 12px;color:var(--ink);background:#fafbfa;outline:0}
+    label input:focus,label select:focus,label textarea:focus{border-color:#83aaa5;box-shadow:0 0 0 3px rgba(30,98,92,.08)}
+    .wide{grid-column:1/-1}
+    textarea{min-height:78px;resize:vertical}
+    .money-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:20px;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:var(--line)}
+    .money-strip div{padding:14px;background:#fafbfa}.money-strip span{display:block;color:var(--muted);font-size:9px;text-transform:uppercase}.money-strip strong{display:block;margin-top:5px;font-size:17px}
+    .form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+    .secondary{border:1px solid var(--line);border-radius:8px;padding:10px 13px;color:var(--ink);background:#fff;font-size:11px;font-weight:800}
+    .history{overflow:hidden}
+    .history-list{padding:6px 18px}
+    .history-row{padding:15px 0;border-bottom:1px solid #edf0f1}.history-row:last-child{border:0}
+    .history-row header{display:flex;justify-content:space-between;gap:12px}.history-row strong{font-size:12px}.history-row b{font-size:12px}
+    .history-row p{margin:5px 0 9px;color:var(--muted);font-size:10px}
+    .history-actions{display:flex;gap:12px;color:var(--accent);font-size:10px;font-weight:800}
+    @media(max-width:900px){
+      .topbar{grid-template-columns:1fr auto;padding:0 16px}.brand{display:none}.search{display:none}
+      main{width:min(100% - 24px,700px);padding-top:22px}.command-layout,.sales-shell{grid-template-columns:1fr}
+      .form-grid{grid-template-columns:1fr 1fr}.work-row{grid-template-columns:24px 1fr auto}.work-row time{display:none}
+    }
+    @media(max-width:560px){
+      .topbar{grid-template-columns:1fr}.top-actions{display:none}.nav{justify-content:center}
+      .page-head{align-items:flex-start}.date{display:none}h1{font-size:30px}
+      .priority-focus{grid-template-columns:36px 1fr}.priority-focus .primary{grid-column:1/-1}
+      .form-grid{grid-template-columns:1fr}.money-strip{grid-template-columns:1fr}.wide{grid-column:auto}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><div class="mark">M</div><div><strong>Miraç Saha</strong><span>Operasyon sistemi</span></div></div>
+      <nav class="nav">
+        <button class="active" data-view="karargah">Karargâh</button>
+        <button data-view="satis">Satış</button>
+      </nav>
+      <div class="top-actions"><input class="search" placeholder="Müşteri, sipariş veya komut ara"><button class="shortcut">Ctrl K</button></div>
+    </header>
+    <main>
+      <section class="view active" id="karargah">
+        <div class="page-head"><div><div class="eyebrow">Operasyon özeti</div><h1>Karargâh</h1><p>Bugün ne yapılacağı tek sırada, tek ekranda.</p></div><div class="date">19 Temmuz 2026 · Pazar</div></div>
+        <div class="command-layout">
+          <section class="surface priority">
+            <div class="priority-focus"><div class="number">01</div><div><div class="eyebrow">Şimdi yapılacak iş</div><h2>Geciken teslimi kapat</h2><p>Ferhat Gündüz siparişi 6 gün gecikti · Üretim hazır</p></div><button class="primary">Siparişi aç</button></div>
+            <div class="work-list">
+              <div class="work-row"><span class="rank">02</span><div><strong>Edibe Deniz’i ara</strong><small>₺30.000 açık alacak · Telefon notu bekliyor</small></div><time>Bugün</time><span class="pill amber">Tahsilat</span></div>
+              <div class="work-row"><span class="rank">03</span><div><strong>İki yeni siparişi üretime aktar</strong><small>Ölçü ve varyant bilgileri tamamlandı</small></div><time>14:30</time><span class="pill green">Üretim</span></div>
+              <div class="work-row"><span class="rank">04</span><div><strong>Gün sonu kontrolü</strong><small>Açık sipariş ve teslim listesini kapat</small></div><time>18:00</time><span class="pill green">Rutin</span></div>
+            </div>
+          </section>
+          <aside class="side-stack">
+            <section class="surface progress"><h3>Günün ilerlemesi</h3><p>2 / 6 görev tamamlandı</p><div class="meter"><i></i></div><div class="progress-foot"><span>Başlangıç</span><span>%34</span></div></section>
+            <section class="surface"><div class="surface-head"><h2>Alarmlar</h2><span>3 kayıt</span></div><div class="alerts"><div class="alert-row"><b>Teslim gecikmesi</b><span>1 sipariş hedef tarihi geçti</span></div><div class="alert-row"><b>Nakit baskısı</b><span>7 günlük plan kontrol edilmeli</span></div><div class="alert-row"><b>Stok temiz</b><span>Kritik seviyede ürün yok</span></div></div></section>
+          </aside>
+        </div>
+      </section>
+      <section class="view" id="satis">
+        <div class="page-head"><div><div class="eyebrow">Hızlı işlem</div><h1>Satış</h1><p>Ölçüden teklife kadar tek form, gereksiz ekran yok.</p></div><div class="date">Hedef süre · 30 saniye</div></div>
+        <div class="sales-shell">
+          <section class="surface order">
+            <div class="order-top"><div><h2>Yeni sipariş</h2><p>Zorunlu alanlar tamamlandığında teklif hazırdır.</p></div><span class="timer">00:30</span></div>
+            <div class="form-grid">
+              <label>Müşteri<input placeholder="Müşteri adı"></label>
+              <label>Ürün<select><option>Baza — Elit</option></select></label>
+              <label>Adet<input value="1"></label>
+              <label>Ölçü<select><option>160 × 200</option></select></label>
+              <label>Varyant<input value="Krem / Silver"></label>
+              <label>Teslim tarihi<input type="date" value="2026-07-24"></label>
+              <label class="wide">Sipariş notu<textarea placeholder="Teslim adresi, özel üretim veya müşteri notu"></textarea></label>
+            </div>
+            <div class="money-strip"><div><span>Toplam</span><strong>₺18.500</strong></div><div><span>Kapora</span><strong>₺5.000</strong></div><div><span>Kalan</span><strong>₺13.500</strong></div></div>
+            <div class="form-actions"><button class="secondary">PDF teklif</button><button class="secondary">WhatsApp</button><button class="primary">Siparişi kaydet</button></div>
+          </section>
+          <section class="surface history"><div class="surface-head"><h2>Son siparişler</h2><span>Tümünü gör</span></div><div class="history-list">
+            <div class="history-row"><header><strong>Ferhat Gündüz</strong><b>₺28.000</b></header><p>Set · Silver Gold · 1 adet</p><div class="history-actions"><span>Üretimde</span><span>PDF</span><span>WhatsApp</span></div></div>
+            <div class="history-row"><header><strong>Davut Yılmaz</strong><b>₺18.500</b></header><p>Baza Elit · 160 × 200</p><div class="history-actions"><span>Hazır</span><span>PDF</span><span>WhatsApp</span></div></div>
+            <div class="history-row"><header><strong>Edibe Deniz</strong><b>₺12.400</b></header><p>Başlık Premium · Krem</p><div class="history-actions"><span>Sipariş</span><span>PDF</span><span>WhatsApp</span></div></div>
+          </div></section>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.querySelector(".nav").addEventListener("click", event => {
+      const button = event.target.closest("[data-view]");
+      if (!button) return;
+      document.querySelectorAll(".nav button").forEach(item => item.classList.toggle("active", item === button));
+      document.querySelectorAll(".view").forEach(view => view.classList.toggle("active", view.id === button.dataset.view));
+    });
+  </script>
+</body>
+</html>
