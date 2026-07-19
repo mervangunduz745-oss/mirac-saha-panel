@@ -3021,6 +3021,9 @@
     .command-palette-list small { color: #8995a8; }
     .sales-tool-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
     .order-history { margin-top: 18px; }
+    body:not(.auth-locked) #entry .module-shell { grid-template-columns: minmax(0, 1fr); }
+    body:not(.auth-locked) #entry .module-side { display: none; }
+    body:not(.auth-locked) #entry .module-main { max-width: 1080px; }
     body:not(.auth-locked).dashboard-dark #dashboardQuickActions {
       order: 1;
       margin: 0;
@@ -5835,7 +5838,7 @@
       document.querySelectorAll(".secondary-entry-panel").forEach(panel => panel.classList.toggle("role-hidden", worker));
       byId("inventoryNameForm")?.closest(".panel")?.classList.toggle("role-hidden", worker);
       const quickEntry = byId("quickEntry");
-      if (quickEntry) quickEntry.textContent = worker ? "Yeni Sipariş" : "Yeni İşlem";
+      if (quickEntry) quickEntry.textContent = "Yeni Sipariş";
       renderMobileCommandBar();
     }
 
