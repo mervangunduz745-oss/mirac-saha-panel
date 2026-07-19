@@ -3815,6 +3815,53 @@
       color: #24453f;
       background: #e5eeeb;
     }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions,
+    body:not(.auth-locked).dashboard-dark .dashboard-layout { display: none !important; }
+    body:not(.auth-locked).dashboard-dark #dashboard { gap: 20px; }
+    body:not(.auth-locked).dashboard-dark .command-center-section {
+      order: initial;
+      padding: 22px;
+      border-radius: 18px;
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass {
+      grid-template-columns: minmax(260px, .78fr) minmax(420px, 1.22fr);
+      gap: 16px;
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-lead,
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-stack {
+      color: var(--pro-text);
+      border-color: var(--pro-border);
+      background: #f7f8f6;
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-lead :is(h2, p, span, strong),
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-stack :is(h3, p, span, strong) {
+      color: inherit;
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-stat,
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-card {
+      color: var(--pro-text);
+      border-color: #d6dbdc;
+      background: #edf1f2;
+      box-shadow: none;
+    }
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-card p,
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-card small,
+    body:not(.auth-locked).dashboard-dark #actionCompass .action-compass-stat span { color: var(--pro-muted); }
+    body:not(.auth-locked).dashboard-dark #dailyFlow {
+      grid-template-columns: repeat(2, minmax(260px, 1fr));
+      gap: 10px;
+    }
+    body:not(.auth-locked).dashboard-dark #automationGrid {
+      grid-template-columns: repeat(2, minmax(260px, 1fr));
+      gap: 10px;
+    }
+    body:not(.auth-locked).dashboard-dark #automationGrid .automation-card {
+      color: var(--pro-text);
+      border-color: #d6dbdc;
+      background: #f3f5f5;
+    }
+    body:not(.auth-locked).dashboard-dark #automationGrid .automation-card span { color: var(--pro-muted); }
     @media (max-width: 1100px) {
       body:not(.auth-locked) .entry-grid {
         grid-template-columns: repeat(2, minmax(160px, 1fr));
@@ -9486,9 +9533,9 @@
       document.querySelectorAll(".tab-view").forEach(view => view.classList.toggle("active", view.id === id));
       document.querySelectorAll("#nav button").forEach(btn => btn.classList.toggle("active", btn.dataset.view === id));
       const active = document.querySelector(`#nav button[data-view="${id}"]`);
-      byId("pageTitle").textContent = id === "dashboard" ? "Saha Komuta Paneli" : active ? active.textContent : "Karargâh";
+      byId("pageTitle").textContent = id === "dashboard" ? "Karargâh" : active ? active.textContent : "Karargâh";
       byId("pageSubtitle").textContent = id === "dashboard"
-        ? `${todayLabel} · Para, teslim, stok ve üretim önceliği.`
+        ? `${todayLabel} · Günlük görevler, öncelik sırası ve alarmlar.`
         : viewSubtitles[id] || viewSubtitles.dashboard;
       applyRoleAccess();
       renderMobileCommandBar();
