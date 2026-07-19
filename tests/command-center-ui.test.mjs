@@ -58,5 +58,17 @@ for (const label of ["Açık iş emri", "Günün tahsilat hedefi", "Kritik alarm
 assert.ok(html.includes('data-open-daily-collection'), "Collection status card must expose a quick action");
 assert.ok(html.includes('data-jump-view="production"'), "Work-order status card must open Production");
 assert.ok(html.includes('data-jump-view="control"'), "Critical status card must open Control");
+for (const [module, color] of [
+  ["command", "#2E7D32"],
+  ["tasks", "#1976D2"],
+  ["finance", "#6D4C41"],
+  ["alarms", "#E53935"],
+  ["stock", "#8E24AA"],
+  ["reports", "#0288D1"],
+  ["settings", "#455A64"]
+]) {
+  assert.ok(html.includes(`data-module="${module}"`), `Navigation must expose ${module} module semantics`);
+  assert.ok(html.includes(color), `${module} must use ${color}`);
+}
 
 console.log("Command center task and tools navigation checks passed");

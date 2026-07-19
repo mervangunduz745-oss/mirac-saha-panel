@@ -3873,6 +3873,13 @@
       --pro-text: #17242b;
       --pro-muted: #68757c;
       --pro-accent: #176b68;
+      --module-command: #2E7D32;
+      --module-tasks: #1976D2;
+      --module-finance: #6D4C41;
+      --module-alarms: #E53935;
+      --module-stock: #8E24AA;
+      --module-reports: #0288D1;
+      --module-settings: #455A64;
       background: #f5f6f4;
     }
     body:not(.auth-locked) .app {
@@ -3932,6 +3939,30 @@
       box-shadow: none;
     }
     body:not(.auth-locked) #nav button::before { display: none; }
+    body:not(.auth-locked) #nav > button::before,
+    body:not(.auth-locked) #nav .tools-menu button::before {
+      content: attr(data-icon);
+      display: inline-grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      margin-right: 7px;
+      border-radius: 6px;
+      color: #fff;
+      background: #607d8b;
+      font-size: 11px;
+      font-weight: 900;
+      vertical-align: middle;
+    }
+    body:not(.auth-locked) #nav [data-module="command"]::before { background: var(--module-command); }
+    body:not(.auth-locked) #nav [data-module="tasks"]::before { background: var(--module-tasks); }
+    body:not(.auth-locked) #nav [data-module="finance"]::before { background: var(--module-finance); }
+    body:not(.auth-locked) #nav [data-module="alarms"]::before { background: var(--module-alarms); }
+    body:not(.auth-locked) #nav [data-module="stock"]::before { background: var(--module-stock); }
+    body:not(.auth-locked) #nav [data-module="reports"]::before { background: var(--module-reports); }
+    body:not(.auth-locked) #nav [data-module="settings"]::before { background: var(--module-settings); }
+    body:not(.auth-locked) #nav button.active[data-module="command"] { color:#1f5d24;border-color:#b8d4ba;background:#e7f1e8 }
+    body:not(.auth-locked) #nav button.active[data-module="finance"] { color:#5c3c34;border-color:#d4c2bc;background:#f1e9e6 }
     body:not(.auth-locked) #nav button.active {
       color: #174b49;
       border-color: #bdd1cf;
@@ -3954,13 +3985,15 @@
     }
     body:not(.auth-locked) #nav .tools-menu.hidden { display: none !important; }
     body:not(.auth-locked) #nav .tools-menu button {
-      display: block;
+      display: flex;
+      align-items: center;
       width: 100%;
       min-height: 36px;
       padding: 9px 11px;
       color: #3e4c53;
       text-align: left;
     }
+    body:not(.auth-locked) #nav .tools-menu button::before { flex:0 0 22px; }
     body:not(.auth-locked) #nav .tools-menu button:hover { color: #174b49; background: #edf5f4; }
     body:not(.auth-locked) main {
       display: block;
@@ -4271,9 +4304,9 @@
       background: #25463f;
     }
     body:not(.auth-locked).dashboard-dark .live-status-strip { border-color:#3b454c }
-    body:not(.auth-locked).dashboard-dark .live-status-card.green{color:#9df0d6;background:#25463f;border-color:#426b63}
-    body:not(.auth-locked).dashboard-dark .live-status-card.amber{color:#ffd58b;background:#514126;border-color:#75603b}
-    body:not(.auth-locked).dashboard-dark .live-status-card.red{color:#ffb1aa;background:#532f31;border-color:#774548}
+    body:not(.auth-locked).dashboard-dark .live-status-card.blue{color:#b9dcff;background:#153f69;border-color:#28689f}
+    body:not(.auth-locked).dashboard-dark .live-status-card.finance{color:#e4cdc5;background:#49342e;border-color:#745248}
+    body:not(.auth-locked).dashboard-dark .live-status-card.red{color:#ffc0bd;background:#62272a;border-color:#a43d42}
     body:not(.auth-locked).dashboard-dark .live-status-card button{background:rgba(0,0,0,.12)}
     body:not(.auth-locked).dashboard-dark .title-row {
       position: relative;
@@ -4367,12 +4400,12 @@
       font-size: 11px;
       font-weight: 850;
     }
-    body:not(.auth-locked) .full-dashboard-actions button:nth-child(1){background:#00a884}
-    body:not(.auth-locked) .full-dashboard-actions button:nth-child(2){background:#f05272}
-    body:not(.auth-locked) .full-dashboard-actions button:nth-child(3){background:#3478e5}
-    body:not(.auth-locked) .full-dashboard-actions button:nth-child(4){background:#f29a2e}
-    body:not(.auth-locked) .full-dashboard-actions button:nth-child(5){background:#8a4dde}
-    body:not(.auth-locked) .full-dashboard-actions button:nth-child(6){background:#16a7ba}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(1){background:#1976D2}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(2){background:#6D4C41}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(3){background:#1976D2}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(4){background:#8E24AA}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(5){background:#6D4C41}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(6){background:#6D4C41}
     body:not(.auth-locked) .full-stat-grid {
       display: grid;
       grid-template-columns: repeat(4,minmax(180px,1fr));
@@ -4511,9 +4544,9 @@
       border: 1px solid transparent;
       border-radius: 9px;
     }
-    body:not(.auth-locked) .live-status-card.green { color:#155b4d;background:#e1f2ec;border-color:#b9ded2 }
-    body:not(.auth-locked) .live-status-card.amber { color:#815919;background:#f8edcf;border-color:#ead49b }
-    body:not(.auth-locked) .live-status-card.red { color:#963d42;background:#f7dfe0;border-color:#e9b9bc }
+    body:not(.auth-locked) .live-status-card.blue { color:#155ea9;background:#e1eefb;border-color:#b6d2ef }
+    body:not(.auth-locked) .live-status-card.finance { color:#5b3d35;background:#eee6e3;border-color:#d5c1ba }
+    body:not(.auth-locked) .live-status-card.red { color:#b32622;background:#fbe1e0;border-color:#efb4b1 }
     body:not(.auth-locked) .live-status-icon {
       display:grid;
       place-items:center;
@@ -4802,20 +4835,20 @@
       <div>
         <nav class="nav" id="nav">
           <div class="nav-label">Ana Menü</div>
-          <button class="active" data-icon="K" data-view="dashboard">Karargâh</button>
-          <button data-icon="D" data-view="analytics">Dashboard</button>
-          <button data-icon="S" data-view="entry">Satış</button>
+          <button class="active" data-icon="▦" data-module="command" data-view="dashboard">Karargâh</button>
+          <button data-icon="▦" data-module="command" data-view="analytics">Dashboard</button>
+          <button data-icon="₺" data-module="finance" data-view="entry">Satış</button>
           <div class="tools-menu-wrap">
             <button id="toolsMenuButton" type="button" aria-expanded="false">Araçlar</button>
             <div class="tools-menu hidden" id="toolsMenu">
-              <button type="button" data-tools-view="production">Üretim</button>
-              <button type="button" data-tools-view="stock">Stok</button>
-              <button type="button" data-tools-view="cari">Cari</button>
-              <button type="button" data-tools-view="fixed">Kasa &amp; POS</button>
-              <button type="button" data-tools-view="debt">Borç Planı</button>
-              <button type="button" data-tools-view="moves">Hareketler</button>
-              <button type="button" data-tools-view="settings">Rapor ve Yedek</button>
-              <button type="button" data-tools-view="control">Sistem Sağlığı</button>
+              <button type="button" data-icon="✓" data-module="tasks" data-tools-view="production">Üretim / İş Emirleri</button>
+              <button type="button" data-icon="▣" data-module="stock" data-tools-view="stock">Stok / Envanter</button>
+              <button type="button" data-icon="₺" data-module="finance" data-tools-view="cari">Cari</button>
+              <button type="button" data-icon="₺" data-module="finance" data-tools-view="fixed">Kasa &amp; POS</button>
+              <button type="button" data-icon="₺" data-module="finance" data-tools-view="debt">Borç Planı</button>
+              <button type="button" data-icon="⌁" data-module="reports" data-tools-view="moves">Hareketler</button>
+              <button type="button" data-icon="⌁" data-module="reports" data-tools-view="settings">Rapor ve Yedek</button>
+              <button type="button" data-icon="!" data-module="alarms" data-tools-view="control">Sistem Sağlığı</button>
             </div>
           </div>
           <button data-icon="$" data-view="sales">Satış</button>
@@ -9130,12 +9163,12 @@
         <button class="btn primary" type="button" ${firstAttr}>${safe(first.action || "Aç")}</button>
       `;
       statusStrip.innerHTML = `
-        <article class="live-status-card green">
-          <div class="live-status-icon"><span>Ü</span></div>
+        <article class="live-status-card blue">
+          <div class="live-status-icon"><span>✓</span></div>
           <div class="live-status-copy"><span>Açık iş emri</span><strong>${m.jobs.open.length}</strong></div>
           <button type="button" data-jump-view="production">Üretime Git</button>
         </article>
-        <article class="live-status-card amber">
+        <article class="live-status-card finance">
           <div class="live-status-icon"><span>₺</span></div>
           <div class="live-status-copy"><span>Günün tahsilat hedefi</span><strong>${safe(money(collectionTarget))}</strong></div>
           <button type="button" data-open-daily-collection>Tahsilat Gir</button>
