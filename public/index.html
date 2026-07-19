@@ -3772,6 +3772,49 @@
       border-color: #b8d0c9;
       background: #deece7;
     }
+    body:not(.auth-locked).dashboard-dark header {
+      border-bottom-color: #d7d8d3;
+      background: rgba(244,241,233,.96);
+    }
+    body:not(.auth-locked).dashboard-dark header #logoutPanel {
+      color: #334047;
+      border-color: #cbd1d2;
+      background: #f1f3f3;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-layout .panel,
+    body:not(.auth-locked).dashboard-dark .command-center-section,
+    body:not(.auth-locked).dashboard-dark .dashboard-zone,
+    body:not(.auth-locked).dashboard-dark .dashboard-list-row,
+    body:not(.auth-locked).dashboard-dark .dashboard-zone-item,
+    body:not(.auth-locked).dashboard-dark .guide-item,
+    body:not(.auth-locked).dashboard-dark #recentMoves > * {
+      color: var(--pro-text);
+      border-color: var(--pro-border);
+      background: var(--pro-surface);
+      box-shadow: 0 8px 28px rgba(45,54,57,.06);
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-list-row:hover,
+    body:not(.auth-locked).dashboard-dark .dashboard-zone-item:hover {
+      border-color: #b8c8c4;
+      background: #f4f6f5;
+    }
+    body:not(.auth-locked).dashboard-dark .dashboard-list-row strong,
+    body:not(.auth-locked).dashboard-dark .dashboard-zone-item strong,
+    body:not(.auth-locked).dashboard-dark .guide-item strong,
+    body:not(.auth-locked).dashboard-dark #recentMoves strong { color: var(--pro-text); }
+    body:not(.auth-locked).dashboard-dark .dashboard-list-row span,
+    body:not(.auth-locked).dashboard-dark .dashboard-zone-item span,
+    body:not(.auth-locked).dashboard-dark .guide-item span,
+    body:not(.auth-locked).dashboard-dark #recentMoves span { color: var(--pro-muted); }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action {
+      color: #24453f;
+      border-color: #cbd5d2;
+      background: #f7f7f2;
+    }
+    body:not(.auth-locked).dashboard-dark #dashboardQuickActions .quick-action[data-open-order] {
+      color: #24453f;
+      background: #e5eeeb;
+    }
     @media (max-width: 1100px) {
       body:not(.auth-locked) .entry-grid {
         grid-template-columns: repeat(2, minmax(160px, 1fr));
