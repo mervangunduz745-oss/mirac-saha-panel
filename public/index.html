@@ -2974,13 +2974,53 @@
       display: grid;
       gap: 18px;
     }
-    body:not(.auth-locked).dashboard-dark #actionCompass,
+    body:not(.auth-locked) #nav button[data-view]:not([data-view="dashboard"]):not([data-view="entry"]) { display: none; }
+    body:not(.auth-locked) #nav .nav-label:not(:first-child) { display: none; }
+    body:not(.auth-locked) header #undoLast,
+    body:not(.auth-locked) header #exportJson,
+    body:not(.auth-locked) header #exportCsv { display: none; }
+    body:not(.auth-locked).dashboard-dark #kpiCards,
+    body:not(.auth-locked).dashboard-dark #secondaryCards { display: none !important; }
     body:not(.auth-locked).dashboard-dark #liveRhythmStrip,
-    body:not(.auth-locked).dashboard-dark #dailyFlow,
-    body:not(.auth-locked).dashboard-dark #automationGrid,
     body:not(.auth-locked).dashboard-dark #resetDailyFlow {
       display: none !important;
     }
+    body:not(.auth-locked).dashboard-dark .command-center-section {
+      order: 5;
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border: 1px solid #293140;
+      border-radius: 16px;
+      background: #171c26;
+    }
+    body:not(.auth-locked).dashboard-dark .command-center-section + .command-center-section { order: 6; }
+    body:not(.auth-locked).dashboard-dark .command-center-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    body:not(.auth-locked).dashboard-dark .command-center-head h2 { margin: 0; color: #f2f5f9; }
+    .kbd-button {
+      border: 1px solid #3a4557;
+      border-radius: 9px;
+      padding: 8px 11px;
+      color: #d9e1ec;
+      background: #202633;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .command-palette { width: min(620px, calc(100vw - 28px)); border: 0; border-radius: 18px; padding: 0; background: #151a23; color: #f2f5f9; box-shadow: 0 24px 80px rgba(0,0,0,.55); }
+    .command-palette::backdrop { background: rgba(7,10,15,.72); backdrop-filter: blur(5px); }
+    .command-palette-head { display: flex; gap: 12px; padding: 16px; border-bottom: 1px solid #293140; }
+    .command-palette-head input { flex: 1; min-width: 0; border: 1px solid #354052; border-radius: 10px; padding: 12px 14px; color: #fff; background: #202633; }
+    .command-palette-list { display: grid; gap: 6px; padding: 12px; }
+    .command-palette-list button { display: flex; justify-content: space-between; gap: 16px; width: 100%; border: 0; border-radius: 10px; padding: 13px 14px; color: #eef2f7; background: transparent; text-align: left; cursor: pointer; }
+    .command-palette-list button:hover, .command-palette-list button:focus { outline: none; background: #252d3a; }
+    .command-palette-list small { color: #8995a8; }
+    .sales-tool-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .order-history { margin-top: 18px; }
     body:not(.auth-locked).dashboard-dark #dashboardQuickActions {
       order: 1;
       margin: 0;
@@ -3719,15 +3759,15 @@
       <div class="brand">
         <div class="mark">M</div>
         <div>
-          <strong>Miraç ERP</strong>
-          <span>Saha komuta</span>
+          <strong>Miraç Saha</strong>
+          <span>Operasyon merkezi</span>
         </div>
       </div>
       <div>
         <nav class="nav" id="nav">
           <div class="nav-label">Ana Menü</div>
           <button class="active" data-icon="K" data-view="dashboard">Karargâh</button>
-          <button data-icon="+" data-view="entry">Sipariş</button>
+          <button data-icon="S" data-view="entry">Satış</button>
           <button data-icon="$" data-view="sales">Satış</button>
           <button data-icon="A" data-view="purchase">Alış</button>
           <button data-icon="U" data-view="production">Üretim</button>
@@ -3744,7 +3784,7 @@
         </nav>
       </div>
       <div class="side-note">
-        Karargâh paneli · sade, ciddi, saha odaklı. Az menü, net aksiyon, her kayıt iz bıraksın.
+        İki iş, tek ekran: bugün ne yapılacak ve sipariş nasıl kapanacak.
       </div>
     </aside>
 
@@ -3754,7 +3794,7 @@
           <span>Arama</span>
         <input id="search" placeholder="Cari, stok, ürün, not ara..." autocomplete="off">
         </div>
-        <button class="btn primary" id="quickEntry">Yeni İşlem</button>
+        <button class="btn primary" id="quickEntry">Yeni Sipariş</button>
         <button class="btn" id="undoLast">Son Kaydı Geri Al</button>
         <button class="btn" id="exportJson">JSON Yedek</button>
         <button class="btn" id="exportCsv">CSV</button>
@@ -3805,10 +3845,21 @@
             </div>
           </div>
           <div class="command-panels-grid" id="secondaryCards"></div>
-          <div class="action-compass" id="actionCompass"></div>
+          <section class="command-center-section">
+            <div class="command-center-head">
+              <div><span class="dashboard-section-label production">Komut Merkezi</span><h2>Öncelik Motoru</h2></div>
+              <button class="kbd-button" id="openCommandPalette" type="button">Ctrl / ⌘ + K</button>
+            </div>
+            <div class="action-compass" id="actionCompass"></div>
+          </section>
           <div class="live-rhythm-strip" id="liveRhythmStrip"></div>
-          <div class="daily-flow" id="dailyFlow"></div>
-          <div class="automation-grid" id="automationGrid"></div>
+          <section class="command-center-section">
+            <div class="command-center-head">
+              <div><span class="dashboard-section-label risk">Günlük Görev Ekranı</span><h2>İş Listesi ve Alarmlar</h2></div>
+            </div>
+            <div class="daily-flow" id="dailyFlow"></div>
+            <div class="automation-grid" id="automationGrid"></div>
+          </section>
           <button class="btn compact-action daily-flow-reset" id="resetDailyFlow" type="button">Bugünü Sıfırla</button>
         </section>
 
@@ -3837,8 +3888,8 @@
           <div class="panel module-main">
             <div class="panel-head">
               <div>
-                <h2>Sipariş Yönetimi</h2>
-                <div class="hint">Müşteri, ürün, kapora, teslim ve üretim bağlantısı tek akışta.</div>
+                <h2>30 Saniyede Sipariş</h2>
+                <div class="hint">Müşteri, ölçü, varyant, kapora ve teslim bilgisi tek akışta.</div>
               </div>
               <span class="status warn">Cari + üretim işi bağlar</span>
             </div>
@@ -3917,6 +3968,10 @@
                 <button class="btn" type="button" id="clearOrderForm">Temizle</button>
                 <button class="btn primary" type="submit">Siparişi Kaydet</button>
               </div>
+              <div class="sales-tool-row">
+                <button class="btn" type="button" id="draftOfferPdf">PDF Teklif Önizle</button>
+                <button class="btn" type="button" id="draftOfferWhatsapp">WhatsApp'ta Paylaş</button>
+              </div>
             </form>
             <div class="section-divider"></div>
             <div class="panel-head compact">
@@ -3927,6 +3982,13 @@
               <span class="status ok" id="openOrderBriefCount">0 açık</span>
             </div>
             <div id="openOrderBrief"></div>
+            <div class="order-history">
+              <div class="panel-head compact">
+                <div><h3>Sipariş Geçmişi</h3><div class="hint">Son 10 sipariş ve hızlı belge işlemleri.</div></div>
+                <span class="status ok" id="orderHistoryCount">0 kayıt</span>
+              </div>
+              <div id="orderHistory"></div>
+            </div>
           </div>
 
           <div class="panel module-side">
@@ -4821,6 +4883,14 @@
       <button class="btn" type="button" data-mobile-view="dashboard">Karargâha Git</button>
     </div>
   </section>
+
+  <dialog class="command-palette" id="commandPalette">
+    <div class="command-palette-head">
+      <input id="commandPaletteSearch" autocomplete="off" placeholder="Komut ara: sipariş, satış, üretim, stok...">
+      <button class="btn" id="closeCommandPalette" type="button">Esc</button>
+    </div>
+    <div class="command-palette-list" id="commandPaletteList"></div>
+  </dialog>
 
   <dialog class="payment-dialog" id="debtPaymentDialog">
     <form id="debtPaymentForm">
@@ -7226,10 +7296,78 @@
             <td>${safe(orderProductLabel(tx))}</td>
             <td class="money">${money(remaining)}</td>
             <td class="order-note">${safe(note || "-")}</td>
-            <td><button class="btn" data-print-order="${safe(tx.id)}" type="button">Fiş Yazdır</button></td>
+            <td><div class="row-actions"><button class="btn" data-print-order="${safe(tx.id)}" type="button">PDF Teklif</button><button class="btn" data-whatsapp-order="${safe(tx.id)}" type="button">WhatsApp</button></div></td>
           </tr>`;
         }).join("")}</tbody>
       </table>`;
+    }
+
+    function renderOrderHistory() {
+      const target = byId("orderHistory");
+      const counter = byId("orderHistoryCount");
+      if (!target || !counter) return;
+      const rows = activeTransactions().filter(tx => tx.type === "SIPARIS").slice().reverse().slice(0, 10);
+      counter.textContent = `${rows.length} kayıt`;
+      if (!rows.length) {
+        target.innerHTML = `<div class="empty">Henüz sipariş geçmişi yok.</div>`;
+        return;
+      }
+      target.innerHTML = `<table class="order-brief-table">
+        <thead><tr><th>Tarih</th><th>Müşteri</th><th>Ürün / Varyant</th><th class="money">Toplam</th><th>Durum</th><th>İşlem</th></tr></thead>
+        <tbody>${rows.map(tx => `<tr>
+          <td>${safe(tx.date || "")}</td><td><strong>${safe(tx.party || "")}</strong></td>
+          <td>${safe(orderProductLabel(tx))}</td><td class="money">${money(tx.amount || 0)}</td>
+          <td><span class="status ${tx.status === "Teslim" ? "ok" : "warn"}">${safe(tx.status || "Sipariş")}</span></td>
+          <td><div class="row-actions"><button class="btn" data-print-order="${safe(tx.id)}" type="button">PDF</button><button class="btn" data-whatsapp-order="${safe(tx.id)}" type="button">WhatsApp</button></div></td>
+        </tr>`).join("")}</tbody>
+      </table>`;
+    }
+
+    function orderShareText(tx) {
+      const total = Number(tx.amount || 0);
+      const paid = Number(tx.paid || 0);
+      return [
+        "Miraç ERP Sipariş / Teklif",
+        `Müşteri: ${tx.party || "-"}`,
+        `Ürün: ${orderProductLabel(tx) || "-"}`,
+        `Adet: ${qty(tx.qty || 0)}`,
+        `Toplam: ${money(total)}`,
+        `Kapora: ${money(paid)}`,
+        `Kalan: ${money(Math.max(0, total - paid))}`,
+        tx.dueDate ? `Teslim: ${tx.dueDate}` : "",
+        orderSlipNote(tx) ? `Not: ${orderSlipNote(tx)}` : ""
+      ].filter(Boolean).join("\n");
+    }
+
+    function shareOrderWhatsapp(id) {
+      const tx = (state.transactions || []).find(row => row.id === id);
+      if (!tx || tx.type !== "SIPARIS") return alert("Sipariş kaydı bulunamadı.");
+      window.open(`https://wa.me/?text=${encodeURIComponent(orderShareText(tx))}`, "_blank", "noopener");
+    }
+
+    function draftOrderFromForm() {
+      const item = byId("orderProduct").value;
+      const amount = Number(byId("orderQty").value || 0) * Number(byId("orderUnitPrice").value || 0);
+      return {
+        id: "TEKLIF-ONIZLEME", type: "SIPARIS", date: byId("orderDate").value, party: byId("orderCustomer").value,
+        item, itemName: itemName(item), sizeVariant: byId("orderSizeVariant").value === "Özel Ölçü" ? byId("orderCustomSize").value : byId("orderSizeVariant").value,
+        colorVariant: byId("orderColorVariant").value, qty: Number(byId("orderQty").value || 0), amount,
+        paid: Number(byId("orderPaid").value || 0), dueDate: byId("orderDue").value, status: "Teklif",
+        note: byId("orderNote").value
+      };
+    }
+
+    function previewDraftOffer() {
+      const draft = draftOrderFromForm();
+      if (!draft.party || !draft.item || !draft.qty) return alert("Teklif için müşteri, ürün ve adet girin.");
+      state.transactions.push(draft);
+      try { printOrderSlip(draft.id); } finally { state.transactions.pop(); }
+    }
+
+    function shareDraftOffer() {
+      const draft = draftOrderFromForm();
+      if (!draft.party || !draft.item || !draft.qty) return alert("Paylaşım için müşteri, ürün ve adet girin.");
+      window.open(`https://wa.me/?text=${encodeURIComponent(orderShareText(draft))}`, "_blank", "noopener");
     }
 
     function orderSlipNote(tx) {
@@ -9098,6 +9236,7 @@
           renderGuide();
         }
         if (activeView === "entry") renderOrderBrief();
+        if (activeView === "entry") renderOrderHistory();
         if (activeView === "sales") {
           renderTradeChannel("SATIS");
           renderDeliverySalesQueue();
@@ -9156,7 +9295,7 @@
     const viewSubtitles = {
       dashboard: "Saha karar ekranı: para, teslim, borç, stok ve üretim önceliği.",
       control: "Kayıt, hesap ve teknik sağlık; hata varsa yeni işlemden önce burası temizlenir.",
-      entry: "Yeni sipariş, teslim tarihi, kapora ve üretim bağlantısı.",
+      entry: "30 saniyede sipariş: ölçü, varyant, kapora, PDF teklif ve WhatsApp.",
       sales: "Satış kaydı: stok düşer, müşteri alacağı ve tahsilat aynı anda izlenir.",
       purchase: "Alış kaydı: stok artar, tedarikçi borcu ve ödeme aynı anda izlenir.",
       cari: "Müşteri alacağı, tedarikçi borcu, açılış bakiyesi ve net cari duruş.",
@@ -9322,6 +9461,38 @@
       reader.readAsText(file, "utf-8");
     }
 
+    const commandPaletteCommands = [
+      { label: "Yeni sipariş aç", hint: "30 saniyede sipariş", run: openOrderEntry },
+      { label: "Karargâha git", hint: "Günlük görev ve alarmlar", run: () => showView("dashboard") },
+      { label: "Satış kaydı aç", hint: "Teslim ve ciro", run: () => openTradeEntry("SATIS") },
+      { label: "Üretim işi aç", hint: "İş emri", run: openProductionEntry },
+      { label: "Stok kartlarını aç", hint: "Ürün ve malzeme", run: () => showView("stock") },
+      { label: "Sipariş geçmişini aç", hint: "Son hareketler", run: () => showView("entry") },
+      { label: "Tüm hareketleri aç", hint: "Kayıt dökümü", run: () => showView("moves") }
+    ];
+
+    function renderCommandPalette(query = "") {
+      const normalized = String(query).trim().toLocaleLowerCase("tr-TR");
+      const rows = commandPaletteCommands.filter(command => `${command.label} ${command.hint}`.toLocaleLowerCase("tr-TR").includes(normalized));
+      byId("commandPaletteList").innerHTML = rows.length
+        ? rows.map((command, index) => `<button type="button" data-command-index="${commandPaletteCommands.indexOf(command)}"><strong>${safe(command.label)}</strong><small>${safe(command.hint)}</small></button>`).join("")
+        : `<div class="empty">Eşleşen komut yok.</div>`;
+    }
+
+    function openCommandPalette() {
+      renderCommandPalette("");
+      byId("commandPaletteSearch").value = "";
+      byId("commandPalette").showModal();
+      setTimeout(() => byId("commandPaletteSearch").focus(), 0);
+    }
+
+    function runPaletteCommand(index) {
+      const command = commandPaletteCommands[Number(index)];
+      if (!command) return;
+      byId("commandPalette").close();
+      command.run();
+    }
+
     function requestTypedDeletionConfirmation(total, counts) {
       return new Promise(resolve => {
         const dialog = document.createElement("dialog");
@@ -9411,6 +9582,21 @@
       const btn = event.target.closest("button[data-view]");
       if (btn) showView(btn.dataset.view);
     });
+    byId("openCommandPalette").addEventListener("click", openCommandPalette);
+    byId("closeCommandPalette").addEventListener("click", () => byId("commandPalette").close());
+    byId("commandPaletteSearch").addEventListener("input", event => renderCommandPalette(event.target.value));
+    byId("commandPaletteList").addEventListener("click", event => {
+      const button = event.target.closest("[data-command-index]");
+      if (button) runPaletteCommand(button.dataset.commandIndex);
+    });
+    document.addEventListener("keydown", event => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        openCommandPalette();
+      }
+    });
+    byId("draftOfferPdf").addEventListener("click", previewDraftOffer);
+    byId("draftOfferWhatsapp").addEventListener("click", shareDraftOffer);
     byId("dashboardQuickActions").addEventListener("click", event => {
       const cashButton = event.target.closest("[data-open-cash]");
       if (cashButton) return openCashEntry(cashButton.dataset.openCash);
@@ -9630,7 +9816,15 @@
     });
     byId("openOrderBrief").addEventListener("click", event => {
       const printButton = event.target.closest("button[data-print-order]");
-      if (printButton) printOrderSlip(printButton.dataset.printOrder);
+      if (printButton) return printOrderSlip(printButton.dataset.printOrder);
+      const whatsappButton = event.target.closest("button[data-whatsapp-order]");
+      if (whatsappButton) shareOrderWhatsapp(whatsappButton.dataset.whatsappOrder);
+    });
+    byId("orderHistory").addEventListener("click", event => {
+      const printButton = event.target.closest("button[data-print-order]");
+      if (printButton) return printOrderSlip(printButton.dataset.printOrder);
+      const whatsappButton = event.target.closest("button[data-whatsapp-order]");
+      if (whatsappButton) shareOrderWhatsapp(whatsappButton.dataset.whatsappOrder);
     });
     byId("allMoves").addEventListener("click", event => {
       const printButton = event.target.closest("button[data-print-order]");
