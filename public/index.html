@@ -4055,9 +4055,11 @@
       padding: 24px;
     }
     body:not(.auth-locked) .entry-grid {
-      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
       gap: 12px;
     }
+    body:not(.auth-locked) #entry .flow-rail { display: none; }
+    body:not(.auth-locked) #entry .panel-head > .status { display: none; }
     body:not(.auth-locked) .field label {
       color: #5f6c73;
       font-size: 10px;
@@ -4079,6 +4081,110 @@
     body:not(.auth-locked) .status { border-radius: 999px; }
     body:not(.auth-locked) table { font-size: 12px; }
     body:not(.auth-locked) thead th { background: #f0f3f3; }
+    body:not(.auth-locked) .legacy-dashboard-blocks { display: none !important; }
+    body:not(.auth-locked) .live-ops-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(330px, .55fr);
+      gap: 18px;
+    }
+    body:not(.auth-locked) .surface-live {
+      overflow: hidden;
+      border: 1px solid #dfe3e5;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(20,32,39,.02);
+    }
+    body:not(.auth-locked) .live-priority { padding: 23px; }
+    body:not(.auth-locked) .live-priority-focus {
+      display: grid;
+      grid-template-columns: 42px minmax(0,1fr) auto;
+      align-items: center;
+      gap: 16px;
+      min-height: 96px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid #dfe3e5;
+    }
+    body:not(.auth-locked) .live-number {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      color: #fff;
+      background: #142027;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    body:not(.auth-locked) .live-eyebrow {
+      margin-bottom: 7px;
+      color: #1e625c;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    body:not(.auth-locked) .live-priority-focus h2 {
+      margin: 0 0 5px;
+      color: #142027;
+      font-size: 24px;
+      letter-spacing: -.035em;
+    }
+    body:not(.auth-locked) .live-priority-focus p { margin: 0; color: #66737b; font-size: 12px; }
+    body:not(.auth-locked) .live-work-list { margin-top: 10px; }
+    body:not(.auth-locked) .live-work-row {
+      display: grid;
+      grid-template-columns: 26px minmax(0,1fr) 120px 92px;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 2px;
+      border-bottom: 1px solid #edf0f1;
+    }
+    body:not(.auth-locked) .live-work-row:last-child { border: 0; }
+    body:not(.auth-locked) .live-rank { color: #9aa3a8; font-size: 11px; font-weight: 800; }
+    body:not(.auth-locked) .live-work-row strong { display: block; color: #142027; font-size: 13px; }
+    body:not(.auth-locked) .live-work-row small { display: block; margin-top: 3px; color: #66737b; font-size: 11px; }
+    body:not(.auth-locked) .live-work-row time { color: #66737b; font-size: 11px; }
+    body:not(.auth-locked) .live-pill {
+      justify-self: end;
+      border-radius: 999px;
+      padding: 6px 9px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    body:not(.auth-locked) .live-pill.red { color: #a24d45; background: #f6e9e7; }
+    body:not(.auth-locked) .live-pill.amber { color: #9a6a28; background: #f5eedf; }
+    body:not(.auth-locked) .live-pill.green { color: #1e625c; background: #e8f0ee; }
+    body:not(.auth-locked) .live-side-stack { display: grid; gap: 18px; }
+    body:not(.auth-locked) .live-progress { padding: 21px; }
+    body:not(.auth-locked) .live-progress h3 { margin: 0 0 4px; font-size: 14px; }
+    body:not(.auth-locked) .live-progress p { margin: 0 0 18px; color: #66737b; font-size: 11px; }
+    body:not(.auth-locked) .live-meter { height: 7px; overflow: hidden; border-radius: 99px; background: #edf0ef; }
+    body:not(.auth-locked) .live-meter i { display: block; height: 100%; background: #1e625c; }
+    body:not(.auth-locked) .live-progress-foot { display: flex; justify-content: space-between; margin-top: 9px; color: #66737b; font-size: 10px; }
+    body:not(.auth-locked) .live-surface-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 20px 22px;
+      border-bottom: 1px solid #dfe3e5;
+    }
+    body:not(.auth-locked) .live-surface-head h2 { margin: 0; font-size: 17px; }
+    body:not(.auth-locked) .live-surface-head span { color: #66737b; font-size: 11px; }
+    body:not(.auth-locked) .live-alerts { padding: 8px 20px 14px; }
+    body:not(.auth-locked) .live-alert-row { padding: 14px 0; border-bottom: 1px solid #edf0f1; }
+    body:not(.auth-locked) .live-alert-row:last-child { border: 0; }
+    body:not(.auth-locked) .live-alert-row b { display: block; margin-bottom: 4px; font-size: 12px; }
+    body:not(.auth-locked) .live-alert-row span { color: #66737b; font-size: 11px; }
+    @media (max-width: 900px) {
+      body:not(.auth-locked) .live-ops-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      body:not(.auth-locked) .live-priority-focus { grid-template-columns: 36px minmax(0,1fr); }
+      body:not(.auth-locked) .live-priority-focus .btn { grid-column: 1 / -1; }
+      body:not(.auth-locked) .live-work-row { grid-template-columns: 24px minmax(0,1fr) auto; }
+      body:not(.auth-locked) .live-work-row time { display: none; }
+    }
     @media (max-width: 1100px) {
       body:not(.auth-locked) .entry-grid {
         grid-template-columns: repeat(2, minmax(160px, 1fr));
@@ -4256,6 +4362,20 @@
         <div class="search-results hidden" id="searchResults"></div>
 
         <section class="tab-view active" id="dashboard">
+          <div class="live-ops-layout">
+            <section class="live-priority surface-live">
+              <div class="live-priority-focus" id="livePriorityFocus"></div>
+              <div class="live-work-list" id="liveWorkList"></div>
+            </section>
+            <aside class="live-side-stack">
+              <section class="surface-live live-progress" id="liveProgress"></section>
+              <section class="surface-live">
+                <div class="live-surface-head"><h2>Alarmlar</h2><span id="liveAlarmCount">0 kayıt</span></div>
+                <div class="live-alerts" id="liveAlarms"></div>
+              </section>
+            </aside>
+          </div>
+          <div class="legacy-dashboard-blocks">
           <div class="quick-action-panel" id="dashboardQuickActions"></div>
           <div class="command-board command-board-quiet" id="kpiCards"></div>
           <div class="dashboard-layout dashboard-layout-quiet">
@@ -4297,6 +4417,7 @@
             <div class="automation-grid" id="automationGrid"></div>
           </section>
           <button class="btn compact-action daily-flow-reset" id="resetDailyFlow" type="button">Bugünü Sıfırla</button>
+          </div>
         </section>
 
         <section class="tab-view" id="control">
@@ -5300,6 +5421,7 @@
   <nav class="mobile-command-bar" id="mobileCommandBar" aria-label="Mobil saha komutları">
     <button type="button" data-icon="K" data-mobile-view="dashboard">Karargâh</button>
     <button type="button" data-icon="S" data-mobile-view="entry">Satış</button>
+    <button class="hidden" data-mobile-view="sales">Satış</button>
     <button class="pulse" type="button" data-icon="K" data-open-command-sheet>Komut</button>
   </nav>
   <div class="command-sheet-backdrop hidden" id="commandSheetBackdrop"></div>
@@ -8422,6 +8544,52 @@
       `).join("");
     }
 
+    function renderLiveOperations() {
+      const focus = byId("livePriorityFocus");
+      const list = byId("liveWorkList");
+      const progress = byId("liveProgress");
+      const alarms = byId("liveAlarms");
+      const alarmCount = byId("liveAlarmCount");
+      if (!focus || !list || !progress || !alarms || !alarmCount) return;
+      const plan = actionCompassPlan();
+      const actions = plan.actions || [];
+      const first = actions[0] || { title: "Günlük kontrolü başlat", text: "Bugünün görevlerini sırayla tamamla.", action: "Görevleri Gör", view: "dashboard", kind: "good" };
+      const firstAttr = first.copy ? "data-copy-compass" : `data-jump-view="${safe(first.view || "dashboard")}"`;
+      focus.innerHTML = `
+        <div class="live-number">01</div>
+        <div><div class="live-eyebrow">Şimdi yapılacak iş</div><h2>${safe(first.title)}</h2><p>${safe(first.text || plan.text || "")}</p></div>
+        <button class="btn primary" type="button" ${firstAttr}>${safe(first.action || "Aç")}</button>
+      `;
+      const rows = actions.slice(1, 4);
+      list.innerHTML = rows.length ? rows.map((item, index) => `
+        <div class="live-work-row">
+          <span class="live-rank">0${index + 2}</span>
+          <div><strong>${safe(item.title)}</strong><small>${safe(item.text || "")}</small></div>
+          <time>${safe(item.value || "Bugün")}</time>
+          <span class="live-pill ${item.kind === "bad" ? "red" : item.kind === "warn" ? "amber" : "green"}">${safe(item.tag || "Görev")}</span>
+        </div>
+      `).join("") : `<div class="empty">Bekleyen ek öncelik görünmüyor.</div>`;
+
+      const dailyItems = dailyFlowItems();
+      const done = dailyFlowState();
+      const completed = dailyItems.filter(item => done[item.id]).length;
+      const percent = dailyItems.length ? Math.round(completed / dailyItems.length * 100) : 0;
+      progress.innerHTML = `<h3>Günün ilerlemesi</h3><p>${completed} / ${dailyItems.length} görev tamamlandı</p>
+        <div class="live-meter"><i style="width:${percent}%"></i></div>
+        <div class="live-progress-foot"><span>Başlangıç</span><span>%${percent}</span></div>`;
+
+      const m = metrics();
+      const overdueJobs = m.jobs.open.filter(row => row.dueIn != null && row.dueIn < 0);
+      const overdueDebt = m.debt.open.filter(row => row.dueIn != null && row.dueIn < 0);
+      const alertRows = [
+        { title: "Teslim gecikmesi", text: overdueJobs.length ? `${overdueJobs.length} sipariş hedef tarihi geçti` : "Geciken teslim görünmüyor" },
+        { title: "Ödeme planı", text: overdueDebt.length ? `${overdueDebt.length} geciken ödeme kontrol edilmeli` : "Geciken ödeme görünmüyor" },
+        { title: m.lowCount ? "Kritik stok" : "Stok temiz", text: m.lowCount ? `${m.lowCount} kalem minimum seviyede` : "Kritik seviyede ürün yok" }
+      ];
+      alarmCount.textContent = `${alertRows.length} kayıt`;
+      alarms.innerHTML = alertRows.map(row => `<div class="live-alert-row"><b>${safe(row.title)}</b><span>${safe(row.text)}</span></div>`).join("");
+    }
+
     function renderAutomations() {
       const m = metrics();
       const overdueDebt = m.debt.open.filter(row => row.dueIn != null && row.dueIn < 0);
@@ -9668,6 +9836,7 @@
           renderCards();
           renderMoves();
           renderGuide();
+          renderLiveOperations();
         }
         if (activeView === "entry") renderOrderBrief();
         if (activeView === "entry") renderOrderHistory();
@@ -10038,6 +10207,11 @@
       if (event.target.closest("[data-open-production]")) return openProductionEntry();
       const btn = event.target.closest("[data-jump-view]");
       if (btn) showView(btn.dataset.jumpView);
+    });
+    byId("livePriorityFocus").addEventListener("click", event => {
+      if (event.target.closest("[data-copy-compass]")) return copyCompassPlan();
+      const jumpButton = event.target.closest("[data-jump-view]");
+      if (jumpButton) showView(jumpButton.dataset.jumpView);
     });
     byId("guideList").addEventListener("click", event => {
       const collectionButton = event.target.closest("[data-open-collection]");
