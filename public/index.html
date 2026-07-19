@@ -2974,7 +2974,7 @@
       display: grid;
       gap: 18px;
     }
-    body:not(.auth-locked) #nav button[data-view]:not([data-view="dashboard"]):not([data-view="entry"]) { display: none; }
+    body:not(.auth-locked) #nav button[data-view]:not([data-view="dashboard"]):not([data-view="analytics"]):not([data-view="entry"]) { display: none; }
     body:not(.auth-locked) #nav .nav-label:not(:first-child) { display: none; }
     body:not(.auth-locked) header #undoLast,
     body:not(.auth-locked) header #exportJson,
@@ -4268,6 +4268,171 @@
       color: #9df0d6;
       background: #25463f;
     }
+    body:not(.auth-locked).dashboard-dark .title-row {
+      position: relative;
+      padding: 12px 0 24px;
+    }
+    body:not(.auth-locked).dashboard-dark .title-row::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 7px;
+      width: 180px;
+      height: 4px;
+      border-radius: 99px;
+      background: linear-gradient(90deg,#65dfbd,#5aa9ff,#ff70b7);
+    }
+    body:not(.auth-locked).dashboard-dark .surface-live {
+      position: relative;
+    }
+    body:not(.auth-locked).dashboard-dark .surface-live::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 2px;
+      pointer-events: none;
+      background: linear-gradient(90deg,#65dfbd 0%,#5aa9ff 48%,#ff70b7 100%);
+    }
+    body:not(.auth-locked).dashboard-dark .live-priority-focus .btn.primary {
+      border-bottom: 3px solid #2f9f84;
+    }
+    /* Full-color executive dashboard */
+    body:not(.auth-locked) #analytics {
+      margin: -28px 0 -60px;
+      padding: 30px;
+      border-radius: 24px 24px 0 0;
+      color: #fff;
+      background:
+        radial-gradient(circle at 8% 4%, rgba(255,213,94,.33), transparent 24%),
+        radial-gradient(circle at 92% 8%, rgba(255,72,156,.35), transparent 27%),
+        radial-gradient(circle at 78% 82%, rgba(46,229,157,.24), transparent 28%),
+        linear-gradient(135deg, #4020a0 0%, #6936d6 34%, #c42b86 68%, #ed6f4c 100%);
+    }
+    body:not(.auth-locked) .full-dashboard { display: grid; gap: 18px; }
+    body:not(.auth-locked) .full-dashboard-hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 150px;
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 20px;
+      background: rgba(26,13,75,.34);
+    }
+    body:not(.auth-locked) .full-dashboard-kicker {
+      margin-bottom: 8px;
+      color: #ffe67d;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    body:not(.auth-locked) .full-dashboard-hero h2 {
+      margin: 0 0 7px;
+      color: #fff;
+      font-size: clamp(32px,4vw,50px);
+      letter-spacing: -.055em;
+    }
+    body:not(.auth-locked) .full-dashboard-hero p { margin: 0; color: #e8dff7; font-size: 13px; }
+    body:not(.auth-locked) .full-dashboard-health {
+      min-width: 180px;
+      padding: 16px 18px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 16px;
+      color: #fff;
+      background: rgba(255,255,255,.12);
+      text-align: right;
+    }
+    body:not(.auth-locked) .full-dashboard-health strong { display: block; font-size: 28px; }
+    body:not(.auth-locked) .full-dashboard-health span { color: #e9e2f6; font-size: 10px; }
+    body:not(.auth-locked) .full-dashboard-actions {
+      display: grid;
+      grid-template-columns: repeat(6,minmax(110px,1fr));
+      gap: 9px;
+    }
+    body:not(.auth-locked) .full-dashboard-actions button {
+      min-height: 54px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 12px;
+      color: #fff;
+      background: rgba(32,15,86,.38);
+      font-size: 11px;
+      font-weight: 850;
+    }
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(1){background:#00a884}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(2){background:#f05272}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(3){background:#3478e5}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(4){background:#f29a2e}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(5){background:#8a4dde}
+    body:not(.auth-locked) .full-dashboard-actions button:nth-child(6){background:#16a7ba}
+    body:not(.auth-locked) .full-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4,minmax(180px,1fr));
+      gap: 12px;
+    }
+    body:not(.auth-locked) .full-stat {
+      min-height: 132px;
+      padding: 19px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 17px;
+      color: #fff;
+      background: rgba(255,255,255,.14);
+    }
+    body:not(.auth-locked) .full-stat:nth-child(8n+1){background:linear-gradient(135deg,#006f8b,#00af9c)}
+    body:not(.auth-locked) .full-stat:nth-child(8n+2){background:linear-gradient(135deg,#e23c6f,#ff795f)}
+    body:not(.auth-locked) .full-stat:nth-child(8n+3){background:linear-gradient(135deg,#2858c8,#4a99f4)}
+    body:not(.auth-locked) .full-stat:nth-child(8n+4){background:linear-gradient(135deg,#d97918,#ffc23d)}
+    body:not(.auth-locked) .full-stat:nth-child(8n+5){background:linear-gradient(135deg,#6940bd,#ad58d7)}
+    body:not(.auth-locked) .full-stat:nth-child(8n+6){background:linear-gradient(135deg,#118b9c,#28c9b0)}
+    body:not(.auth-locked) .full-stat:nth-child(8n+7){background:linear-gradient(135deg,#a42f70,#ef5b9a)}
+    body:not(.auth-locked) .full-stat:nth-child(8n+8){background:linear-gradient(135deg,#475064,#7d8ca3)}
+    body:not(.auth-locked) .full-stat span { display:block;color:rgba(255,255,255,.78);font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    body:not(.auth-locked) .full-stat strong { display:block;margin-top:12px;font-size:25px;letter-spacing:-.04em}
+    body:not(.auth-locked) .full-stat small { display:block;margin-top:7px;color:rgba(255,255,255,.8);font-size:10px}
+    body:not(.auth-locked) .full-dashboard-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    body:not(.auth-locked) .full-viz-card {
+      padding:20px;
+      border:1px solid rgba(255,255,255,.28);
+      border-radius:18px;
+      color:#fff;
+      background:rgba(27,13,73,.48);
+    }
+    body:not(.auth-locked) .full-viz-wide { grid-column:span 2 }
+    body:not(.auth-locked) .full-viz-head { display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
+    body:not(.auth-locked) .full-viz-head span{color:#e2d8f5;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    body:not(.auth-locked) .full-viz-head h3{margin:4px 0 0;color:#fff;font-size:17px}
+    body:not(.auth-locked) .full-viz-head b{color:#ffe67d;font-size:11px}
+    body:not(.auth-locked) .full-viz-head button{border:1px solid rgba(255,255,255,.28);border-radius:8px;padding:7px 10px;color:#fff;background:rgba(255,255,255,.12);font-size:10px}
+    body:not(.auth-locked) .full-bars{display:grid;gap:12px}
+    body:not(.auth-locked) .full-bar-row{display:grid;grid-template-columns:110px minmax(0,1fr) 100px;align-items:center;gap:11px;font-size:10px}
+    body:not(.auth-locked) .full-bar-track{height:12px;overflow:hidden;border-radius:99px;background:rgba(255,255,255,.13)}
+    body:not(.auth-locked) .full-bar-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#ffe45e,#ff6fa5)}
+    body:not(.auth-locked) .full-bar-row b{text-align:right;font-size:10px}
+    body:not(.auth-locked) .full-donut{display:grid;place-items:center;width:156px;height:156px;margin:8px auto;border-radius:50%;background:conic-gradient(#49e3b1 0 var(--p),#ffcc52 var(--p) 75%,rgba(255,255,255,.13) 75%)}
+    body:not(.auth-locked) .full-donut::after{content:"";width:104px;height:104px;border-radius:50%;background:#32176f}
+    body:not(.auth-locked) .full-donut-label{margin-top:-100px;text-align:center;position:relative;z-index:2}
+    body:not(.auth-locked) .full-donut-label strong{display:block;font-size:25px}.full-donut-label span{font-size:9px;color:#dfd6ef}
+    body:not(.auth-locked) .full-production-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    body:not(.auth-locked) .full-mini-stat{padding:15px;border-radius:12px;background:rgba(255,255,255,.12)}
+    body:not(.auth-locked) .full-mini-stat strong{display:block;font-size:22px}.full-mini-stat span{font-size:9px;color:#e4daf4}
+    body:not(.auth-locked) .full-recent-list{display:grid;gap:1px;background:rgba(255,255,255,.16)}
+    body:not(.auth-locked) .full-recent-row{display:grid;grid-template-columns:90px 110px minmax(0,1fr) 110px;gap:12px;padding:11px;background:#351978;font-size:10px}
+    body:not(.auth-locked) .full-recent-row strong{text-align:right}
+    @media(max-width:1050px){
+      body:not(.auth-locked) .full-dashboard-actions{grid-template-columns:repeat(3,1fr)}
+      body:not(.auth-locked) .full-stat-grid{grid-template-columns:repeat(2,1fr)}
+      body:not(.auth-locked) .full-dashboard-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:680px){
+      body:not(.auth-locked) #analytics{padding:14px;margin:-14px -10px -94px;border-radius:0}
+      body:not(.auth-locked) .full-dashboard-hero{align-items:flex-start;flex-direction:column}
+      body:not(.auth-locked) .full-dashboard-health{width:100%;text-align:left}
+      body:not(.auth-locked) .full-dashboard-actions{grid-template-columns:1fr 1fr}
+      body:not(.auth-locked) .full-stat-grid,.full-dashboard-grid{grid-template-columns:1fr!important}
+      body:not(.auth-locked) .full-viz-wide{grid-column:auto}
+      body:not(.auth-locked) .full-recent-row{grid-template-columns:76px 1fr 90px}.full-recent-row span:nth-child(2){display:none}
+    }
     body:not(.auth-locked).dashboard-dark #saveBadge {
       color: #1e625c;
       border-color: #c6d8d4;
@@ -4569,6 +4734,7 @@
         <nav class="nav" id="nav">
           <div class="nav-label">Ana Menü</div>
           <button class="active" data-icon="K" data-view="dashboard">Karargâh</button>
+          <button data-icon="D" data-view="analytics">Dashboard</button>
           <button data-icon="S" data-view="entry">Satış</button>
           <div class="tools-menu-wrap">
             <button id="toolsMenuButton" type="button" aria-expanded="false">Araçlar</button>
@@ -4690,6 +4856,46 @@
             <div class="automation-grid" id="automationGrid"></div>
           </section>
           <button class="btn compact-action daily-flow-reset" id="resetDailyFlow" type="button">Bugünü Sıfırla</button>
+          </div>
+        </section>
+
+        <section class="tab-view" id="analytics">
+          <div class="full-dashboard">
+            <div class="full-dashboard-hero">
+              <div>
+                <div class="full-dashboard-kicker">Miraç işletme panoraması</div>
+                <h2>Rakamlar konuşsun.</h2>
+                <p>Satış, para, sipariş, üretim, stok ve borç tek canlı ekranda.</p>
+              </div>
+              <div class="full-dashboard-health" id="fullDashboardHealth"></div>
+            </div>
+            <div class="full-dashboard-actions" id="fullDashboardActions">
+              <button type="button" data-full-view="entry">Yeni Sipariş</button>
+              <button type="button" data-full-view="sales">Satış &amp; Teslim</button>
+              <button type="button" data-full-view="production">Üretim</button>
+              <button type="button" data-full-view="stock">Stok</button>
+              <button type="button" data-full-view="cari">Cari</button>
+              <button type="button" data-full-view="fixed">Kasa &amp; POS</button>
+            </div>
+            <div class="full-stat-grid" id="fullStatGrid"></div>
+            <div class="full-dashboard-grid">
+              <section class="full-viz-card full-viz-wide">
+                <div class="full-viz-head"><div><span>Finansal dağılım</span><h3>Para akışı ve yük</h3></div><b id="fullFinanceCaption"></b></div>
+                <div class="full-bars" id="fullFinanceBars"></div>
+              </section>
+              <section class="full-viz-card">
+                <div class="full-viz-head"><div><span>Sipariş nabzı</span><h3>Açık işler</h3></div></div>
+                <div class="full-donut-wrap" id="fullOrderPulse"></div>
+              </section>
+              <section class="full-viz-card">
+                <div class="full-viz-head"><div><span>Üretim hattı</span><h3>Atölye durumu</h3></div></div>
+                <div class="full-production-stats" id="fullProductionStats"></div>
+              </section>
+              <section class="full-viz-card full-viz-wide">
+                <div class="full-viz-head"><div><span>Canlı hareket</span><h3>Son kayıtlar</h3></div><button type="button" data-full-view="moves">Tümünü aç</button></div>
+                <div class="full-recent-list" id="fullRecentList"></div>
+              </section>
+            </div>
           </div>
         </section>
 
@@ -8898,6 +9104,61 @@
       byId("liveTasksDialog").showModal();
     }
 
+    function renderFullDashboard() {
+      const statGrid = byId("fullStatGrid");
+      if (!statGrid) return;
+      const m = metrics();
+      const txs = activeTransactions();
+      const salesTotal = txs.filter(tx => tx.type === "SATIS").reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
+      const collectionTotal = txs.filter(tx => tx.type === "TAHSILAT").reduce((sum, tx) => sum + Number(tx.amount || tx.paid || 0), 0);
+      const expenseTotal = txs.filter(tx => ["MASRAF","ODEME","BORC_ODEME","PERSONEL_ODEME"].includes(tx.type)).reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
+      const orderCount = m.openOrders.length;
+      const jobCount = m.jobs.open.length;
+      const health = actionCompassPlan().score;
+      byId("fullDashboardHealth").innerHTML = `<strong>${health}/100</strong><span>İşletme sağlık skoru</span>`;
+      const stats = [
+        ["Toplam Satış", money(salesTotal), `${txs.filter(tx => tx.type === "SATIS").length} satış kaydı`],
+        ["Tahsilat", money(collectionTotal), `${m.customers.filter(row => row.receivable > 0).length} açık müşteri`],
+        ["Kasa / Banka / POS", money(m.cashTotal), `${(state.accounts || []).filter(row => row.active !== false).length} aktif hesap`],
+        ["Müşteri Alacağı", money(m.receivable), "Tahsilat fırsatı"],
+        ["Ticari Borç", money(m.payable), `${(m.suppliers || []).filter(row => row.payable > 0).length} tedarikçi`],
+        ["Açık Sipariş", `${orderCount}`, money(m.openOrderTotal)],
+        ["Aktif Üretim", `${jobCount}`, `${m.jobs.urgent.length} acil / geciken`],
+        ["Kritik Stok", `${m.lowCount}`, `${state.items.length} stok kartı`]
+      ];
+      statGrid.innerHTML = stats.map(([label,value,note]) => `<article class="full-stat"><span>${safe(label)}</span><strong>${safe(value)}</strong><small>${safe(note)}</small></article>`).join("");
+
+      const finance = [
+        ["Satış", salesTotal],
+        ["Tahsilat", collectionTotal],
+        ["Alacak", m.receivable],
+        ["Borç", m.payable],
+        ["Gider / Ödeme", expenseTotal],
+        ["7 Günlük Yük", m.debt.dueSoonTotal + m.fixed.weeklyTotal]
+      ];
+      const maxValue = Math.max(1, ...finance.map(([,value]) => Number(value || 0)));
+      byId("fullFinanceCaption").textContent = `Net cari ${money(m.receivable - m.payable)}`;
+      byId("fullFinanceBars").innerHTML = finance.map(([label,value]) => `
+        <div class="full-bar-row"><span>${safe(label)}</span><div class="full-bar-track"><i style="width:${Math.max(3, Math.round(Number(value || 0) / maxValue * 100))}%"></i></div><b>${safe(money(value))}</b></div>
+      `).join("");
+
+      const completedOrders = txs.filter(tx => tx.type === "SIPARIS" && tx.status === "Teslim").length;
+      const totalOrders = Math.max(1, txs.filter(tx => tx.type === "SIPARIS").length);
+      const completion = Math.round(completedOrders / totalOrders * 100);
+      byId("fullOrderPulse").innerHTML = `<div class="full-donut" style="--p:${completion}%"></div><div class="full-donut-label"><strong>${orderCount}</strong><span>Açık sipariş</span></div>`;
+      byId("fullProductionStats").innerHTML = [
+        ["Açık iş", jobCount],
+        ["Acil", m.jobs.urgent.length],
+        ["Stok alarmı", m.lowCount],
+        ["Ürün kartı", state.items.length]
+      ].map(([label,value]) => `<div class="full-mini-stat"><strong>${safe(value)}</strong><span>${safe(label)}</span></div>`).join("");
+
+      const recent = txs.slice().reverse().slice(0, 7);
+      byId("fullRecentList").innerHTML = recent.length ? recent.map(tx => `
+        <div class="full-recent-row"><span>${safe(tx.date || "")}</span><span>${safe(txTypeLabel(tx.type))}</span><span>${safe(tx.party || orderProductLabel(tx) || "-")}</span><strong>${safe(money(tx.amount || 0))}</strong></div>
+      `).join("") : `<div class="empty">Henüz hareket yok.</div>`;
+    }
+
     function renderAutomations() {
       const m = metrics();
       const overdueDebt = m.debt.open.filter(row => row.dueIn != null && row.dueIn < 0);
@@ -10146,6 +10407,7 @@
           renderGuide();
           renderLiveOperations();
         }
+        if (activeView === "analytics") renderFullDashboard();
         if (activeView === "entry") renderOrderBrief();
         if (activeView === "entry") renderOrderHistory();
         if (activeView === "sales") {
@@ -10205,6 +10467,7 @@
 
     const viewSubtitles = {
       dashboard: "Saha karar ekranı: para, teslim, borç, stok ve üretim önceliği.",
+      analytics: "Tam işletme panoraması: satış, para, cari, sipariş, üretim, stok ve borç istatistikleri.",
       control: "Kayıt, hesap ve teknik sağlık; hata varsa yeni işlemden önce burası temizlenir.",
       entry: "30 saniyede sipariş: ölçü, varyant, kapora, PDF teklif ve WhatsApp.",
       sales: "Satış kaydı: stok düşer, müşteri alacağı ve tahsilat aynı anda izlenir.",
@@ -10539,6 +10802,10 @@
       if (event.target.closest("[data-copy-compass]")) return copyCompassPlan();
       const jumpButton = event.target.closest("[data-jump-view]");
       if (jumpButton) showView(jumpButton.dataset.jumpView);
+    });
+    byId("analytics").addEventListener("click", event => {
+      const button = event.target.closest("[data-full-view]");
+      if (button) showView(button.dataset.fullView);
     });
     byId("liveProgress").addEventListener("click", event => {
       if (event.target.closest("#openLiveTasks")) openLiveTasksDialog();
