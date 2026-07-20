@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
-const html = fs.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
+const html = fs.readFileSync(new URL("../public/index.html", import.meta.url), "utf8").replace(/\r\n/g, "\n");
 const sw = fs.readFileSync(new URL("../public/sw.js", import.meta.url), "utf8");
 const start = html.indexOf("function renderAll()");
-const end = html.indexOf("function renderSearchView", start);
+const end = html.indexOf("function openCashEntry", start);
 const render = html.slice(start, end);
 
 assert.ok(render.includes('const activeView = document.querySelector(".tab-view.active")?.id'), "Full render must detect the visible view");

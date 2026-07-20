@@ -4319,6 +4319,16 @@
     body:not(.auth-locked).dashboard-dark .live-status-card.finance{color:#e4cdc5;background:#49342e;border-color:#745248}
     body:not(.auth-locked).dashboard-dark .live-status-card.red{color:#ffc0bd;background:#62272a;border-color:#a43d42}
     body:not(.auth-locked).dashboard-dark .live-status-card button{background:rgba(0,0,0,.12)}
+    body:not(.auth-locked).dashboard-dark .live-field-queue { border-color: #3b454c; }
+    body:not(.auth-locked).dashboard-dark .live-field-queue-head h3,
+    body:not(.auth-locked).dashboard-dark .live-field-queue-card strong,
+    body:not(.auth-locked).dashboard-dark .live-field-queue-card-value { color: #fff; }
+    body:not(.auth-locked).dashboard-dark .live-field-queue-kicker { color: #65dfbd; }
+    body:not(.auth-locked).dashboard-dark .live-field-queue-count,
+    body:not(.auth-locked).dashboard-dark .live-field-queue-card p { color: #aebbc1; }
+    body:not(.auth-locked).dashboard-dark .live-field-queue-card { border-color: #465159; background: rgba(14,20,24,.56); }
+    body:not(.auth-locked).dashboard-dark .live-field-queue-card button { color: #bff5e5; border-color: #426b63; background: #21443f; }
+    body:not(.auth-locked).dashboard-dark .live-field-queue-empty { border-color: #465159; color: #aebbc1; background: rgba(14,20,24,.56); }
     body:not(.auth-locked).dashboard-dark .title-row {
       position: relative;
       padding: 12px 0 24px;
@@ -4559,6 +4569,29 @@
     body:not(.auth-locked) .full-mini-stat span { color: #F1ECF8; opacity: 1; }
     body:not(.auth-locked) .full-stat:nth-child(8n+4),
     body:not(.auth-locked) .full-stat:nth-child(8n+4) :is(span,strong,small) { color:#2A2112; }
+    body.worker-mode #entry .worker-finance-field,
+    body.worker-mode #entry .worker-finance-action { display: none !important; }
+    body.worker-mode #entry .worker-finance-notice {
+      display: block !important;
+      margin-top: 8px;
+      padding: 9px 11px;
+      border: 1px solid #b8d4ba;
+      border-radius: 8px;
+      color: #1f5d24;
+      background: #e7f1e8;
+      font-size: 11px;
+      font-weight: 750;
+    }
+    body.worker-mode .worker-finance-col { display: none !important; }
+    body.worker-mode #stock .worker-finance-card { display: none !important; }
+    body.worker-mode #stock .worker-finance-cell { display: none !important; }
+    body.worker-mode #stock .stock-family-finance { display: none !important; }
+    @media (max-width: 900px) {
+      body:not(.auth-locked) .live-field-queue-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      body:not(.auth-locked) .live-field-queue-grid { grid-template-columns: 1fr; }
+    }
     body:not(.auth-locked).dashboard-dark #saveBadge {
       color: #1e625c;
       border-color: #c6d8d4;
@@ -4679,6 +4712,77 @@
     body:not(.auth-locked) .live-pill.red { color: #a24d45; background: #f6e9e7; }
     body:not(.auth-locked) .live-pill.amber { color: #9a6a28; background: #f5eedf; }
     body:not(.auth-locked) .live-pill.green { color: #1e625c; background: #e8f0ee; }
+    body:not(.auth-locked) .live-field-queue {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #edf0f1;
+    }
+    body:not(.auth-locked) .live-field-queue-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    body:not(.auth-locked) .live-field-queue-head h3 { margin: 3px 0 0; color: #142027; font-size: 14px; }
+    body:not(.auth-locked) .live-field-queue-kicker {
+      color: #1e625c;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    body:not(.auth-locked) .live-field-queue-count { color: #66737b; font-size: 10px; font-weight: 800; }
+    body:not(.auth-locked) .live-field-queue-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    body:not(.auth-locked) .live-field-queue-card {
+      display: grid;
+      min-width: 0;
+      gap: 9px;
+      padding: 12px;
+      border: 1px solid #dfe3e5;
+      border-radius: 9px;
+      background: #f8faf9;
+    }
+    body:not(.auth-locked) .live-field-queue-card strong {
+      display: block;
+      overflow: hidden;
+      color: #142027;
+      font-size: 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    body:not(.auth-locked) .live-field-queue-card p {
+      min-height: 30px;
+      margin: 3px 0 0;
+      overflow: hidden;
+      color: #66737b;
+      font-size: 10px;
+      line-height: 1.45;
+      text-overflow: ellipsis;
+    }
+    body:not(.auth-locked) .live-field-queue-card-value { color: #142027; font-size: 15px; font-weight: 850; }
+    body:not(.auth-locked) .live-field-queue-card button {
+      width: 100%;
+      border: 1px solid #c8d5d2;
+      border-radius: 7px;
+      padding: 7px 8px;
+      color: #1e625c;
+      background: #e8f0ee;
+      font-size: 10px;
+      font-weight: 850;
+    }
+    body:not(.auth-locked) .live-field-queue-card.collection { border-top: 3px solid #6d4c41; }
+    body:not(.auth-locked) .live-field-queue-card.stock { border-top: 3px solid #8e24aa; }
+    body:not(.auth-locked) .live-field-queue-card.debt { border-top: 3px solid #e53935; }
+    body:not(.auth-locked) .live-field-queue-card.production { border-top: 3px solid #1976d2; }
+    body:not(.auth-locked) .live-field-queue-empty {
+      padding: 13px;
+      border: 1px dashed #cfd8d8;
+      border-radius: 9px;
+      color: #66737b;
+      background: #f8faf9;
+      font-size: 11px;
+    }
     body:not(.auth-locked) aside.live-side-stack {
       position: static;
       z-index: auto;
@@ -4994,6 +5098,7 @@
               <div class="live-priority-focus" id="livePriorityFocus"></div>
               <div class="live-status-strip" id="liveStatusStrip"></div>
               <div class="live-work-list" id="liveWorkList"></div>
+              <section class="live-field-queue" id="liveFieldQueue"></section>
             </section>
             <aside class="live-side-stack">
               <section class="surface-live live-progress" id="liveProgress"></section>
@@ -5115,6 +5220,7 @@
               <div>
                 <h2>30 Saniyede Sipariş</h2>
                 <div class="hint">Müşteri, ölçü, varyant, kapora ve teslim bilgisi tek akışta.</div>
+                <div id="workerFinanceNotice" class="worker-finance-notice role-hidden">Mahmud görünümü: fiyat, kapora ve kasa bilgileri gizlidir. Sipariş üretime düşer; finansı yetkili tamamlar.</div>
               </div>
               <span class="status warn">Cari + üretim işi bağlar</span>
             </div>
@@ -5126,6 +5232,7 @@
               <span><b>3</b>Teslim &amp; Satış</span>
             </div>
             <form id="orderForm">
+              <input id="orderEditId" type="hidden">
               <div class="entry-grid">
                 <div class="field">
                   <label for="orderDate">Sipariş Tarihi</label>
@@ -5156,15 +5263,15 @@
                   <label for="orderQty">Adet</label>
                   <input id="orderQty" type="number" min="0" step="0.01" placeholder="1" required>
                 </div>
-                <div class="field">
+                <div class="field worker-finance-field">
                   <label for="orderUnitPrice">Birim Fiyat</label>
                   <input id="orderUnitPrice" type="number" min="0" step="0.01" placeholder="0">
                 </div>
-                <div class="field">
+                <div class="field worker-finance-field">
                   <label for="orderPaid">Kapora / Tahsilat</label>
                   <input id="orderPaid" type="number" min="0" step="0.01" placeholder="0">
                 </div>
-                <div class="field">
+                <div class="field worker-finance-field">
                   <label for="orderAccount">Kasa / Banka</label>
                   <select id="orderAccount"></select>
                 </div>
@@ -5191,9 +5298,9 @@
               </div>
               <div class="form-actions">
                 <button class="btn" type="button" id="clearOrderForm">Temizle</button>
-                <button class="btn primary" type="submit">Siparişi Kaydet</button>
+                <button class="btn primary" id="saveOrderButton" type="submit">Siparişi Kaydet</button>
               </div>
-              <div class="sales-tool-row">
+              <div class="sales-tool-row worker-finance-action">
                 <button class="btn" type="button" id="draftOfferPdf">PDF Teklif Önizle</button>
                 <button class="btn" type="button" id="draftOfferWhatsapp">WhatsApp'ta Paylaş</button>
               </div>
@@ -5251,6 +5358,7 @@
               <span class="status ok">Satış / Alış / Tahsilat / Ödeme / Mahsup / Personel</span>
             </div>
             <form id="entryForm">
+              <input id="txEditId" type="hidden">
               <div class="entry-grid">
                 <div class="field">
                   <label for="txType">İşlem Tipi</label>
@@ -5325,7 +5433,7 @@
               </div>
               <div class="form-actions">
                 <button class="btn" type="button" id="clearForm">Temizle</button>
-                <button class="btn primary" type="submit">Kaydet ve Hesapla</button>
+                <button class="btn primary" id="saveTransactionButton" type="submit">Kaydet ve Hesapla</button>
               </div>
             </form>
           </div>
@@ -5420,6 +5528,7 @@
                   <span class="status ok">Sıfır bakiye / hareket üretmez</span>
                 </div>
                 <form id="cariCardForm">
+                  <input id="cariCardEditId" type="hidden">
                   <div class="entry-grid">
                     <div class="field">
                       <label for="cariCardType">Cari Türü</label>
@@ -5452,7 +5561,7 @@
                   </div>
                   <div class="form-actions">
                     <button class="btn" type="button" id="clearCariCard">Temizle</button>
-                    <button class="btn primary" type="submit">Cari Kartı Kaydet</button>
+                    <button class="btn primary" id="saveCariCardButton" type="submit">Cari Kartı Kaydet</button>
                   </div>
                 </form>
               </div>
@@ -5462,6 +5571,7 @@
                   <span class="status warn">Sadece eski borç/alacak devri</span>
                 </div>
                 <form id="cariOpeningForm">
+                  <input id="cariOpeningEditId" type="hidden">
                   <div class="entry-grid">
                     <div class="field">
                       <label for="cariOpeningType">Açılış Türü</label>
@@ -5489,7 +5599,7 @@
                   </div>
                   <div class="form-actions">
                     <button class="btn" type="button" id="clearCariOpening">Temizle</button>
-                    <button class="btn primary" type="submit">Cari Açılışı Kaydet</button>
+                    <button class="btn primary" id="saveCariOpeningButton" type="submit">Cari Açılışı Kaydet</button>
                   </div>
                 </form>
               </div>
@@ -5530,6 +5640,7 @@
                 <span class="status warn">Tek plan</span>
               </div>
               <form id="debtForm">
+                <input id="debtEditId" type="hidden">
                 <div class="entry-grid">
                   <div class="field">
                     <label for="debtType">Borç Türü</label>
@@ -5593,7 +5704,7 @@
                 </div>
                 <div class="form-actions">
                   <button class="btn" type="button" id="clearDebtForm">Temizle</button>
-                  <button class="btn primary" type="submit">Borç Planına Ekle</button>
+                  <button class="btn primary" id="saveDebtButton" type="submit">Borç Planına Ekle</button>
                 </div>
               </form>
             </div>
@@ -5629,6 +5740,7 @@
               <button class="stock-mode" type="button" data-stock-action="merge-size-cards"><strong>Eski Kartları Toparla</strong><span>Aynı modelin ölçülü eski kartlarını aileye bağlar.</span></button>
             </div>
             <form id="inventoryNameForm">
+              <input id="inventoryEditCode" type="hidden">
               <div class="entry-grid">
                 <div class="field">
                   <label for="inventoryKind">Tür</label>
@@ -5766,7 +5878,7 @@
               <div class="form-actions">
                 <button class="btn" type="button" id="clearInventoryForm">Temizle</button>
                 <button class="btn" type="button" id="buildInventoryName">İsim Oluştur</button>
-                <button class="btn primary" type="submit">Stok Kartına Kaydet</button>
+                <button class="btn primary" id="saveInventoryButton" type="submit">Stok Kartına Kaydet</button>
               </div>
             </form>
             </div>
@@ -5846,7 +5958,7 @@
           <div class="panel">
             <div class="panel-head">
               <h2>Üretim İş Listesi</h2>
-              <span class="status warn">İşleme Alındı / Üretim Aşamasında / Teslimata Hazır / Teslim Edildi</span>
+              <span class="status warn">Mahmud · İşleme Alındı / Üretim Aşamasında / Teslimata Hazır / Teslim Edildi</span>
             </div>
             <form id="workOrderForm">
               <input id="jobEditId" type="hidden">
@@ -6023,6 +6135,7 @@
                 <span class="status warn">Planlanan yük</span>
               </div>
               <form id="fixedForm">
+                <input id="fixedEditId" type="hidden">
                 <div class="entry-grid">
                   <div class="field">
                     <label for="fixedName">Gider Adı</label>
@@ -6062,7 +6175,7 @@
                 </div>
                 <div class="form-actions">
                   <button class="btn" type="button" id="clearFixedForm">Temizle</button>
-                  <button class="btn primary" type="submit">Sabit Gider Ekle</button>
+                  <button class="btn primary" id="saveFixedButton" type="submit">Sabit Gider Ekle</button>
                 </div>
               </form>
             </div>
@@ -6130,8 +6243,9 @@
 
   <dialog class="payment-dialog" id="debtPaymentDialog">
     <form id="debtPaymentForm">
+      <input id="debtPaymentEditId" type="hidden">
       <div class="payment-dialog-head">
-        <h2>Borç Ödemesi Gir</h2>
+        <h2 id="debtPaymentTitle">Borç Ödemesi Gir</h2>
         <div class="hint" id="debtPaymentSummary"></div>
       </div>
       <div class="payment-dialog-grid">
@@ -6146,7 +6260,7 @@
       </div>
       <div class="form-actions">
         <button class="btn" id="cancelDebtPayment" type="button">Vazgeç</button>
-        <button class="btn primary" type="submit">Ödemeyi Kaydet</button>
+        <button class="btn primary" id="saveDebtPaymentButton" type="submit">Ödemeyi Kaydet</button>
       </div>
     </form>
   </dialog>
@@ -6234,6 +6348,7 @@
     let renderMetricsCache = null;
     let searchRenderTimer = null;
     const clientId = getClientId();
+    const DEFAULT_PRODUCTION_ASSIGNEE = "Mahmud";
     const WORKER_ALLOWED_VIEWS = new Set(["entry", "production", "stock"]);
     const WORKER_ALLOWED_TX_TYPES = new Set(["SIPARIS", "URETIM"]);
 
@@ -6545,11 +6660,15 @@
     function fillInventoryFromFamily(key) {
       const item = (state.items || []).find(row => stockFamilyKey(row) === key);
       if (!item) return;
+      byId("inventoryEditCode").value = item.code || "";
       byId("inventoryKind").value = item.kind || "Mamül";
       byId("inventoryGroup").value = item.group || item.category || "Baza";
       byId("inventoryModel").value = item.model || String(stockFamilyTitle(item)).replace(new RegExp(`^${String(item.group || item.category || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*-\\s*`, "i"), "");
       byId("inventorySize").value = item.kind === "Mamül" ? "" : (item.size || "");
       byId("inventoryVariant").value = item.kind === "Mamül" ? "" : (item.variant || "");
+      byId("inventoryUnit").value = item.unit || "adet";
+      byId("inventoryOpening").value = Number(item.opening || 0) || "";
+      byId("inventoryMin").value = Number(item.min || 0) || "";
       byId("inventorySizeVariants").value = itemSizeVariants(item).filter(value => value !== "Özel Ölçü").join("\n");
       byId("inventoryVariantOptions").value = itemColorVariants(item).join(", ");
       byId("inventorySalePrice").value = Number(item.salePrice || 0) || "";
@@ -6562,6 +6681,7 @@
       renderInventoryImagePreview(pendingInventoryImage);
       updateInventoryMode();
       buildInventoryNamePreview();
+      byId("saveInventoryButton").textContent = "Stok Kartını Güncelle";
       byId("inventoryModel").focus();
     }
     function applyInventoryMode(kind, group) {
@@ -7037,6 +7157,10 @@
       return currentRole() === "worker";
     }
 
+    function productionAssigneeLabel(job = {}) {
+      return String(job.assignee || "").trim() || DEFAULT_PRODUCTION_ASSIGNEE;
+    }
+
     function canWriteCloudMigrations() {
       return ["owner", "editor"].includes(currentRole());
     }
@@ -7070,6 +7194,7 @@
       ["undoLast", "exportJson", "exportCsv"].forEach(id => byId(id)?.classList.toggle("role-hidden", worker));
       document.querySelectorAll(".secondary-entry-panel").forEach(panel => panel.classList.toggle("role-hidden", worker));
       byId("inventoryNameForm")?.closest(".panel")?.classList.toggle("role-hidden", worker);
+      byId("workerFinanceNotice")?.classList.toggle("role-hidden", !worker);
       const quickEntry = byId("quickEntry");
       if (quickEntry) quickEntry.textContent = "Yeni Sipariş";
       renderMobileCommandBar();
@@ -8501,9 +8626,54 @@
           <td class="money">${qty(tx.qty || 0)}</td>
           <td class="money">${money(tx.amount || 0)}</td>
           <td><span class="status ${isCanceled(tx) ? "bad" : "ok"}">${safe(tx.status || "")}</span></td>
-          <td>${isCanceled(tx) ? "Etkisiz" : `<div class="row-actions">${tx.type === "SIPARIS" ? `<button class="btn compact-action" data-print-order="${safe(tx.id)}" type="button">Fiş Yazdır</button>` : ""}<button class="btn danger compact-action" data-cancel-tx="${safe(tx.id)}" type="button">İptal</button></div>`}</td>
+          <td>${isCanceled(tx) ? "Etkisiz" : `<div class="row-actions">${tx.type === "SIPARIS" ? `<button class="btn compact-action" data-edit-order="${safe(tx.id)}" type="button">Düzelt</button>` : tx.type === "BORC_ODEME" ? `<button class="btn compact-action" data-edit-debt-payment="${safe(tx.id)}" type="button">Düzelt</button>` : tx.type === "URETIM" ? `<button class="btn compact-action" data-jump-view="production" type="button">Üretime Git</button>` : `<button class="btn compact-action" data-edit-tx="${safe(tx.id)}" type="button">Düzelt</button>`}${tx.type === "SIPARIS" ? `<button class="btn compact-action" data-print-order="${safe(tx.id)}" type="button">Fiş Yazdır</button>` : ""}<button class="btn danger compact-action" data-cancel-tx="${safe(tx.id)}" type="button">İptal</button></div>`}</td>
         </tr>`).join("")}</tbody>
       </table>`;
+    }
+
+    function editDebtPayment(id) {
+      if (blockWorkerAction("Borç ödeme düzeltmesi üretim personeli hesabında kapalı.")) return;
+      const tx = (state.transactions || []).find(row => row.id === id && row.type === "BORC_ODEME" && !isCanceled(row));
+      const plan = tx?.debtPlanId ? (state.debtPlans || []).find(row => row.id === tx.debtPlanId && !isCanceled(row)) : null;
+      if (!tx || !plan) return alert("Düzeltilecek borç ödeme veya bağlı plan bulunamadı.");
+      byId("debtPaymentEditId").value = tx.id;
+      pendingDebtPaymentId = plan.id;
+      byId("debtPaymentSummary").textContent = `${plan.id} / ${plan.party} · Mevcut ödeme ${money(tx.amount)} · ${plan.account || "Banka"}`;
+      byId("debtPaymentDate").value = tx.date || today;
+      byId("debtPaymentAmount").value = Number(tx.amount || 0);
+      byId("debtPaymentAmount").max = Math.max(0, Number(plan.amount || 0) - Math.max(0, Number(plan.paid || 0) - Number(tx.amount || 0)));
+      byId("debtPaymentTitle").textContent = "Borç Ödemesini Düzelt";
+      byId("saveDebtPaymentButton").textContent = "Ödemeyi Güncelle";
+      byId("debtPaymentDialog").showModal();
+      setTimeout(() => byId("debtPaymentDate").focus(), 0);
+    }
+
+    function editTransaction(id) {
+      const tx = (state.transactions || []).find(row => row.id === id && !isCanceled(row));
+      if (!tx) return alert("Düzeltilecek işlem bulunamadı.");
+      if (tx.type === "SIPARIS") return editOrder(tx.id);
+      if (["CARI_ALACAK_ACILIS", "CARI_BORC_ACILIS"].includes(tx.type)) return editCariOpening(tx.id);
+      if (tx.type === "BORC_ODEME") return alert("Borç ödeme hareketi, borç planındaki ödeme ekranından düzeltilir.");
+      if (tx.type === "URETIM") return alert("Üretim hareketi üretim iş emrinden düzeltilir.");
+      if (tx.type === "SATIS" && (tx.productionJobId || tx.sourceOrderId)) {
+        return alert("Üretim bağlantılı satış doğrudan düzeltilemez; önce bağlı sipariş/üretim akışını kontrol edin.");
+      }
+      byId("txEditId").value = tx.id;
+      byId("txType").value = tx.type;
+      byId("txDate").value = tx.date || today;
+      byId("party").value = tx.party || "";
+      byId("item").value = tx.item || byId("item").value;
+      byId("qty").value = tx.qty || "";
+      byId("unitPrice").value = tx.unitPrice || "";
+      byId("amount").value = tx.amount || "";
+      byId("paid").value = tx.paid || "";
+      byId("account").value = tx.account || byId("account").value;
+      byId("status").value = tx.status || "Vadeli";
+      byId("note").value = tx.note || "";
+      byId("saveTransactionButton").textContent = "İşlemi Güncelle";
+      updateFormMode();
+      showView("entry");
+      setTimeout(() => byId("party").focus(), 120);
     }
 
     function renderOrderBrief() {
@@ -8521,8 +8691,9 @@
         target.innerHTML = `<div class="empty">Aktif açık sipariş görünmüyor. Yeni sipariş oluştuğunda burada listelenir.</div>`;
         return;
       }
+      const financeHead = isWorkerMode() ? "" : `<th class="money worker-finance-col">Kalan</th>`;
       target.innerHTML = `<table class="order-brief-table">
-        <thead><tr><th>Tarih</th><th>Müşteri</th><th>Ürün</th><th class="money">Kalan</th><th>Not</th><th>İşlem</th></tr></thead>
+        <thead><tr><th>Tarih</th><th>Müşteri</th><th>Ürün</th>${financeHead}<th>Not</th><th>İşlem</th></tr></thead>
         <tbody>${rows.map(tx => {
           const remaining = Math.max(0, Number(tx.amount || 0) - Number(tx.paid || 0));
           const note = String(tx.note || "").replace(/^Teslim:\s*/i, "Teslim: ");
@@ -8530,9 +8701,9 @@
             <td>${safe(tx.date || "")}</td>
             <td><strong>${safe(tx.party || "")}</strong></td>
             <td>${safe(orderProductLabel(tx))}</td>
-            <td class="money">${money(remaining)}</td>
+            ${isWorkerMode() ? "" : `<td class="money worker-finance-col">${money(remaining)}</td>`}
             <td class="order-note">${safe(note || "-")}</td>
-            <td><div class="row-actions"><button class="btn" data-print-order="${safe(tx.id)}" type="button">PDF Teklif</button><button class="btn" data-whatsapp-order="${safe(tx.id)}" type="button">WhatsApp</button></div></td>
+            <td><div class="row-actions"><button class="btn" data-edit-order="${safe(tx.id)}" type="button">Düzelt</button><button class="btn danger" data-cancel-tx="${safe(tx.id)}" type="button">İptal</button>${isWorkerMode() ? "" : `<button class="btn worker-finance-col" data-print-order="${safe(tx.id)}" type="button">PDF Teklif</button><button class="btn worker-finance-col" data-whatsapp-order="${safe(tx.id)}" type="button">WhatsApp</button>`}</div></td>
           </tr>`;
         }).join("")}</tbody>
       </table>`;
@@ -8548,13 +8719,14 @@
         target.innerHTML = `<div class="empty">Henüz sipariş geçmişi yok.</div>`;
         return;
       }
+      const financeHead = isWorkerMode() ? "" : `<th class="money worker-finance-col">Toplam</th>`;
       target.innerHTML = `<table class="order-brief-table">
-        <thead><tr><th>Tarih</th><th>Müşteri</th><th>Ürün / Varyant</th><th class="money">Toplam</th><th>Durum</th><th>İşlem</th></tr></thead>
+        <thead><tr><th>Tarih</th><th>Müşteri</th><th>Ürün / Varyant</th>${financeHead}<th>Durum</th><th>İşlem</th></tr></thead>
         <tbody>${rows.map(tx => `<tr>
           <td>${safe(tx.date || "")}</td><td><strong>${safe(tx.party || "")}</strong></td>
-          <td>${safe(orderProductLabel(tx))}</td><td class="money">${money(tx.amount || 0)}</td>
+          <td>${safe(orderProductLabel(tx))}</td>${isWorkerMode() ? "" : `<td class="money worker-finance-col">${money(tx.amount || 0)}</td>`}
           <td><span class="status ${tx.status === "Teslim" ? "ok" : "warn"}">${safe(tx.status || "Sipariş")}</span></td>
-          <td><div class="row-actions"><button class="btn" data-print-order="${safe(tx.id)}" type="button">PDF</button><button class="btn" data-whatsapp-order="${safe(tx.id)}" type="button">WhatsApp</button></div></td>
+          <td><div class="row-actions"><button class="btn" data-edit-order="${safe(tx.id)}" type="button">Düzelt</button><button class="btn danger" data-cancel-tx="${safe(tx.id)}" type="button">İptal</button>${isWorkerMode() ? "" : `<button class="btn worker-finance-col" data-print-order="${safe(tx.id)}" type="button">PDF</button><button class="btn worker-finance-col" data-whatsapp-order="${safe(tx.id)}" type="button">WhatsApp</button>`}</div></td>
         </tr>`).join("")}</tbody>
       </table>`;
     }
@@ -8717,7 +8889,7 @@
               <div class="dashboard-list-main">
                 <strong>${safe(job.customer || "Müşteri")}</strong>
                 <span>${safe(itemName(job.product))} × ${safe(qty(job.qty))} · ${safe(job.stage)}</span>
-                <small>${safe(job.assignee || "Sorumlu yok")}</small>
+                <small>${safe(productionAssigneeLabel(job))}</small>
               </div>
               <div class="dashboard-list-value">${safe(due)}<small>${safe(job.priority || "Normal")}</small></div>
             </button>`;
@@ -8773,7 +8945,7 @@
           </div>
           <div class="search-result-group">
             <h3>Üretim</h3>
-            ${jobRows.length ? jobRows.map(job => searchResultButton("production", `${job.customer || "-"} / ${jobProductLabel(job)}`, `${job.stage || "-"} · ${job.dueDate || "-"} · ${job.assignee || "-"}`)).join("") : `<div class="empty">Yok</div>`}
+            ${jobRows.length ? jobRows.map(job => searchResultButton("production", `${job.customer || "-"} / ${jobProductLabel(job)}`, `${job.stage || "-"} · ${job.dueDate || "-"} · ${productionAssigneeLabel(job)}`)).join("") : `<div class="empty">Yok</div>`}
           </div>
         </div>
       `;
@@ -8921,7 +9093,7 @@
       const customerMap = new Map(m.customers.map(row => [row.name.toLocaleLowerCase("tr-TR"), row]));
       const supplierMap = new Map(m.suppliers.map(row => [row.name.toLocaleLowerCase("tr-TR"), row]));
       byId("cariCardsTable").innerHTML = `<table>
-        <thead><tr><th>ID</th><th>Tür</th><th>Cari</th><th>Telefon</th><th class="money">Alacak</th><th class="money">Borç</th><th>Durum</th><th>Not</th></tr></thead>
+        <thead><tr><th>ID</th><th>Tür</th><th>Cari</th><th>Telefon</th><th class="money">Alacak</th><th class="money">Borç</th><th>Durum</th><th>Not</th><th>İşlem</th></tr></thead>
         <tbody>${rows.map(row => {
           const key = row.name.toLocaleLowerCase("tr-TR");
           const receivable = Number(customerMap.get(key)?.receivable || 0);
@@ -8936,6 +9108,7 @@
             <td class="money">${money(payable)}</td>
             <td><span class="status ${hasBalance ? "warn" : "ok"}">${hasBalance ? "Bakiyeli" : safe(row.status || "Aktif")}</span></td>
             <td>${safe(row.note || "")}</td>
+            <td>${row.id ? `<div class="row-actions"><button class="btn compact-action" data-edit-cari="${safe(row.id)}" type="button">Düzelt</button><button class="btn ${row.status === "Pasif" ? "" : "danger"} compact-action" data-toggle-cari="${safe(row.id)}" type="button">${row.status === "Pasif" ? "Aktifleştir" : "Arşivle"}</button></div>` : `<button class="btn compact-action" data-create-cari="${safe(row.name)}" type="button">Kart aç</button>`}</td>
           </tr>`;
         }).join("")}</tbody>
       </table>`;
@@ -8987,7 +9160,7 @@
             <td><span class="status ${row.priority === "Acil" ? "bad" : row.priority === "Yüksek" ? "warn" : "ok"}">${safe(row.priority || "Normal")}</span></td>
             <td><span class="status ${row.effectiveStatus === "İptal" ? "bad" : row.effectiveStatus === "Ödendi" ? "ok" : row.effectiveStatus === "Gecikti" ? "bad" : "warn"}">${safe(row.effectiveStatus)}</span></td>
             <td>${safe(row.account || "")}</td>
-            <td>${row.closed ? "Kapalı" : `<div class="row-actions"><button class="btn compact-action" data-pay-debt="${safe(row.id)}" type="button">Ödeme Gir</button><button class="btn danger compact-action" data-cancel-debt="${safe(row.id)}" type="button">İptal</button></div>`}</td>
+            <td><div class="row-actions"><button class="btn compact-action" data-edit-debt="${safe(row.id)}" type="button">Düzelt</button>${row.closed ? "" : `<button class="btn compact-action" data-pay-debt="${safe(row.id)}" type="button">Ödeme Gir</button><button class="btn danger compact-action" data-cancel-debt="${safe(row.id)}" type="button">İptal</button>`}</div></td>
           </tr>`).join("")}</tbody>
         </table>`
         : `<div class="empty">Borç planı kaydı yok. Banka taksidi, senet, resmi ödeme ve şahsi borçları buradan tek plan halinde gir.</div>`;
@@ -9000,12 +9173,19 @@
       const missingCost = materialRows.filter(row => !Number(row.cost || 0));
       const catalogReady = rows.filter(row => row.catalogVisible !== false && Number(row.salePrice || 0) > 0).length;
       const totalValue = rows.reduce((sum, row) => sum + Number(row.stockValue || 0), 0);
-      const stockCards = [
-        ["Toplam Stok Değeri", money(totalValue), `${rows.length} kart`, totalValue ? "green" : "amber", "D"],
-        ["Kritik Malzeme", `${lowMaterials.length}`, "ham madde/malzeme alarmı", lowMaterials.length ? "red" : "green", "K"],
-        ["Maliyet Eksiği", `${missingCost.length}`, "maliyet yoksa kâr okunmaz", missingCost.length ? "red" : "green", "M"],
-        ["Katalog Hazır", `${catalogReady}`, "fiyatlı ve görünür ürün", catalogReady ? "green" : "amber", "F"]
-      ];
+      const stockCards = isWorkerMode()
+        ? [
+          ["Kritik Malzeme", `${lowMaterials.length}`, "ham madde/malzeme alarmı", lowMaterials.length ? "red" : "green", "K"],
+          ["Açık Üretim", `${metrics().jobs.open.length}`, "Mahmud'un iş sırası", metrics().jobs.open.length ? "amber" : "green", "Ü"],
+          ["Stok Kartı", `${rows.length}`, "kart adı ve miktar", rows.length ? "green" : "amber", "S"],
+          ["Alarm Dışı", `${rows.filter(row => !row.low).length}`, "sahada kullanılabilir", "green", "✓"]
+        ]
+        : [
+          ["Toplam Stok Değeri", money(totalValue), `${rows.length} kart`, totalValue ? "green" : "amber", "D"],
+          ["Kritik Malzeme", `${lowMaterials.length}`, "ham madde/malzeme alarmı", lowMaterials.length ? "red" : "green", "K"],
+          ["Maliyet Eksiği", `${missingCost.length}`, "maliyet yoksa kâr okunmaz", missingCost.length ? "red" : "green", "M"],
+          ["Katalog Hazır", `${catalogReady}`, "fiyatlı ve görünür ürün", catalogReady ? "green" : "amber", "F"]
+        ];
       byId("stockCards").innerHTML = stockCards.map(([label, value, hint, color, icon]) => `
         <article class="card">
           <div>
@@ -9016,12 +9196,18 @@
           <div class="icon ${color}">${icon}</div>
         </article>
       `).join("");
-      const rules = [
-        ["Bitmiş Ürün Standardı", "Baza, yatak, başlık ve set modelleri stok kartında dursun; kritik alarm sadece istenirse açılır.", "durum"],
-        ["Kritik stok alarmı", "Ana alarm ham madde, aksesuar, ambalaj ve üretim malzemesi için çalışır.", lowMaterials.length ? "kontrol" : "tamam"],
-        ["Maliyet disiplini", `${missingCost.length} malzeme kartında ortalama maliyet eksik. Maliyet yoksa satış kârı bulanık kalır.`, missingCost.length ? "kontrol" : "tamam"],
-        ["Katalog bağlantısı", `${catalogReady} ürün fiyat listesine hazır görünüyor. Görsel + satış fiyatı girilen ürün katalogda kullanılabilir.`, catalogReady ? "tamam" : "kontrol"]
-      ];
+      const rules = isWorkerMode()
+        ? [
+          ["Mahmud üretim sırası", `${metrics().jobs.open.length} açık iş üretim ekranında görevliye göre izleniyor.`, metrics().jobs.open.length ? "kontrol" : "tamam"],
+          ["Kritik stok alarmı", "Ham madde, aksesuar, ambalaj ve üretim malzemesi için çalışır.", lowMaterials.length ? "kontrol" : "tamam"],
+          ["Ürün adı standardı", "Stok kartı ve ürün adı korunur; düzenleme mevcut kodu değiştirmez.", "tamam"]
+        ]
+        : [
+          ["Bitmiş Ürün Standardı", "Baza, yatak, başlık ve set modelleri stok kartında dursun; kritik alarm sadece istenirse açılır.", "durum"],
+          ["Kritik stok alarmı", "Ana alarm ham madde, aksesuar, ambalaj ve üretim malzemesi için çalışır.", lowMaterials.length ? "kontrol" : "tamam"],
+          ["Maliyet disiplini", `${missingCost.length} malzeme kartında ortalama maliyet eksik. Maliyet yoksa satış kârı bulanık kalır.`, missingCost.length ? "kontrol" : "tamam"],
+          ["Katalog bağlantısı", `${catalogReady} ürün fiyat listesine hazır görünüyor. Görsel + satış fiyatı girilen ürün katalogda kullanılabilir.`, catalogReady ? "tamam" : "kontrol"]
+        ];
       byId("stockDiscipline").innerHTML = rules.map(([title, text, badge]) => `<div class="standard-row">
         <div><strong>${title}</strong><span>${text}</span></div>
         <span class="status ${badge === "tamam" ? "ok" : badge === "kontrol" ? "warn" : "ok"}">${badge}</span>
@@ -9066,14 +9252,14 @@
               ${(colors.length ? colors : ["renk/varyant yok"]).slice(0, 6).map(value => `<span class="mini-chip">${safe(value)}</span>`).join("")}
             </div>
             <div class="stock-family-actions">
-              <span class="hint">${qty(family.current)} mevcut · ${money(family.stockValue)}</span>
+                <span class="hint">${qty(family.current)} mevcut${isWorkerMode() ? "" : ` · ${money(family.stockValue)}`}</span>
               <button class="stock-family-action" type="button" data-stock-family="${safe(family.key)}">Kartı Düzenle</button>
             </div>
           </article>`;
         }).join("")
         : `<div class="empty">Stok kartı yok. Önce ürün ailesi aç, ölçüleri varyant olarak gir.</div>`;
       byId("stockTable").innerHTML = `<table>
-        <thead><tr><th>Görsel</th><th>Kod</th><th>Ad</th><th>Tür</th><th>Birim</th><th class="money">Mevcut</th><th class="money">Min</th><th class="money">Ort. Maliyet</th><th class="money">Satış</th><th class="money">Stok Değeri</th><th>Durum</th></tr></thead>
+        <thead><tr><th>Görsel</th><th>Kod</th><th>Ad</th><th>Tür</th><th>Birim</th><th class="money">Mevcut</th><th class="money">Min</th>${isWorkerMode() ? "" : '<th class="money worker-finance-cell">Ort. Maliyet</th><th class="money worker-finance-cell">Satış</th><th class="money worker-finance-cell">Stok Değeri</th>'}<th>Durum</th></tr></thead>
         <tbody>${rows.map(row => `<tr>
           <td>${itemImageMarkup(row.image)}</td>
           <td>${safe(row.code)}</td>
@@ -9082,9 +9268,7 @@
           <td>${row.unit}</td>
           <td class="money">${qty(row.current)}</td>
           <td class="money">${qty(row.min)}</td>
-          <td class="money">${money(row.cost)}</td>
-          <td class="money">${Number(row.salePrice || 0) ? money(row.salePrice) : "-"}</td>
-          <td class="money">${money(row.stockValue)}</td>
+          ${isWorkerMode() ? "" : `<td class="money worker-finance-cell">${money(row.cost)}</td><td class="money worker-finance-cell">${Number(row.salePrice || 0) ? money(row.salePrice) : "-"}</td><td class="money worker-finance-cell">${money(row.stockValue)}</td>`}
           <td><span class="status ${row.low ? "bad" : row.stockAlert && row.min > 0 ? "ok" : "warn"}">${row.low ? "Kritik" : row.stockAlert && row.min > 0 ? "Yeterli" : "Alarm dışı"}</span></td>
         </tr>`).join("")}</tbody>
       </table>`;
@@ -9224,6 +9408,96 @@
       `).join("");
     }
 
+    function fieldDecisionQueue() {
+      const m = metrics();
+      const queue = [];
+      const topCustomer = m.customers
+        .filter(row => Number(row.receivable || 0) > 0)
+        .sort((a, b) => Number(b.receivable || 0) - Number(a.receivable || 0))[0];
+      if (topCustomer) {
+        queue.push({
+          kind: "collection",
+          tag: "Tahsilat",
+          title: topCustomer.name,
+          value: money(topCustomer.receivable),
+          text: "En yüksek açık alacak; cari karttan tahsilat adımını başlat.",
+          action: "Cariyi aç",
+          collection: topCustomer.name
+        });
+      }
+
+      const demandByItem = new Map();
+      m.openOrders.forEach(order => {
+        const key = String(order.item || "");
+        demandByItem.set(key, (demandByItem.get(key) || 0) + Number(order.qty || 0));
+      });
+      const stockRisk = m.stockRows
+        .map(row => ({ ...row, orderDemand: demandByItem.get(String(row.code || "")) || 0 }))
+        .filter(row => row.low || row.orderDemand > Number(row.current || 0))
+        .sort((a, b) => (Number(b.orderDemand || 0) - Number(b.current || 0)) - (Number(a.orderDemand || 0) - Number(a.current || 0)))[0];
+      if (stockRisk) {
+        queue.push({
+          kind: "stock",
+          tag: "Stok",
+          title: stockRisk.name,
+          value: `${qty(stockRisk.current)} ${stockRisk.unit || "adet"}`,
+          text: stockRisk.orderDemand ? `${qty(stockRisk.orderDemand)} açık sipariş talebi var; minimum ${qty(stockRisk.min)}.` : `Minimum ${qty(stockRisk.min)} seviyesinin altında.`,
+          action: "Stoku aç",
+          view: "stock"
+        });
+      }
+
+      const nextDebt = m.debt.priorityRows
+        .filter(row => Number(row.remaining || 0) > 0)
+        .sort((a, b) => (a.dueIn == null ? 9999 : a.dueIn) - (b.dueIn == null ? 9999 : b.dueIn) || Number(b.remaining || 0) - Number(a.remaining || 0))[0];
+      if (nextDebt) {
+        queue.push({
+          kind: "debt",
+          tag: "Borç",
+          title: nextDebt.party || nextDebt.type || "Borç planı",
+          value: money(nextDebt.remaining),
+          text: nextDebt.dueIn == null ? "Vade yok; borç planına tarih ve öncelik koy." : nextDebt.dueIn < 0 ? `${Math.abs(nextDebt.dueIn)} gün gecikmiş; ödeme planını bugün aç.` : `${nextDebt.dueIn} gün içinde vade; sırayı bugünden netleştir.`,
+          action: "Borcu aç",
+          view: "debt"
+        });
+      }
+
+      const nextJob = m.jobs.open
+        .slice()
+        .sort((a, b) => (a.dueIn == null ? 9999 : a.dueIn) - (b.dueIn == null ? 9999 : b.dueIn) || (a.priority === "Acil" ? -1 : 1))[0];
+      if (nextJob) {
+        queue.push({
+          kind: "production",
+          tag: "Üretim",
+          title: nextJob.customer || "Açık üretim işi",
+          value: nextJob.dueIn == null ? "Vade yok" : nextJob.dueIn < 0 ? `${Math.abs(nextJob.dueIn)} gün gecikmiş` : nextJob.dueIn === 0 ? "Bugün" : `${nextJob.dueIn} gün`,
+          text: `${itemName(nextJob.product)} × ${qty(nextJob.qty)} · ${productionAssigneeLabel(nextJob)} · ${nextJob.stage}`,
+          action: "Üretimi aç",
+          view: "production"
+        });
+      }
+      return queue.slice(0, 4);
+    }
+
+    function renderFieldDecisionQueue() {
+      const target = byId("liveFieldQueue");
+      if (!target) return;
+      const queue = fieldDecisionQueue();
+      target.innerHTML = `
+        <div class="live-field-queue-head">
+          <div><div class="live-field-queue-kicker">Saha karar kuyruğu</div><h3>Bir sonraki doğru hamle</h3></div>
+          <span class="live-field-queue-count">${queue.length} öncelik</span>
+        </div>
+        ${queue.length ? `<div class="live-field-queue-grid">${queue.map(item => `
+          <article class="live-field-queue-card ${item.kind}">
+            <div><strong>${safe(item.title)}</strong><p>${safe(item.text)}</p></div>
+            <div class="live-field-queue-card-value">${safe(item.value)}</div>
+            <button type="button" ${item.collection ? `data-queue-collection="${safe(item.collection)}"` : `data-queue-view="${safe(item.view)}"`}>${safe(item.action)}</button>
+          </article>
+        `).join("")}</div>` : `<div class="live-field-queue-empty">Bugün için tahsilat, stok, borç veya üretim önceliği çıkmadı.</div>`}
+      `;
+    }
+
     function renderLiveOperations() {
       const focus = byId("livePriorityFocus");
       const list = byId("liveWorkList");
@@ -9274,6 +9548,7 @@
           <span class="live-pill ${item.kind === "bad" ? "red" : item.kind === "warn" ? "amber" : "green"}">${safe(item.tag || "Görev")}</span>
         </div>
       `).join("") : `<div class="empty">Bekleyen ek öncelik görünmüyor.</div>`;
+      renderFieldDecisionQueue();
 
       const dailyItems = dailyFlowItems();
       const done = dailyFlowState();
@@ -9615,7 +9890,7 @@
             <td class="money"><strong>${money(row.monthly)}</strong></td>
             <td>${row.period === "daily" ? "Her gün" : row.dueDay || ""}</td>
             <td><span class="status ${row.active ? "ok" : "warn"}">${row.active ? "Aktif" : "Pasif"}</span></td>
-            <td><button class="btn compact-action ${row.active ? "danger" : ""}" data-toggle-fixed="${row.id}" type="button">${row.active ? "Pasife Al" : "Aktifleştir"}</button></td>
+            <td><div class="row-actions"><button class="btn compact-action" data-edit-fixed="${row.id}" type="button">Düzelt</button><button class="btn compact-action ${row.active ? "danger" : ""}" data-toggle-fixed="${row.id}" type="button">${row.active ? "Pasife Al" : "Aktifleştir"}</button></div></td>
           </tr>`).join("")}</tbody>
         </table>`
         : `<div class="empty">Sabit gider kaydı yok.</div>`;
@@ -9627,7 +9902,7 @@
         .filter(stage => stage !== "İptal" && stage !== currentStage)
         .map(stage => `<option value="stage:${safe(stage)}">Aşama: ${safe(stage)}</option>`);
       const utilityOptions = [];
-      if (job.sourceTx) utilityOptions.push(`<option value="print:${safe(job.sourceTx)}">Fiş yazdır</option>`);
+      if (job.sourceTx && !isWorkerMode()) utilityOptions.push(`<option value="print:${safe(job.sourceTx)}">Fiş yazdır</option>`);
       if (!isWorkerMode()) {
         utilityOptions.push(`<option value="edit">Düzenle</option>`);
         utilityOptions.push(`<option value="cancel">İptal et</option>`);
@@ -9734,7 +10009,7 @@
             <td>${safe(job.customer)}</td>
             <td>${safe(jobProductLabel(job))}</td>
             <td class="money">${qty(job.qty)}</td>
-            <td>${safe(job.assignee || "-")}</td>
+            <td>${safe(productionAssigneeLabel(job))}</td>
             <td><span class="status ${job.stage === "Üretim Aşamasında" || job.stage === "Teslimata Hazır" ? "warn" : "ok"}">${safe(job.stage)}</span></td>
             <td>${job.dueIn == null ? "" : job.dueIn < 0 ? `<span class="status bad">${Math.abs(job.dueIn)} gün gecikti</span>` : job.dueIn === 0 ? `<span class="status bad">Bugün</span>` : `${job.dueIn} gün`}</td>
             <td><span class="status ${job.priority === "Acil" ? "bad" : job.priority === "Yüksek" ? "warn" : "ok"}">${safe(job.priority)}</span></td>
@@ -9797,6 +10072,7 @@
 
     function clearForm() {
       pendingTradeLink = null;
+      byId("txEditId").value = "";
       const paidLabel = document.querySelector('label[for="paid"]');
       if (paidLabel) paidLabel.textContent = "Peşin Ödenen / Alınan";
       byId("txDate").value = today;
@@ -9807,6 +10083,7 @@
       byId("paid").value = "";
       byId("note").value = "";
       byId("status").value = "Vadeli";
+      byId("saveTransactionButton").textContent = "Kaydet ve Hesapla";
       updateFormMode();
     }
 
@@ -9844,6 +10121,7 @@
     }
 
     function clearOrderForm() {
+      byId("orderEditId").value = "";
       byId("orderDate").value = today;
       byId("orderCustomer").value = "";
       byId("orderSizeVariant").value = "";
@@ -9855,21 +10133,25 @@
       byId("orderPaid").value = "";
       byId("orderDue").value = today;
       byId("orderPriority").value = "Normal";
-      byId("orderWorker").value = "Mahmud";
+      byId("orderWorker").value = DEFAULT_PRODUCTION_ASSIGNEE;
       byId("orderNote").value = "";
+      byId("saveOrderButton").textContent = "Siparişi Kaydet";
       updateOrderVariantOptions();
     }
 
     function clearFixedForm() {
+      byId("fixedEditId").value = "";
       byId("fixedName").value = "";
       byId("fixedCategory").value = "";
       byId("fixedAmount").value = "";
       byId("fixedPeriod").value = "monthly";
       byId("fixedDueDay").value = "";
       byId("fixedActive").value = "true";
+      byId("saveFixedButton").textContent = "Sabit Gider Ekle";
     }
 
     function clearDebtForm() {
+      byId("debtEditId").value = "";
       byId("debtType").value = "Banka Taksidi";
       byId("debtScope").value = "Ticari";
       byId("debtParty").value = "";
@@ -9879,25 +10161,31 @@
       byId("debtPriority").value = "Normal";
       byId("debtStatus").value = "Planlandı";
       byId("debtNote").value = "";
+      byId("saveDebtButton").textContent = "Borç Planına Ekle";
     }
 
     function clearCariCardForm() {
+      byId("cariCardEditId").value = "";
       byId("cariCardType").value = "Müşteri";
       byId("cariCardName").value = "";
       byId("cariCardPhone").value = "";
       byId("cariCardStatus").value = "Aktif";
       byId("cariCardNote").value = "";
+      byId("saveCariCardButton").textContent = "Cari Kartı Kaydet";
     }
 
     function clearCariOpeningForm() {
+      byId("cariOpeningEditId").value = "";
       byId("cariOpeningType").value = "CARI_ALACAK_ACILIS";
       byId("cariOpeningDate").value = today;
       byId("cariOpeningParty").value = "";
       byId("cariOpeningAmount").value = "";
       byId("cariOpeningNote").value = "";
+      byId("saveCariOpeningButton").textContent = "Cari Açılışı Kaydet";
     }
 
     function clearInventoryForm() {
+      byId("inventoryEditCode").value = "";
       byId("inventoryKind").value = "Mamül";
       byId("inventoryGroup").value = "Baza";
       byId("inventoryModel").value = "";
@@ -9915,6 +10203,7 @@
       byId("inventoryVariantOptions").value = "";
       byId("inventoryPriceHeaders").value = "";
       byId("inventoryPriceRows").value = "";
+      byId("saveInventoryButton").textContent = "Stok Kartına Kaydet";
       pendingInventoryImage = "";
       renderInventoryImagePreview("");
       updateInventoryMode();
@@ -9927,10 +10216,13 @@
       const preview = buildInventoryNamePreview();
       if (!preview.name) return alert("Envanter adı için en az grup veya model gerekli.");
       state.items = state.items || [];
-      const existingName = state.items.find(item => itemNameKey(item.name) === itemNameKey(preview.name));
+      const editCode = byId("inventoryEditCode").value;
+      const existing = editCode ? state.items.find(item => item.code === editCode) : null;
+      if (editCode && !existing) return alert("Düzeltilecek stok kartı bulunamadı.");
+      const existingName = state.items.find(item => itemNameKey(item.name) === itemNameKey(preview.name) && item.code !== editCode);
       if (existingName) return alert(`Bu envanter adı zaten var: ${existingName.name}`);
       const item = {
-        code: preview.code,
+        code: existing?.code || preview.code,
         name: preview.name,
         kind: preview.kind,
         itemClass: stockItemClass(preview),
@@ -9953,13 +10245,14 @@
         catalogNote: byId("inventoryCatalogNote").value.trim(),
         priceHeaders: byId("inventoryPriceHeaders").value.trim(),
         priceRows: byId("inventoryPriceRows").value.trim(),
-        createdAt: new Date().toISOString()
+        createdAt: existing?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
       if ([item.opening, item.min, item.cost, item.salePrice].some(value => value < 0)) return alert("Stok, minimum, maliyet ve satış fiyatı negatif olamaz.");
-      backupState("before-add-inventory-item");
+      backupState(editCode ? "before-edit-inventory-item" : "before-add-inventory-item");
       state.logs = state.logs || [];
-      state.items.push(item);
-      state.logs.push({ at: new Date().toISOString(), event: "ADD_ITEM_CARD", code: item.code, name: item.name });
+      if (existing) Object.assign(existing, item); else state.items.push(item);
+      state.logs.push({ at: item.updatedAt, event: editCode ? "EDIT_ITEM_CARD" : "ADD_ITEM_CARD", code: item.code, name: item.name });
       saveState();
       clearInventoryForm();
       renderAll();
@@ -9973,7 +10266,7 @@
       byId("jobDue").value = today;
       byId("jobStage").value = "İşleme Alındı";
       byId("jobPriority").value = "Normal";
-      byId("jobWorker").value = "Mahmud";
+      byId("jobWorker").value = DEFAULT_PRODUCTION_ASSIGNEE;
       byId("jobNote").value = "";
       byId("saveWorkOrderButton").textContent = "İş Ekle";
       ["jobCustomer", "jobProduct", "jobQty"].forEach(id => { byId(id).disabled = false; });
@@ -9990,7 +10283,7 @@
         dueDate: byId("jobDue").value || today,
         stage: normalizeProductionStage(byId("jobStage").value),
         priority: byId("jobPriority").value,
-        assignee: byId("jobWorker").value.trim() || "Mahmud",
+        assignee: byId("jobWorker").value.trim() || DEFAULT_PRODUCTION_ASSIGNEE,
         note: byId("jobNote").value.trim()
       };
       state.productionJobs = state.productionJobs || [];
@@ -10025,8 +10318,39 @@
       showView("production");
     }
 
+    function editOrder(id) {
+      const tx = (state.transactions || []).find(row => row.id === id && row.type === "SIPARIS");
+      if (!tx) return alert("Sipariş kaydı bulunamadı.");
+      if (tx.saleTx || tx.status === "Teslim") return alert("Teslim edilmiş sipariş doğrudan düzeltilemez; bağlı satış akışını kontrol edin.");
+      const job = (state.productionJobs || []).find(row => row.sourceTx === tx.id || row.id === tx.productionJobId);
+      byId("orderEditId").value = tx.id;
+      byId("orderDate").value = tx.date || today;
+      byId("orderCustomer").value = tx.party || "";
+      byId("orderProduct").value = tx.item || byId("orderProduct").value;
+      updateOrderVariantOptions();
+      byId("orderSizeVariant").value = tx.sizeVariant || "";
+      byId("orderColorVariant").value = tx.colorVariant || "";
+      byId("orderQty").value = tx.qty || "";
+      byId("orderUnitPrice").value = tx.unitPrice || "";
+      byId("orderPaid").value = tx.paid || "";
+      byId("orderAccount").value = tx.account || byId("orderAccount").value;
+      byId("orderDue").value = String(tx.note || "").match(/Teslim:\s*([^|]+)/i)?.[1]?.trim() || today;
+      byId("orderPriority").value = job?.priority || "Normal";
+      byId("orderWorker").value = productionAssigneeLabel(job || {});
+      byId("orderNote").value = String(tx.note || "").replace(/\s*\|\s*(Ölçü|Kumaş\/Renk|Teslim|Sipariş kaydı):[^|]*/gi, "").trim();
+      byId("saveOrderButton").textContent = "Siparişi Güncelle";
+      showView("entry");
+      setTimeout(() => byId("orderCustomer").focus(), 120);
+    }
+
     function addOrder(event) {
       event.preventDefault();
+      const editId = byId("orderEditId").value;
+      const existingTx = editId ? (state.transactions || []).find(row => row.id === editId && row.type === "SIPARIS") : null;
+      const existingJob = existingTx ? (state.productionJobs || []).find(row => row.sourceTx === existingTx.id || row.id === existingTx.productionJobId) : null;
+      if (editId && !existingTx) return alert("Düzeltilecek sipariş bulunamadı.");
+      if (existingTx && (existingTx.saleTx || existingTx.status === "Teslim")) return alert("Teslim edilmiş sipariş doğrudan düzeltilemez.");
+      const workerOrder = isWorkerMode();
       const customer = byId("orderCustomer").value.trim();
       const product = byId("orderProduct").value;
       const productItem = itemByCode(product);
@@ -10035,8 +10359,8 @@
       const sizeVariant = selectedSize === "Özel Ölçü" ? customSize : selectedSize;
       const colorVariant = byId("orderColorVariant").value.trim();
       const qtyValue = Number(byId("orderQty").value || 0);
-      const unitPrice = Number(byId("orderUnitPrice").value || 0);
-      const paid = Number(byId("orderPaid").value || 0);
+      const unitPrice = workerOrder && !existingTx ? 0 : Number(byId("orderUnitPrice").value || existingTx?.unitPrice || 0);
+      const paid = workerOrder && !existingTx ? 0 : Number(byId("orderPaid").value || existingTx?.paid || 0);
       const amount = qtyValue * unitPrice;
       const dueDate = byId("orderDue").value || today;
       const note = byId("orderNote").value.trim();
@@ -10045,11 +10369,12 @@
       if (itemSizeVariants(productItem).length && !selectedSize) return alert("Ölçü varyantı seçilmeli.");
       if (selectedSize === "Özel Ölçü" && !customSize) return alert("Özel ölçü girilmeli.");
       if (qtyValue <= 0) return alert("Adet 0'dan büyük olmalı.");
-      if (unitPrice <= 0) return alert("Birim fiyat 0'dan büyük olmalı.");
+      if (!workerOrder && unitPrice <= 0) return alert("Birim fiyat 0'dan büyük olmalı.");
       if (paid < 0) return alert("Kapora negatif olamaz.");
       if (paid > amount) return alert("Kapora toplam sipariş tutarından büyük olamaz.");
+      const now = new Date().toISOString();
       const tx = {
-        id: nextId(),
+        id: existingTx?.id || nextId(),
         date: byId("orderDate").value || today,
         type: "SIPARIS",
         party: customer,
@@ -10061,13 +10386,14 @@
         unitPrice,
         amount,
         paid,
-        account: byId("orderAccount").value,
-        status: "Sipariş",
+        account: workerOrder ? (existingTx?.account || "") : byId("orderAccount").value,
+        status: existingTx?.status && existingTx.status !== "İptal" ? existingTx.status : "Sipariş",
         note: appendNote(appendNote(appendNote(note, sizeVariant ? `Ölçü: ${sizeVariant}` : ""), colorVariant ? `Kumaş/Renk: ${colorVariant}` : ""), `Teslim: ${dueDate}`),
-        createdAt: new Date().toISOString()
+        createdAt: existingTx?.createdAt || now,
+        updatedAt: now
       };
       const job = {
-        id: nextJobId(),
+        id: existingJob?.id || nextJobId(),
         customer,
         product,
         sizeVariant,
@@ -10075,21 +10401,22 @@
         variantKey: [product, sizeVariant, colorVariant].filter(Boolean).join("|"),
         qty: qtyValue,
         dueDate,
-        stage: "İşleme Alındı",
+        stage: existingJob?.stage && existingJob.stage !== "İptal" ? normalizeProductionStage(existingJob.stage) : "İşleme Alındı",
         priority: byId("orderPriority").value,
-        assignee: byId("orderWorker").value.trim() || "Mahmud",
+        assignee: byId("orderWorker").value.trim() || DEFAULT_PRODUCTION_ASSIGNEE,
         note: appendNote(appendNote(appendNote(note, sizeVariant ? `Ölçü: ${sizeVariant}` : ""), colorVariant ? `Kumaş/Renk: ${colorVariant}` : ""), `Sipariş kaydı: ${tx.id}`),
         sourceTx: tx.id,
-        createdAt: tx.createdAt
+        createdAt: existingJob?.createdAt || tx.createdAt,
+        updatedAt: now
       };
       tx.productionJobId = job.id;
-      backupState("before-add-order");
+      backupState(editId ? "before-edit-order" : "before-add-order");
       state.transactions = state.transactions || [];
       state.productionJobs = state.productionJobs || [];
       state.logs = state.logs || [];
-      state.transactions.push(tx);
-      state.productionJobs.push(job);
-      state.logs.push({ at: new Date().toISOString(), event: "ADD_ORDER", tx: tx.id, job: job.id, customer, product, sizeVariant, colorVariant });
+      if (existingTx) Object.assign(existingTx, tx); else state.transactions.push(tx);
+      if (existingJob) Object.assign(existingJob, job); else state.productionJobs.push(job);
+      state.logs.push({ at: now, event: editId ? "EDIT_ORDER" : "ADD_ORDER", tx: tx.id, job: job.id, customer, product, sizeVariant, colorVariant });
       saveState();
       clearOrderForm();
       renderAll();
@@ -10171,7 +10498,7 @@
       byId("jobDue").value = job.dueDate || today;
       byId("jobStage").value = normalizeProductionStage(job.stage) || "İşleme Alındı";
       byId("jobPriority").value = job.priority || "Normal";
-      byId("jobWorker").value = job.assignee || "Mahmud";
+      byId("jobWorker").value = productionAssigneeLabel(job);
       byId("jobNote").value = job.note || "";
       byId("saveWorkOrderButton").textContent = "İşi Güncelle";
       ["jobCustomer", "jobProduct", "jobQty"].forEach(fieldId => { byId(fieldId).disabled = Boolean(job.sourceTx); });
@@ -10210,31 +10537,87 @@
       setTimeout(() => (byId("unitPrice").value ? byId("paid") : byId("unitPrice")).focus(), 120);
     }
 
+    function editFixedExpense(id) {
+      const row = (state.fixedExpenses || []).find(item => item.id === id);
+      if (!row) return alert("Düzeltilecek sabit gider bulunamadı.");
+      byId("fixedEditId").value = row.id;
+      byId("fixedName").value = row.name || "";
+      byId("fixedCategory").value = row.category || "";
+      byId("fixedAmount").value = row.amount || "";
+      byId("fixedPeriod").value = row.period || "monthly";
+      byId("fixedDueDay").value = row.dueDay || "";
+      byId("fixedAccount").value = row.account || byId("fixedAccount").value;
+      byId("fixedActive").value = row.active === false ? "false" : "true";
+      byId("saveFixedButton").textContent = "Sabit Gideri Güncelle";
+      showView("fixed");
+      setTimeout(() => byId("fixedName").focus(), 120);
+    }
+
     function addFixedExpense(event) {
       event.preventDefault();
       if (blockWorkerAction("Sabit gider kaydı üretim personeli hesabında kapalı.")) return;
+      const editId = byId("fixedEditId").value;
+      const existing = editId ? (state.fixedExpenses || []).find(item => item.id === editId) : null;
+      if (editId && !existing) return alert("Düzeltilecek sabit gider bulunamadı.");
       const row = {
-        id: nextFixedId(),
+        id: existing?.id || nextFixedId(),
         name: byId("fixedName").value.trim(),
         category: byId("fixedCategory").value.trim(),
         amount: Number(byId("fixedAmount").value || 0),
         period: byId("fixedPeriod").value,
         dueDay: Number(byId("fixedDueDay").value || 1),
         account: byId("fixedAccount").value,
-        active: byId("fixedActive").value === "true"
+        active: byId("fixedActive").value === "true",
+        createdAt: existing?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
       if (!row.name) return alert("Gider adı gerekli.");
       if (row.amount <= 0) return alert("Tutar 0'dan büyük olmalı.");
       if (row.period === "weekly" && (row.dueDay < 1 || row.dueDay > 7)) return alert("Haftalık vade günü 1-7 arası olmalı.");
       if (row.period === "monthly" && (row.dueDay < 1 || row.dueDay > 31)) return alert("Aylık vade günü 1-31 arası olmalı.");
-      backupState("before-add-fixed-expense");
+      backupState(editId ? "before-edit-fixed-expense" : "before-add-fixed-expense");
       state.fixedExpenses = state.fixedExpenses || [];
-      state.fixedExpenses.push(row);
-      state.logs.push({ at: new Date().toISOString(), event: "ADD_FIXED_EXPENSE", id: row.id, name: row.name });
+      if (existing) Object.assign(existing, row); else state.fixedExpenses.push(row);
+      state.logs.push({ at: row.updatedAt, event: editId ? "EDIT_FIXED_EXPENSE" : "ADD_FIXED_EXPENSE", id: row.id, name: row.name });
       saveState();
       clearFixedForm();
       renderAll();
       showView("fixed");
+    }
+
+    function editCariCard(id) {
+      const card = (state.cariCards || []).find(row => row.id === id);
+      if (!card) return alert("Düzeltilecek cari kartı bulunamadı.");
+      byId("cariCardEditId").value = card.id;
+      byId("cariCardType").value = card.type || "Müşteri";
+      byId("cariCardName").value = card.name || "";
+      byId("cariCardPhone").value = card.phone || "";
+      byId("cariCardStatus").value = card.status || "Aktif";
+      byId("cariCardNote").value = card.note || "";
+      byId("saveCariCardButton").textContent = "Cari Kartını Güncelle";
+      showView("cari");
+      setTimeout(() => byId("cariCardName").focus(), 120);
+    }
+
+    function startCariCard(name) {
+      clearCariCardForm();
+      byId("cariCardName").value = name || "";
+      showView("cari");
+      setTimeout(() => byId("cariCardPhone").focus(), 120);
+    }
+
+    function toggleCariCardArchive(id) {
+      const card = (state.cariCards || []).find(row => row.id === id);
+      if (!card) return;
+      const archived = card.status === "Pasif";
+      if (!archived && !confirm(`${card.name} cari kartı arşivlensin mi? Hareketler ve bakiyeler korunur.`)) return;
+      backupState(archived ? "before-restore-cari-card" : "before-archive-cari-card");
+      card.status = archived ? "Aktif" : "Pasif";
+      card.updatedAt = new Date().toISOString();
+      card.archivedAt = archived ? "" : card.updatedAt;
+      state.logs.push({ at: card.updatedAt, event: archived ? "RESTORE_CARI_CARD" : "ARCHIVE_CARI_CARD", id: card.id, name: card.name });
+      saveState();
+      renderAll();
     }
 
     function addCariCard(event) {
@@ -10242,24 +10625,35 @@
       if (blockWorkerAction("Cari kart açılışı üretim personeli hesabında kapalı.")) return;
       const name = byId("cariCardName").value.trim();
       if (!name) return alert("Cari adı gerekli.");
+      const editId = byId("cariCardEditId").value;
+      const existing = editId ? (state.cariCards || []).find(row => row.id === editId) : null;
+      if (editId && !existing) return alert("Düzeltilecek cari kartı bulunamadı.");
       const card = {
-        id: nextCariCardId(),
+        id: existing?.id || nextCariCardId(),
         type: byId("cariCardType").value,
         name,
         phone: byId("cariCardPhone").value.trim(),
         note: byId("cariCardNote").value.trim(),
         status: byId("cariCardStatus").value,
-        createdAt: new Date().toISOString()
+        createdAt: existing?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
       backupState("before-add-cari-card");
       state.cariCards = state.cariCards || [];
-      const existing = state.cariCards.find(row => String(row.name || "").toLocaleLowerCase("tr-TR") === name.toLocaleLowerCase("tr-TR"));
-      if (existing) {
+      const duplicate = state.cariCards.find(row => String(row.name || "").toLocaleLowerCase("tr-TR") === name.toLocaleLowerCase("tr-TR") && row.id !== editId);
+      if (duplicate) {
+        duplicate.type = card.type;
+        duplicate.phone = card.phone;
+        duplicate.note = card.note;
+        duplicate.status = card.status;
+        duplicate.updatedAt = card.updatedAt;
+        state.logs.push({ at: card.updatedAt, event: "UPDATE_CARI_CARD", id: duplicate.id, name: duplicate.name });
+      } else if (existing) {
         existing.type = card.type;
         existing.phone = card.phone;
         existing.note = card.note;
         existing.status = card.status;
-        existing.updatedAt = card.createdAt;
+        existing.updatedAt = card.updatedAt;
         state.logs.push({ at: new Date().toISOString(), event: "UPDATE_CARI_CARD", id: existing.id, name: existing.name });
       } else {
         state.cariCards.push(card);
@@ -10271,16 +10665,34 @@
       showView("cari");
     }
 
+    function editCariOpening(id) {
+      const tx = (state.transactions || []).find(row => row.id === id && ["CARI_ALACAK_ACILIS", "CARI_BORC_ACILIS"].includes(row.type) && !isCanceled(row));
+      if (!tx) return alert("Düzeltilecek cari açılışı bulunamadı.");
+      byId("cariOpeningEditId").value = tx.id;
+      byId("cariOpeningType").value = tx.type;
+      byId("cariOpeningDate").value = tx.date || today;
+      byId("cariOpeningParty").value = tx.party || "";
+      byId("cariOpeningAmount").value = tx.amount || "";
+      byId("cariOpeningNote").value = tx.note || "";
+      byId("saveCariOpeningButton").textContent = "Cari Açılışını Güncelle";
+      showView("cari");
+      setTimeout(() => byId("cariOpeningParty").focus(), 120);
+    }
+
     function addCariOpening(event) {
       event.preventDefault();
       if (blockWorkerAction("Cari bakiye açılışı üretim personeli hesabında kapalı.")) return;
+      const editId = byId("cariOpeningEditId").value;
+      const existing = editId ? (state.transactions || []).find(row => row.id === editId && !isCanceled(row)) : null;
+      if (editId && !existing) return alert("Düzeltilecek cari açılışı bulunamadı.");
       const type = byId("cariOpeningType").value;
       const party = byId("cariOpeningParty").value.trim();
       const amount = Number(byId("cariOpeningAmount").value || 0);
       if (!party) return alert("Cari adı gerekli.");
       if (amount <= 0) return alert("Açılış tutarı 0'dan büyük olmalı.");
+      const now = new Date().toISOString();
       const tx = {
-        id: nextId(),
+        id: existing?.id || nextId(),
         date: byId("cariOpeningDate").value || today,
         type,
         party,
@@ -10292,23 +10704,46 @@
         account: "",
         status: "Açılış",
         note: byId("cariOpeningNote").value.trim(),
-        createdAt: new Date().toISOString()
+        createdAt: existing?.createdAt || now,
+        updatedAt: now
       };
-      backupState("before-add-cari-opening");
-      state.transactions.push(tx);
-      state.logs.push({ at: new Date().toISOString(), event: "ADD_CARI_OPENING", id: tx.id, type: tx.type, party: tx.party, amount: tx.amount });
+      backupState(editId ? "before-edit-cari-opening" : "before-add-cari-opening");
+      if (existing) Object.assign(existing, tx); else state.transactions.push(tx);
+      state.logs.push({ at: now, event: editId ? "EDIT_CARI_OPENING" : "ADD_CARI_OPENING", id: tx.id, type: tx.type, party: tx.party, amount: tx.amount });
       saveState();
       clearCariOpeningForm();
       renderAll();
       showView("cari");
     }
 
+    function editDebtPlan(id) {
+      const row = (state.debtPlans || []).find(item => item.id === id && !isCanceled(item));
+      if (!row) return alert("Düzeltilecek borç planı bulunamadı.");
+      byId("debtEditId").value = row.id;
+      byId("debtType").value = row.type || "Diğer";
+      byId("debtScope").value = row.scope || "Ticari";
+      byId("debtParty").value = row.party || "";
+      byId("debtAmount").value = row.amount || "";
+      byId("debtPaid").value = row.paid || "";
+      byId("debtDueDate").value = row.dueDate || today;
+      byId("debtPriority").value = row.priority || "Normal";
+      byId("debtStatus").value = row.status || "Planlandı";
+      byId("debtAccount").value = row.account || byId("debtAccount").value;
+      byId("debtNote").value = row.note || "";
+      byId("saveDebtButton").textContent = "Borç Planını Güncelle";
+      showView("debt");
+      setTimeout(() => byId("debtParty").focus(), 120);
+    }
+
     function addDebtPlan(event) {
       event.preventDefault();
       if (blockWorkerAction("Borç planı üretim personeli hesabında kapalı.")) return;
+      const editId = byId("debtEditId").value;
+      const existing = editId ? (state.debtPlans || []).find(item => item.id === editId && !isCanceled(item)) : null;
+      if (editId && !existing) return alert("Düzeltilecek borç planı bulunamadı.");
       const type = byId("debtType").value;
       const row = {
-        id: nextDebtId(),
+        id: existing?.id || nextDebtId(),
         type,
         scope: type === "Şahsi Borç" ? "Şahsi" : byId("debtScope").value,
         party: byId("debtParty").value.trim(),
@@ -10319,17 +10754,18 @@
         status: byId("debtStatus").value,
         account: byId("debtAccount").value,
         note: byId("debtNote").value.trim(),
-        createdAt: new Date().toISOString()
+        createdAt: existing?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
       if (!row.party) return alert("Kurum / kişi gerekli.");
       if (row.amount <= 0) return alert("Toplam tutar 0'dan büyük olmalı.");
       if (row.paid < 0) return alert("Ödenen tutar negatif olamaz.");
       if (row.paid > row.amount) return alert("Ödenen tutar toplamdan büyük olamaz.");
       if (row.paid === row.amount) row.status = "Ödendi";
-      backupState("before-add-debt-plan");
+      backupState(editId ? "before-edit-debt-plan" : "before-add-debt-plan");
       state.debtPlans = state.debtPlans || [];
-      state.debtPlans.push(row);
-      state.logs.push({ at: new Date().toISOString(), event: "ADD_DEBT_PLAN", id: row.id, type: row.type, scope: row.scope });
+      if (existing) Object.assign(existing, row); else state.debtPlans.push(row);
+      state.logs.push({ at: row.updatedAt, event: editId ? "EDIT_DEBT_PLAN" : "ADD_DEBT_PLAN", id: row.id, type: row.type, scope: row.scope });
       saveState();
       clearDebtForm();
       renderAll();
@@ -10343,13 +10779,16 @@
         return;
       }
       const type = byId("txType").value;
+      const editId = byId("txEditId").value;
+      const existingTx = editId ? (state.transactions || []).find(row => row.id === editId && !isCanceled(row)) : null;
+      if (editId && !existingTx) return alert("Düzeltilecek işlem bulunamadı.");
       const tradeLink = type === "SATIS" && pendingTradeLink ? { ...pendingTradeLink } : null;
       const qtyValue = Number(byId("qty").value || 0);
       const price = Number(byId("unitPrice").value || 0);
       const directAmount = Number(byId("amount").value || 0);
       const amount = ["SIPARIS", "SATIS", "ALIS"].includes(type) ? qtyValue * price : directAmount;
       const tx = {
-        id: nextId(),
+        id: existingTx?.id || nextId(),
         date: byId("txDate").value || today,
         type,
         party: type === "URETIM" ? "Üretim" : byId("party").value.trim(),
@@ -10367,7 +10806,8 @@
         variantKey: tradeLink?.variantKey || "",
         sourceOrderId: tradeLink?.sourceOrderId || "",
         productionJobId: tradeLink?.productionJobId || "",
-        createdAt: new Date().toISOString()
+        createdAt: existingTx?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
       const linkedOrder = tradeLink?.sourceOrderId
         ? activeTransactions().find(row => row.id === tradeLink.sourceOrderId && row.type === "SIPARIS")
@@ -10407,8 +10847,9 @@
       const collectedWithAdvance = Number(linkedOrder?.paid || 0) + Number(tx.paid || 0);
       if (linkedOrder && collectedWithAdvance > tx.amount) return alert("Kapora ile teslimde alınan toplam, satış tutarını aşamaz.");
       if (linkedOrder) tx.status = collectedWithAdvance >= tx.amount ? "Ödendi" : collectedWithAdvance > 0 ? "Kısmi" : "Vadeli";
-      backupState(tradeLink ? "before-finalize-order-sale" : "before-add-transaction");
-      state.transactions.push(tx);
+      backupState(editId ? "before-edit-transaction" : tradeLink ? "before-finalize-order-sale" : "before-add-transaction");
+      if (existingTx) Object.assign(existingTx, tx);
+      else state.transactions.push(tx);
       if (linkedOrder) {
         linkedOrder.status = "Teslim";
         linkedOrder.saleTx = tx.id;
@@ -10421,7 +10862,7 @@
       }
       state.logs.push({
         at: new Date().toISOString(),
-        event: tradeLink ? "FINALIZE_ORDER_SALE" : "ADD_TX",
+        event: editId ? "EDIT_TX" : tradeLink ? "FINALIZE_ORDER_SALE" : "ADD_TX",
         id: tx.id,
         type: tx.type,
         sourceOrderId: tx.sourceOrderId,
@@ -10456,12 +10897,22 @@
     function cancelTransaction(id) {
       const tx = (state.transactions || []).find(row => row.id === id);
       if (!tx || isCanceled(tx)) return;
+      if (blockWorkerAction("İşlem iptali Mahmud hesabında kapalı; yetkili düzeltmesi gerekir.")) return;
       if (!confirm(`${tx.id} / ${tx.type} hareketi iptal edilsin mi? Kayıt silinmez, hesap etkisi kaldırılır.`)) return;
       backupState("before-cancel-transaction");
       unlinkFinalizedSale(tx);
       tx.status = "İptal";
       tx.cancelledAt = new Date().toISOString();
       tx.note = appendNote(tx.note, "İptal edildi; hesap etkisi kaldırıldı.");
+      if (tx.type === "SIPARIS") {
+        const linkedJob = (state.productionJobs || []).find(job => job.sourceTx === tx.id || job.id === tx.productionJobId);
+        if (linkedJob && !isCanceled({ status: linkedJob.stage })) {
+          linkedJob.stage = "İptal";
+          linkedJob.cancelledAt = tx.cancelledAt;
+          linkedJob.note = appendNote(linkedJob.note, `${tx.id} siparişi iptal edildi.`);
+          linkedJob.updatedAt = tx.cancelledAt;
+        }
+      }
       if (tx.type === "BORC_ODEME" && tx.debtPlanId) {
         const plan = (state.debtPlans || []).find(row => row.id === tx.debtPlanId);
         if (plan) {
@@ -10516,10 +10967,13 @@
       const remaining = debtRemaining(row);
       if (!remaining) return;
       pendingDebtPaymentId = row.id;
+      byId("debtPaymentEditId").value = "";
       byId("debtPaymentSummary").textContent = `${row.id} / ${row.party} · Kalan ${money(remaining)} · ${row.account || "Banka"}`;
       byId("debtPaymentDate").value = today;
       byId("debtPaymentAmount").value = remaining;
       byId("debtPaymentAmount").max = remaining;
+      byId("debtPaymentTitle").textContent = "Borç Ödemesi Gir";
+      byId("saveDebtPaymentButton").textContent = "Ödemeyi Kaydet";
       byId("debtPaymentDialog").showModal();
       setTimeout(() => byId("debtPaymentDate").focus(), 0);
     }
@@ -10528,34 +10982,42 @@
       event.preventDefault();
       const row = (state.debtPlans || []).find(item => item.id === pendingDebtPaymentId);
       if (!row || isDebtClosed(row)) return closeDebtPaymentDialog();
-      const remaining = debtRemaining(row);
+      const editId = byId("debtPaymentEditId").value;
+      const existingTx = editId ? (state.transactions || []).find(tx => tx.id === editId && tx.type === "BORC_ODEME" && !isCanceled(tx)) : null;
+      if (editId && !existingTx) return closeDebtPaymentDialog();
+      const paidWithoutCurrent = existingTx ? Math.max(0, Number(row.paid || 0) - Number(existingTx.amount || 0)) : Number(row.paid || 0);
+      const remaining = Math.max(0, Number(row.amount || 0) - paidWithoutCurrent);
       const paymentDate = byId("debtPaymentDate").value;
       const payAmount = Number(byId("debtPaymentAmount").value || 0);
       if (!paymentDate) return alert("Ödeme tarihi gerekli.");
       if (!payAmount || payAmount <= 0) return alert("Ödeme tutarı 0'dan büyük olmalı.");
       if (payAmount > remaining) return alert(`Ödeme kalan borçtan büyük olamaz. Kalan: ${money(remaining)}`);
-      backupState("before-pay-debt-plan");
-      row.paid = Number(row.paid || 0) + payAmount;
+      backupState(editId ? "before-edit-debt-payment" : "before-pay-debt-plan");
+      row.paid = paidWithoutCurrent + payAmount;
       row.status = debtRemaining(row) <= 0 ? "Ödendi" : "Kısmi";
       row.paidAt = `${paymentDate}T12:00:00`;
-      const tx = {
+      const now = new Date().toISOString();
+      const tx = existingTx || {
         id: nextId(),
-        date: paymentDate,
         type: "BORC_ODEME",
         party: row.party,
         item: "",
         qty: 0,
         unitPrice: 0,
-        amount: payAmount,
-        paid: payAmount,
         account: row.account || "Banka",
         status: "Ödendi",
-        note: `${row.id} borç planı kısmi ödeme: ${row.type} / kalan ${money(debtRemaining(row))}`,
         debtPlanId: row.id,
-        createdAt: new Date().toISOString()
+        createdAt: now
       };
-      state.transactions.push(tx);
-      state.logs.push({ at: new Date().toISOString(), event: "PAY_DEBT_PLAN", id: row.id, txId: tx.id, date: paymentDate, amount: payAmount, remaining: debtRemaining(row) });
+      Object.assign(tx, {
+        date: paymentDate,
+        amount: payAmount,
+        paid: payAmount,
+        note: `${row.id} borç planı ödeme: ${row.type} / kalan ${money(debtRemaining(row))}`,
+        updatedAt: now
+      });
+      if (!existingTx) state.transactions.push(tx);
+      state.logs.push({ at: now, event: editId ? "EDIT_DEBT_PAYMENT" : "PAY_DEBT_PLAN", id: row.id, txId: tx.id, date: paymentDate, amount: payAmount, remaining: debtRemaining(row) });
       saveState();
       closeDebtPaymentDialog();
       renderAll();
@@ -10563,6 +11025,9 @@
 
     function closeDebtPaymentDialog() {
       pendingDebtPaymentId = "";
+      byId("debtPaymentEditId").value = "";
+      byId("debtPaymentTitle").textContent = "Borç Ödemesi Gir";
+      byId("saveDebtPaymentButton").textContent = "Ödemeyi Kaydet";
       byId("debtPaymentDialog").close();
     }
 
@@ -10924,12 +11389,17 @@
         const confirmButton = dialog.querySelector("#confirmTypedDeletion");
         input.addEventListener("input", () => {
           confirmButton.disabled = input.value.trim() !== "KAYITLARI SİL";
-        });
-        dialog.addEventListener("close", () => {
-          const approved = dialog.returnValue === "confirm" && input.value.trim() === "KAYITLARI SİL";
-          dialog.remove();
-          resolve(approved);
-        }, { once: true });
+          });
+          dialog.addEventListener("close", () => {
+            const confirmation = input.value.trim();
+            if (confirmation !== "KAYITLARI SİL") {
+              dialog.remove();
+              return resolve("");
+            }
+            const approved = dialog.returnValue === "confirm";
+            dialog.remove();
+            resolve(approved ? confirmation : "");
+          }, { once: true });
         dialog.addEventListener("cancel", event => {
           event.preventDefault();
           dialog.close("cancel");
@@ -10952,8 +11422,8 @@
         logs: (state.logs || []).length
       };
       const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
-      const confirmed = await requestTypedDeletionConfirmation(total, counts);
-      if (!confirmed) return;
+      const confirmation = await requestTypedDeletionConfirmation(total, counts);
+      if (confirmation !== "KAYITLARI SİL") return;
       const button = byId("resetFinanceCloud");
       button.disabled = true;
       setCloudStatus("Silme öncesi yedek alınıyor", "Firebase geri dönüş noktası hazırlanıyor.", "warn");
@@ -11042,6 +11512,12 @@
       if (event.target.closest("[data-open-daily-collection]")) return openCashEntry("TAHSILAT");
       const jumpButton = event.target.closest("[data-jump-view]");
       if (jumpButton) showView(jumpButton.dataset.jumpView);
+    });
+    byId("liveFieldQueue").addEventListener("click", event => {
+      const collectionButton = event.target.closest("[data-queue-collection]");
+      if (collectionButton) return openCollectionEntry(collectionButton.dataset.queueCollection);
+      const viewButton = event.target.closest("[data-queue-view]");
+      if (viewButton) showView(viewButton.dataset.queueView);
     });
     byId("analytics").addEventListener("click", event => {
       const button = event.target.closest("[data-full-view]");
@@ -11271,38 +11747,78 @@
     byId("recentMoves").addEventListener("click", event => {
       const jumpButton = event.target.closest("[data-jump-view]");
       if (jumpButton) return showView(jumpButton.dataset.jumpView);
+      const editOrderButton = event.target.closest("button[data-edit-order]");
+      if (editOrderButton) return editOrder(editOrderButton.dataset.editOrder);
+      const editButton = event.target.closest("button[data-edit-tx]");
+      if (editButton) return editTransaction(editButton.dataset.editTx);
       const printButton = event.target.closest("button[data-print-order]");
       if (printButton) return printOrderSlip(printButton.dataset.printOrder);
       const button = event.target.closest("button[data-cancel-tx]");
       if (button) cancelTransaction(button.dataset.cancelTx);
     });
     byId("openOrderBrief").addEventListener("click", event => {
+      const editButton = event.target.closest("button[data-edit-order]");
+      if (editButton) return editOrder(editButton.dataset.editOrder);
+      const cancelButton = event.target.closest("button[data-cancel-tx]");
+      if (cancelButton) return cancelTransaction(cancelButton.dataset.cancelTx);
       const printButton = event.target.closest("button[data-print-order]");
       if (printButton) return printOrderSlip(printButton.dataset.printOrder);
       const whatsappButton = event.target.closest("button[data-whatsapp-order]");
       if (whatsappButton) shareOrderWhatsapp(whatsappButton.dataset.whatsappOrder);
     });
     byId("orderHistory").addEventListener("click", event => {
+      const editButton = event.target.closest("button[data-edit-order]");
+      if (editButton) return editOrder(editButton.dataset.editOrder);
+      const cancelButton = event.target.closest("button[data-cancel-tx]");
+      if (cancelButton) return cancelTransaction(cancelButton.dataset.cancelTx);
       const printButton = event.target.closest("button[data-print-order]");
       if (printButton) return printOrderSlip(printButton.dataset.printOrder);
       const whatsappButton = event.target.closest("button[data-whatsapp-order]");
       if (whatsappButton) shareOrderWhatsapp(whatsappButton.dataset.whatsappOrder);
     });
     byId("allMoves").addEventListener("click", event => {
+      const editOrderButton = event.target.closest("button[data-edit-order]");
+      if (editOrderButton) return editOrder(editOrderButton.dataset.editOrder);
+      const editButton = event.target.closest("button[data-edit-tx]");
+      if (editButton) return editTransaction(editButton.dataset.editTx);
       const printButton = event.target.closest("button[data-print-order]");
       if (printButton) return printOrderSlip(printButton.dataset.printOrder);
       const button = event.target.closest("button[data-cancel-tx]");
       if (button) cancelTransaction(button.dataset.cancelTx);
     });
+    byId("salesTable").addEventListener("click", event => {
+      const editButton = event.target.closest("button[data-edit-tx]");
+      if (editButton) return editTransaction(editButton.dataset.editTx);
+      const cancelButton = event.target.closest("button[data-cancel-tx]");
+      if (cancelButton) return cancelTransaction(cancelButton.dataset.cancelTx);
+    });
+    byId("purchaseTable").addEventListener("click", event => {
+      const editButton = event.target.closest("button[data-edit-tx]");
+      if (editButton) return editTransaction(editButton.dataset.editTx);
+      const cancelButton = event.target.closest("button[data-cancel-tx]");
+      if (cancelButton) return cancelTransaction(cancelButton.dataset.cancelTx);
+    });
     byId("fixedTable").addEventListener("click", event => {
+      const editButton = event.target.closest("button[data-edit-fixed]");
+      if (editButton) return editFixedExpense(editButton.dataset.editFixed);
       const button = event.target.closest("button[data-toggle-fixed]");
       if (button) toggleFixedExpense(button.dataset.toggleFixed);
     });
     byId("debtTable").addEventListener("click", event => {
+      const editButton = event.target.closest("button[data-edit-debt]");
+      if (editButton) return editDebtPlan(editButton.dataset.editDebt);
       const payButton = event.target.closest("button[data-pay-debt]");
       if (payButton) payDebtPlan(payButton.dataset.payDebt);
       const cancelButton = event.target.closest("button[data-cancel-debt]");
       if (cancelButton) cancelDebtPlan(cancelButton.dataset.cancelDebt);
+    });
+    byId("cariCardsTable").addEventListener("click", event => {
+      const editButton = event.target.closest("button[data-edit-cari]");
+      if (editButton) return editCariCard(editButton.dataset.editCari);
+      const toggleButton = event.target.closest("button[data-toggle-cari]");
+      if (toggleButton) return toggleCariCardArchive(toggleButton.dataset.toggleCari);
+      const createButton = event.target.closest("button[data-create-cari]");
+      if (createButton) return startCariCard(createButton.dataset.createCari);
     });
     byId("debtPaymentForm").addEventListener("submit", submitDebtPayment);
     byId("cancelDebtPayment").addEventListener("click", closeDebtPaymentDialog);
